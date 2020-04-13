@@ -7,8 +7,8 @@ const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
 
-const apiKey = process.env.SHOPIFY_API_KEY;
-const apiSecret = process.env.SHOPIFY_API_SECRET;
+const apiKey = "1c9be099aa9c15a6e4cfb342e22e495c";
+const apiSecret = "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";
 
 const forwardingAddress = "https://a23d8ed6.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
