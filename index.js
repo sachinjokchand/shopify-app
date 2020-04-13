@@ -12,7 +12,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET;
 
 const forwardingAddress = "https://a23d8ed6.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
-const scopes = 'read_products,write_script_tags';
+const scopes = 'read_products';
 
 const port = process.env.PORT || 5000
 
