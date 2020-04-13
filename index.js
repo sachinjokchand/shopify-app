@@ -7,12 +7,13 @@ const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
 
-const apiKey = "1c9be099aa9c15a6e4cfb342e22e495c";
-const apiSecret = "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";
+const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
+const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
+
 
 const forwardingAddress = "https://a23d8ed6.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
-const scopes = 'read_products';
+const scopes = 'read_products,write_script_tags'; 
 
 const port = process.env.PORT || 5000
 
