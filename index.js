@@ -25,7 +25,6 @@ app.get('/', (req, res) => {
 
 
 app.get('/shopify', (req, res) => {
-	// console.log("sssssssssss");
   const shop = req.query.shop;
   if (shop) {
     const state = nonce();
@@ -38,13 +37,10 @@ app.get('/shopify', (req, res) => {
 
     res.cookie('state', state);
     res.redirect(installUrl);
-     // res.send('Hello World!');
-    // console.log(installUrl);
   } else {
     return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
   }
 });
-
 
 app.get('/shopify/callback', (req, res) => {
   const { shop, hmac, code, state } = req.query;
