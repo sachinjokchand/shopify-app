@@ -23,7 +23,8 @@
             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 230px;">Action</th>
           </tr>
         </thead>
-      <%= JSON.stringify(shop_data) %>
+      <%= shop_data.wish_list_data[0] %>
+       <%= shop_data.wish_list_data[0].id %>
        <% for(var i=0; i < shop_data.product_data.length ; i++) { %>
      
       <tbody>
