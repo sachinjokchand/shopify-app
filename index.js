@@ -146,8 +146,8 @@ app.get('/shopify/callback', (req, res) => {
               console.log(results);
              if (results.rows.length>0) 
                 {
-                  shop_data.push(shopResponse);
-                   shop_data.push(results.rows);
+                   shop_data['shop_data'] =  results.rows;
+                   shop_data['product_data'] = shopResponse;
                   res.render('home',{ shop_data : shop_data });
                 } 
              else {
