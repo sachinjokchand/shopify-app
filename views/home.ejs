@@ -6,8 +6,13 @@
 	</head>
 	<body>
    
+     <% products = shop_data.product_data; %>
+		 <% products.forEach((result) => { %>
+     
+     <%= JSON.stringify(result) %>
 
-		<%= JSON.stringify(shop_data.product_data) %>
+    <% }) %>
+		<%= JSON.stringify(shop_data) %>
 
 		<div class="login-form">
 			app content
