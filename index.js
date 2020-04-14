@@ -11,11 +11,11 @@ const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c'
 const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
 
 
-const forwardingAddress = "https://stormy-mountain-63674.herokuapp.com"; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 
 const scopes = 'read_products,write_script_tags'; 
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Listening on ${ port }`));
 
