@@ -8,16 +8,11 @@ const querystring = require('querystring');
 const request = require('request-promise');
 
 
-//use path module
-var path = require('path');
-//use ejs view engine
-// var session = require('express-session');
-
-var ejs = require('ejs');
-//use bodyParser middleware
-var bodyParser = require('body-parser');
-//use mysql database
-var mysql = require('mysql');
+const path = require('path');
+const session = require('express-session');
+const ejs = require('ejs');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
 
 
 let pg = require('pg');
