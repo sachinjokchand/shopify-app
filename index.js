@@ -11,8 +11,6 @@ const request = require('request-promise');
 const cool = require('cool-ascii-faces'); 
 //use path module
 var path = require('path');
-//use express module
-var express = require('express');
 //use ejs view engine
 var session = require('express-session');
 
