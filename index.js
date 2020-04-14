@@ -27,8 +27,8 @@ const conn = new Pool({
   connectionString : connString
 });
 
-conn.query(
-  'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
+// conn.query(
+//   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
 
 app.set('views',path.join(__dirname,'views'));
 
@@ -136,14 +136,15 @@ app.get('/shopify/callback', (req, res) => {
       const shopRequestHeaders = {
         'X-Shopify-Access-Token': accessToken,
       };
-
-      request.get(shopRequestUrl, { headers: shopRequestHeaders })
-      .then((shopResponse) => {
-        res.status(200).end(shopResponse);
-      })
-      .catch((error) => {
-        res.status(error.statusCode).send(error.error.error_description);
-      });
+     
+      res.render('home',{ shop_data : "hello sachin" });
+      // request.get(shopRequestUrl, { headers: shopRequestHeaders })
+      // .then((shopResponse) => {
+      //   res.status(200).end(shopResponse);
+      // })
+      // .catch((error) => {
+      //   res.status(error.statusCode).send(error.error.error_description);
+      // });
     })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
