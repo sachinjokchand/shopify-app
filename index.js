@@ -151,7 +151,7 @@ app.get('/shopify/callback', (req, res) => {
                    shop_data['product_data'] = obj['products'];
 
                    console.log( results.rows );
-                   console.log( obj );
+                   // console.log( obj );
                   res.render('home',{ shop_data : shop_data });
                 } 
              else {
