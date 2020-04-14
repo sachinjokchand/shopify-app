@@ -147,10 +147,12 @@ app.get('/shopify/callback', (req, res) => {
              if (results.rows.length>0) 
                 {
                    shop_data['shop_data'] =  results.rows;
-                   shop_data['product_data'] = shopResponse;
+                   var obj = JSON.parse(shopResponse);
+                   shop_data['product_data'] = obj;
+
                    console.log( results.rows );
-                   console.log( shopResponse );
-                  res.render('home',{ shop_data : results.rows });
+                   console.log( obj );
+                  res.render('home',{ shop_data : shop_data });
                 } 
              else {
                   res.render('home',{ shop_data : err });
