@@ -132,19 +132,19 @@ app.get('/shopify/callback', (req, res) => {
     .then((accessTokenResponse) => {
       const accessToken = accessTokenResponse.access_token;
       // DONE: Use access token to make API call to 'shop' endpoint
-      const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/shop.json';
+      const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
       const shopRequestHeaders = {
         'X-Shopify-Access-Token': accessToken,
       };
       
-      res.render('home',{ shop_data : "hello sachin" });
-      // request.get(shopRequestUrl, { headers: shopRequestHeaders })
-      // .then((shopResponse) => {
-      //   res.status(200).end(shopResponse);
-      // })
-      // .catch((error) => {
-      //   res.status(error.statusCode).send(error.error.error_description);
-      // });
+      // res.render('home',{ shop_data : "hello sachin" });
+      request.get(shopRequestUrl, { headers: shopRequestHeaders })
+      .then((shopResponse) => {
+        res.status(200).end(shopResponse);
+      })
+      .catch((error) => {
+        res.status(error.statusCode).send(error.error.error_description);
+      });
     })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
