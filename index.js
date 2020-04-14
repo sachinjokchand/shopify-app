@@ -11,7 +11,7 @@ const request = require('request-promise');
 //use path module
 var path = require('path');
 //use ejs view engine
-var session = require('express-session');
+// var session = require('express-session');
 
 var ejs = require('ejs');
 //use bodyParser middleware
