@@ -25,7 +25,7 @@
         </thead>
     
        <% for(var i=0; i < shop_data.product_data.length ; i++) { %>
-       <% if (shop_data.wish_list_data[0].product_id == shop_data.product_data[i].id) { %>
+       <% if (shop_data.wish_list_data[i].product_id == shop_data.product_data[i].id) { %>
       <tbody>
         <tr role="row" class="odd">
            <td class="table_data"><input name="select_all[]" value="<%= shop_data.product_data[i].id %>" type="checkbox"></td>
