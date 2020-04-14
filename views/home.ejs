@@ -23,9 +23,9 @@
             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 230px;">Action</th>
           </tr>
         </thead>
-      
+      <%= JSON.stringify(shop_data) %>
        <% for(var i=0; i < shop_data.product_data.length ; i++) { %>
-        <% if (shop_data.product_data[i].id == shop_data.wish_list_data[i].id ) { %>
+     
       <tbody>
         <tr role="row" class="odd">
            <td class="table_data"><input name="select_all[]" value="<%= shop_data.product_data[i].id %>" type="checkbox"></td>
@@ -34,7 +34,7 @@
             <td  class="table_data">1</td><td><a href="#"><i class="fa fa-user" aria-hidden="true"></i> View</a> | <a href="#" class="recDelete"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></td>
           </tr>
       </tbody>
-        <% } %>
+       
        <% } %>
       <tfoot>
         <tr>
