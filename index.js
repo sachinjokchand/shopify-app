@@ -6,7 +6,9 @@ const cookie = require('cookie');
 const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
- 
+
+
+const cool = require('cool-ascii-faces'); 
 //use path module
 var path = require('path');
 //use ejs view engine
