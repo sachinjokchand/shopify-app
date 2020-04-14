@@ -11,7 +11,12 @@
   </style>
 	<body>
    
-
+     <% for(var i=0; i < shop_data.product_data.length ; i++) { %>
+       <%= shop_data.wish_list_data[i].product_id %>
+     
+         
+       <% } %>  
+ 
 		<div class="">
 		  <table class="table table-striped table-bordered datatable dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1077px;">
         <thead>
@@ -23,6 +28,8 @@
             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 230px;">Action</th>
           </tr>
         </thead>
+
+       
     
        <% for(var i=0; i < shop_data.product_data.length ; i++) { %>
        <% if (shop_data.wish_list_data[0].product_id == shop_data.product_data[i].id) { %>
