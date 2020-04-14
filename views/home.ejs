@@ -6,13 +6,15 @@
 	</head>
 	<body>
    
-		<%= JSON.stringify(shop_data) %>
-     <% products = shop_data.product_data; %>
-		 <% products.forEach((result) => { %>
-     
-     <%=  result.id  %>
 
-    <% }) %>
+      <table>
+      <% for(var i=0; i < shop_data.product_data; i++) { %>
+         <tr>
+           <td><%= data[i].id %></td>
+           <td><%= data[i].title %></td>
+         </tr>
+      <% } %>
+      </table>
 
 		<div class="login-form">
 			app content

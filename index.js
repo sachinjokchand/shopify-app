@@ -146,7 +146,7 @@ app.get('/shopify/callback', (req, res) => {
               console.log(results);
              if (results.rows.length>0) 
                 {
-                   shop_data['shop_data'] =  results.rows;
+                   shop_data['wish_list_data'] =  results.rows;
                    var obj = JSON.parse(shopResponse);
                    shop_data['product_data'] = obj['products'];
 
