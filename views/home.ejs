@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Home Page</title>		
+	</head>
+	<body>
+
+		<!-- <%= shop_data %> -->
+		<%= JSON.stringify(shop_data) %>
+
+		<div class="login-form">
+			app content
+			<!-- <a href="javascript:void(0)" class="call_ajax">ajax call</a>
+			<a href="javascript:void(0)" class="call_ajax1">ajax call</a> -->
+		</div>
+	</body>
+</html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function()
+	{
+      jQuery(document).on('click','.call_ajax',function()
+		{
+		 console.log("call_ajax")	
+         jQuery.ajax({
+                  type:'POSt',
+                  url: '/json-write',
+                  data: "5555555555555555",
+                  dataType: "jsonp",
+                  success: function (data) {
+                      var ret = jQuery.parseJSON(data);
+                      jQuery('#lblResponse').html(ret.msg);
+                      console.log('Success: ')
+                  },
+                  error: function (xhr, status, error) {
+                      console.log('Error: ' + error.message);
+                      jQuery('#lblResponse').html('Error connecting to the server.');
+                  },
+               
+              });
+		});
+      jQuery(document).on('click','.call_ajax1',function()
+		{
+		 console.log("call_ajax1")	
+         jQuery.ajax({
+                  type:'POSt',
+                  url: 'https://blooming-atoll-23423.herokuapp.com/json-write',
+                  data: "5555555555555555",
+                  dataType: "jsonp",
+                  success: function (data) {
+                      var ret = jQuery.parseJSON(data);
+                      jQuery('#lblResponse').html(ret.msg);
+                      console.log('Success: ')
+                  },
+                  error: function (xhr, status, error) {
+                      console.log('Error: ' + error.message);
+                      jQuery('#lblResponse').html('Error connecting to the server.');
+                  },
+               
+              });
+		});
+	});
+</script>

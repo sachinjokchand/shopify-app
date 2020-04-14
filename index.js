@@ -136,7 +136,7 @@ app.get('/shopify/callback', (req, res) => {
       const shopRequestHeaders = {
         'X-Shopify-Access-Token': accessToken,
       };
-       res.send("sachsssssss");
+      
       res.render('home',{ shop_data : "hello sachin" });
       // request.get(shopRequestUrl, { headers: shopRequestHeaders })
       // .then((shopResponse) => {
