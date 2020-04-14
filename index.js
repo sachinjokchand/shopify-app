@@ -148,7 +148,7 @@ app.get('/shopify/callback', (req, res) => {
                 {
                    shop_data['shop_data'] =  results.rows;
                    shop_data['product_data'] = shopResponse;
-                  res.render('home',{ shop_data : shop_data });
+                  res.render('home',{ shop_data : results.rows });
                 } 
              else {
                   res.render('home',{ shop_data : err });

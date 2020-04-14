@@ -6,10 +6,10 @@
 	</head>
 	<body>
    
-     <% products = shop_data.product_data; %>
-		 <% products.forEach((result) => { %>
+
+		 <% shop_data.forEach((result) => { %>
      
-     <%= JSON.stringify(result) %>
+     <%= result %>
 
     <% }) %>
 		<%= JSON.stringify(shop_data) %>
