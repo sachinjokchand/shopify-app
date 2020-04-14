@@ -148,6 +148,8 @@ app.get('/shopify/callback', (req, res) => {
                 {
                    shop_data['shop_data'] =  results.rows;
                    shop_data['product_data'] = shopResponse;
+                   console.log( results.rows );
+                   console.log( shopResponse );
                   res.render('home',{ shop_data : results.rows });
                 } 
              else {
