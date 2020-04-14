@@ -6,7 +6,11 @@
 	</head>
 	<body>
 
-		<!-- <%= shop_data %> -->
+		<% shop_data['product_data'].forEach((result) => { %>
+     
+     <%= result %>
+
+    <% }) %>
 		<%= JSON.stringify(shop_data) %>
 
 		<div class="login-form">
