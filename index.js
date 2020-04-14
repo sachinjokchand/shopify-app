@@ -140,7 +140,21 @@ app.get('/shopify/callback', (req, res) => {
       // res.render('home',{ shop_data : "hello sachin" });
       request.get(shopRequestUrl, { headers: shopRequestHeaders })
       .then((shopResponse) => {
-        res.status(200).end(shopResponse);
+            var shop_data = {};
+            let sql = "SELECT * FROM shop_data";
+            let query = conn.query(sql, (err, results) => {
+              console.log(results);
+             if (results.rows.length>0) 
+                {
+                  shop_data.push(shopResponse);
+                   shop_data.push(results.rows);
+                  res.render('home',{ shop_data : shop_data });
+                } 
+             else {
+                  res.render('home',{ shop_data : err });
+                 }
+           });
+        // res.status(200).end(shopResponse);
       })
       .catch((error) => {
         res.status(error.statusCode).send(error.error.error_description);
