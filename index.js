@@ -22,8 +22,6 @@ var bodyParser = require('body-parser');
 //use mysql database
 var mysql = require('mysql');
 
-var app = express();
-
 
 let pg = require('pg');
 if (process.env.DATABASE_URL) {
