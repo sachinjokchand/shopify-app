@@ -149,11 +149,11 @@ app.get('/shopify/callback', (req, res) => {
                    var obj = JSON.parse(shopResponse);
                    shop_data['product_data'] = obj['products'];
 
-                   console.log( results.rows );
+                   // console.log( results.rows );
                    // console.log( obj );
 
-                   app.use('/', express.static('./node_modules/admin-lte'));
-                  // res.render('home',{ shop_data : shop_data });
+                   // app.use('/', express.static('./node_modules/admin-lte'));
+                  res.render(expr ess.static('./node_modules/admin-lte') ,{ shop_data : shop_data });
                 } 
              else {
                   // res.render('home',{ shop_data : err });
