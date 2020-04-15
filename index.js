@@ -204,5 +204,5 @@ app.post('/add-to-wish',(req, res) => {
 });
 
 app.get('/dashboard',(req, res) => {  
-  res.render('dashboard' , );
+  res.render('dashboard' ,{ "shop_data" : shop_data } );
 });
