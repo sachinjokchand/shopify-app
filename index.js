@@ -43,10 +43,7 @@ app.use(session({
   resave: false
 }));
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // membuat dependency (package) admin-lte di dalam node_modules menjadi static dan bisa di akses
