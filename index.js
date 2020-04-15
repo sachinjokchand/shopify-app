@@ -153,7 +153,7 @@ app.get('/shopify/callback', (req, res) => {
                    // console.log( obj );
 
                    // app.use('/', express.static('./node_modules/admin-lte'));
-                  res.render(expr ess.static('./node_modules/admin-lte') ,{ shop_data : shop_data });
+                  res.render(express.static('./node_modules/admin-lte') ,{ shop_data : shop_data });
                 } 
              else {
                   // res.render('home',{ shop_data : err });
