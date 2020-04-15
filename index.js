@@ -67,7 +67,6 @@ app.get('/', (req, res) => {
 });
 
 
-
 app.get('/shopify', (req, res) => {
   const shop = req.query.shop;
   if (shop) {
@@ -152,10 +151,12 @@ app.get('/shopify/callback', (req, res) => {
 
                    console.log( results.rows );
                    // console.log( obj );
-                  res.render('home',{ shop_data : shop_data });
+
+                   app.use('/', express.static('./node_modules/admin-lte'));
+                  // res.render('home',{ shop_data : shop_data });
                 } 
              else {
-                  res.render('home',{ shop_data : err });
+                  // res.render('home',{ shop_data : err });
                  }
            });
         // res.status(200).end(shopResponse);
