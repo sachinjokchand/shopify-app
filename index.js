@@ -48,6 +48,11 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
+app.use(
+  "/script-adminlte",
+  express.static(path.join(__dirname, "/node_modules/admin-lte/"))
+);
+
 app.use('/assets',express.static(__dirname + '/public'));
 
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
@@ -155,7 +160,7 @@ app.get('/shopify/callback', (req, res) => {
                    // app.use('/', express.static('./node_modules/admin-lte'));
                    // app.use('/admin', express.static('./node_modules/admin-lte-express/public'))
                    // app.use('/', require('admin-lte-express'));
-                  res.render('/node_modules/admin-lte' ,{ shop_data : shop_data });
+                  res.render('index' ,{ shop_data : shop_data });
                 } 
              else {
                   // res.render('home',{ shop_data : err });
