@@ -142,7 +142,7 @@ app.get('/shopify/callback', (req, res) => {
             var shop_data = {};
             let sql = "SELECT * FROM shop_data";
             let query = conn.query(sql, (err, results) => {
-              console.log(results);
+              // console.log(results);
              if (results.rows.length>0) 
                 {
                    shop_data['wish_list_data'] =  results.rows;
