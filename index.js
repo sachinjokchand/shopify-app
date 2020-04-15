@@ -14,6 +14,9 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
+
 
 let pg = require('pg');
 if (process.env.DATABASE_URL) {
@@ -40,6 +43,21 @@ app.use(session({
   resave: false
 }));
 
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+
+// membuat dependency (package) admin-lte di dalam node_modules menjadi static dan bisa di akses
+app.use(
+  "/script-adminlte",
+  express.static(path.join(__dirname, "/node_modules/admin-lte/"))
+);
+
+// app.use("/", indexRouter);
+// app.use("/users", usersRouter);
+
 // middleware to make 'user' available to all templates
 app.use(function(req, res, next) {
   res.locals.user = req.session.user;
@@ -47,6 +65,8 @@ app.use(function(req, res, next) {
 });
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+
+
 
 app.use('/assets',express.static(__dirname + '/public'));
 
@@ -153,9 +173,9 @@ app.get('/shopify/callback', (req, res) => {
                    // console.log( obj );
 
                    // app.use('/', express.static('./node_modules/admin-lte'));
-                   app.use('/admin', express.static('./node_modules/admin-lte-express/public'))
-                   app.use('/', require('admin-lte-express'));
-                  // res.render(express.static('./node_modules/admin-lte') ,{ shop_data : shop_data });
+                   // app.use('/admin', express.static('./node_modules/admin-lte-express/public'))
+                   // app.use('/', require('admin-lte-express'));
+                  res.render(indexRouter ,{ shop_data : shop_data });
                 } 
              else {
                   // res.render('home',{ shop_data : err });
