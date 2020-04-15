@@ -203,6 +203,6 @@ app.post('/add-to-wish',(req, res) => {
    });
 });
 
-app.post('/dashboard',(req, res) => {  
+app.get('/dashboard',(req, res) => {  
   res.render('dashboard' , );
 });
