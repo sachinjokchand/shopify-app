@@ -32,8 +32,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   "/script-adminlte",
-  express.static(path.join(__dirname, "/node_modules/admin-lte/"))
+  express.static(path.join(__dirname, './node_modules/admin-lte'))
 );
+
+// app.use('/admin', express.static('./node_modules/admin-lte'));
 
 // app.use('/assets',express.static(__dirname + '/public'));
 // //set view engine
