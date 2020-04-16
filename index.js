@@ -86,9 +86,10 @@ app.get('/shopify', (req, res) => {
     const installUrl = 'https://' + shop +
       '/admin/oauth/authorize?client_id=' + apiKey +
       '&scope=' + scopes +
+      '&state=' + state +
       '&redirect_uri=' + redirectUri;
 
-    // res.cookie('state', state);
+    res.cookie('state', state);
     res.redirect(installUrl);
   } else {
     return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
@@ -106,8 +107,8 @@ app.get('/shopify/callback', (req, res) => {
   if (shop && hmac && code) {
     // DONE: Validate request is from Shopify
     const map = Object.assign({}, req.query);
-    delete map['signature'];
-    delete map['hmac'];
+    // delete map['signature'];
+    // delete map['hmac'];
     const message = querystring.stringify(map);
     const providedHmac = Buffer.from(hmac, 'utf-8');
     const generatedHash = Buffer.from(
