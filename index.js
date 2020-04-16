@@ -170,7 +170,7 @@ app.get('/shopify/callback', (req, res) => {
                    // app.use('/', express.static('./node_modules/admin-lte'));
                    // app.use('/admin', express.static('./node_modules/admin-lte-express/public'))
                    // app.use('/', require('admin-lte-express'));
-                  res.render('dashboard' ,{ shop_data : shop_data });
+                  res.render('index' ,{ shop_data : shop_data });
                 } 
              else {
                   // res.render('home',{ shop_data : err });
