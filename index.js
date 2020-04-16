@@ -86,10 +86,9 @@ app.get('/shopify', (req, res) => {
     const installUrl = 'https://' + shop +
       '/admin/oauth/authorize?client_id=' + apiKey +
       '&scope=' + scopes +
-      '&state=' + state +
       '&redirect_uri=' + redirectUri;
 
-    res.cookie('state', state);
+    // res.cookie('state', state);
     res.redirect(installUrl);
   } else {
     return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
