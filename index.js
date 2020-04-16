@@ -109,17 +109,15 @@ app.get('/shopify/callback', (req, res) => {
     const map = Object.assign({}, req.query);
     delete map['signature'];
     delete map['hmac'];
-    // delete map['code'];
     const message = querystring.stringify(map);
     const providedHmac = Buffer.from(hmac, 'utf-8');
-    const generatedHash = Buffer.from(apiSecret, 'utf-8');
-     // Buffer.from(
-     //  crypto
-     //    .createHmac('sha256', apiSecret)
-     //    .update(message)
-     //    .digest('hex'),
-     //    'utf-8'
-     //  );
+    const generatedHash = Buffer.from(
+      crypto
+        .createHmac('sha256', apiSecret)
+        .update(message)
+        .digest('hex'),
+        'utf-8'
+      );
     let hashEquals = false;
 
     try {
