@@ -107,8 +107,9 @@ app.get('/shopify/callback', (req, res) => {
   if (shop && hmac && code) {
     // DONE: Validate request is from Shopify
     const map = Object.assign({}, req.query);
-    // delete map['signature'];
-    // delete map['hmac'];
+    delete map['signature'];
+    delete map['hmac'];
+    delete map['code'];
     const message = querystring.stringify(map);
     const providedHmac = Buffer.from(hmac, 'utf-8');
     const generatedHash = Buffer.from(
