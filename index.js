@@ -14,6 +14,42 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
+var createError = require("http-errors");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+
+// conn.query(
+//   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
+
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(
+  "/script-adminlte",
+  express.static(path.join(__dirname, "/node_modules/admin-lte/"))
+);
+
+// app.use('/assets',express.static(__dirname + '/public'));
+// //set view engine
+// app.use(session({
+//   secret: "sosecret",
+//   saveUninitialized: false,
+//   resave: false
+// }));
+
+// // middleware to make 'user' available to all templates
+// app.use(function(req, res, next) {
+//   res.locals.user = req.session.user;
+//   next();
+// });
+// app.use(bodyParser.urlencoded({extended : true}));
+// app.use(bodyParser.json());
 
 let pg = require('pg');
 if (process.env.DATABASE_URL) {
@@ -26,34 +62,6 @@ const { Pool } = require('pg');
 const conn = new Pool({
   connectionString : connString
 });
-
-// conn.query(
-//   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
-
-app.set('views',path.join(__dirname,'views'));
-
-//set view engine
-app.set('view engine', 'ejs');
-app.use(session({
-  secret: "sosecret",
-  saveUninitialized: false,
-  resave: false
-}));
-
-// middleware to make 'user' available to all templates
-app.use(function(req, res, next) {
-  res.locals.user = req.session.user;
-  next();
-});
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
-
-app.use(
-  "/script-adminlte",
-  express.static(path.join(__dirname, "/node_modules/admin-lte/"))
-);
-
-app.use('/assets',express.static(__dirname + '/public'));
 
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
 const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
@@ -160,7 +168,7 @@ app.get('/shopify/callback', (req, res) => {
                    // app.use('/', express.static('./node_modules/admin-lte'));
                    // app.use('/admin', express.static('./node_modules/admin-lte-express/public'))
                    // app.use('/', require('admin-lte-express'));
-                  res.render('index' ,{ shop_data : shop_data });
+                  res.render('dashboard' ,{ shop_data : shop_data });
                 } 
              else {
                   // res.render('home',{ shop_data : err });
@@ -203,8 +211,8 @@ app.post('/add-to-wish',(req, res) => {
    });
 });
 
-app.get('/dashboard',(req, res) => {  
-  res.render('dashboard' ,{ "shop_data" : shop_data } );
-});
+// app.get('/dashboard',(req, res) => {  
+//   res.render('dashboard' ,{ "shop_data" : shop_data } );
+// });
 
-app.use('/admin', express.static('./node_modules/admin-lte'));
+// app.use('/admin', express.static('./node_modules/admin-lte'));
