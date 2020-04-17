@@ -18,6 +18,17 @@ var createError = require("http-errors");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
+let pg = require('pg');
+if (process.env.DATABASE_URL) {
+  pg.defaults.ssl = true;
+}
+
+let connString = process.env.DATABASE_URL || 'postgres://vhoxtymthgmope:ad8f78b9a8d8c73ffbb40c45092acefdb7dd3c38af5810ee374c99503bd60cbd@ec2-34-204-22-76.compute-1.amazonaws.com:5432/dcq47h4pjsdfrk';
+const { Pool } = require('pg');
+
+const conn = new Pool({
+  connectionString : connString
+});
 // conn.query(
 //   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
 
@@ -58,17 +69,6 @@ app.use('/assets',express.static(__dirname + '/public'));
 // app.use(bodyParser.urlencoded({extended : true}));
 // app.use(bodyParser.json());
 
-let pg = require('pg');
-if (process.env.DATABASE_URL) {
-  pg.defaults.ssl = true;
-}
-
-let connString = process.env.DATABASE_URL || 'postgres://vhoxtymthgmope:ad8f78b9a8d8c73ffbb40c45092acefdb7dd3c38af5810ee374c99503bd60cbd@ec2-34-204-22-76.compute-1.amazonaws.com:5432/dcq47h4pjsdfrk';
-const { Pool } = require('pg');
-
-const conn = new Pool({
-  connectionString : connString
-});
 
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
 const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
