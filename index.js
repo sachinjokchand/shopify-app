@@ -201,24 +201,27 @@ app.get('/shopify/callback', (req, res) => {
 
 app.post('/add-to-wish',(req, res) => {  
   
-  var shop_name = req.body.shop_name;
-  var cust_id   = req.body.cust_id;
-  var pro_id    = req.body.pro_id;
+  // var shop_name = req.body.shop_name;
+  // var cust_id   = req.body.cust_id;
+  // var pro_id    = req.body.pro_id;
+
+
+  res.send(req.body.form_data);
   
-   let data = {shop_name: req.body.shop_name, cust_id: req.body.cust_id, pro_id: req.body.pro_id};
-    const  query = {
-            text: 'INSERT INTO shop_data(shop_name, customer_id, product_id ) VALUES($1, $2, $3)',
-            values: [data.shop_name, data.cust_id, data.pro_id ],
-           }
-     conn.query(query, (err, results) => {
-      if (err)
-       {
-        res.send(err);
-       } 
-      else {
-           res.send(data);
-         }
-   });
+   // let data = {shop_name: req.body.shop_name, cust_id: req.body.cust_id, pro_id: req.body.pro_id};
+   //  const  query = {
+   //          text: 'INSERT INTO shop_data(shop_name, customer_id, product_id ) VALUES($1, $2, $3)',
+   //          values: [data.shop_name, data.cust_id, data.pro_id ],
+   //         }
+   //   conn.query(query, (err, results) => {
+   //    if (err)
+   //     {
+   //      res.send(err);
+   //     } 
+   //    else {
+   //         res.send(data);
+   //       }
+   // });
 });
 
 // app.get('/dashboard',(req, res) => {  
