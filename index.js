@@ -202,21 +202,21 @@ app.post('/add-to-wish',(req, res) => {
             values: [wish_list_data.shop_name, wish_list_data.cust_id ],
            }
      conn.query(query, (err, results) => {
-      if (err) { res.send(err); } 
+      if (err) { res.send("111111"); } 
       else {
              const  query = {
               text: 'INSERT INTO user_data(shop_name, customer_id, customer_name, customer_email ) VALUES($1, $2, $3, $4)',
               values: [cust_data.shop_name, cust_data.cust_id, cust_data.cust_name, cust_data.cust_email ],
              }
              conn.query(query, (err, results) => {
-              if (err) { res.send(err); } 
+              if (err) { res.send("222222222"); } 
               else {
                      const  query = {
                         text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5)',
                         values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url ],
                        }
                        conn.query(query, (err, results) => {
-                        if (err) { res.send(err); } 
+                        if (err) { res.send("333333333"); } 
                         else {
                              res.send(query);
                            }
