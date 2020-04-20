@@ -17,6 +17,7 @@ const mysql = require('mysql');
 var createError = require("http-errors");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var query_string = require('querystring')
 
 let pg = require('pg');
 if (process.env.DATABASE_URL) {
@@ -201,12 +202,12 @@ app.get('/shopify/callback', (req, res) => {
 
 app.post('/add-to-wish',(req, res) => {  
   
-  // var shop_name = req.body.shop_name;
+  var form_obj = req.body.form_data;
+  var form_data    = query_string.form_obj
   // var cust_id   = req.body.cust_id;
-  // var pro_id    = req.body.pro_id;
 
 
-  res.send(req.body.form_data);
+  res.send(form_data);
   
    // let data = {shop_name: req.body.shop_name, cust_id: req.body.cust_id, pro_id: req.body.pro_id};
    //  const  query = {
