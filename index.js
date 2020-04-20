@@ -143,17 +143,15 @@ app.get('/shopify/callback', (req, res) => {
       };
       
       // res.render('home',{ shop_data : "hello sachin" });
-      request.get(shopRequestUrl, { headers: shopRequestHeaders })
-      .then((shopResponse) => {
+      // request.get(shopRequestUrl, { headers: shopRequestHeaders })
+      // .then((shopResponse) => {
             var shop_data = {};
-            let sql = "SELECT * FROM shop_data";
+            let sql = "SELECT * FROM user_data WHERE shop_name='"+shop+"'";
             let query = conn.query(sql, (err, results) => {
               // console.log(results);
              if (results.rows.length>0) 
                 {
-                   shop_data['wish_list_data'] =  results.rows;
-                   var obj = JSON.parse(shopResponse);
-                   shop_data['product_data'] = obj['products'];
+                   shop_data['user_data'] =  results.rows;
 
                    // console.log( results.rows );
                    // console.log( obj );
@@ -168,10 +166,10 @@ app.get('/shopify/callback', (req, res) => {
                  }
            });
         // res.status(200).end(shopResponse);
-      })
-      .catch((error) => {
-        res.status(error.statusCode).send(error.error.error_description);
-      });
+      // })
+      // .catch((error) => {
+      //   res.status(error.statusCode).send(error.error.error_description);
+      // });
     })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
