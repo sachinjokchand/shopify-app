@@ -188,8 +188,8 @@ app.post('/add-to-wish',(req, res) => {
   var form_data = query_string.parse(form_obj);
   var shop_name = req.body.shop_name;
   var cust_id = form_data.cust_id;
-  var cust_name = form_data.cut_first_name+' '+ form_data.cust_last_name;
-  var pro_price = parseInt(form_data.pro_price).toFixed(2);
+  var cust_name = form_data.cust_first_name+' '+ form_data.cust_last_name;
+  var pro_price = parseInt(form_data.pro_price)/100;
   // var cust_id   = req.body.cust_id;
   
    var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
