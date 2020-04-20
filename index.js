@@ -56,24 +56,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/assets',express.static(__dirname + '/public'));
 
-// app.use('/admin', express.static('./node_modules/admin-lte'));
-
-// //set view engine
-// app.use(session({
-//   secret: "sosecret",
-//   saveUninitialized: false,
-//   resave: false
-// }));
-
-// // middleware to make 'user' available to all templates
-// app.use(function(req, res, next) {
-//   res.locals.user = req.session.user;
-//   next();
-// });
-// app.use(bodyParser.urlencoded({extended : true}));
-// app.use(bodyParser.json());
-
-
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
 const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
 
@@ -203,7 +185,7 @@ app.get('/shopify/callback', (req, res) => {
 app.post('/add-to-wish',(req, res) => {  
   
   var form_obj = req.body.form_data;
-  var form_data    = query_string.form_obj
+  var form_data    = query_string.parse(form_obj);
   // var cust_id   = req.body.cust_id;
 
 
