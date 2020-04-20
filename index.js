@@ -185,13 +185,17 @@ app.get('/shopify/callback', (req, res) => {
 app.post('/add-to-wish',(req, res) => {  
   
   var form_obj = req.body.form_data;
-  var form_data    = query_string.parse(form_obj);
+  var form_data = query_string.parse(form_obj);
+  var shop_name = req.body.shop_name;
+  var cust_id = form_data.cust_id;
+  var cust_name = form_data.cut_fisrt_name+' '+ form_data.cust_last_name;
   // var cust_id   = req.body.cust_id;
-
-
-  res.send(form_data.cust_id);
   
-   // let data = {shop_name: req.body.shop_name, cust_id: req.body.cust_id, pro_id: req.body.pro_id};
+   var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
+   var customer_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
+   var product_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: form_data.pro_price, pro_url: form_data.pro_url };
+  
+   res.send(wish_list_data+ +customer_data+ +product_data);
    //  const  query = {
    //          text: 'INSERT INTO shop_data(shop_name, customer_id, product_id ) VALUES($1, $2, $3)',
    //          values: [data.shop_name, data.cust_id, data.pro_id ],
