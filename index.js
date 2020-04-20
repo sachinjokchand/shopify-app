@@ -188,12 +188,13 @@ app.post('/add-to-wish',(req, res) => {
   var form_data = query_string.parse(form_obj);
   var shop_name = req.body.shop_name;
   var cust_id = form_data.cust_id;
-  var cust_name = form_data.cut_fisrt_name+' '+ form_data.cust_last_name;
+  var cust_name = form_data.cut_first_name+' '+ form_data.cust_last_name;
+  var pro_price = form_data.pro_price.toFixed(2);
   // var cust_id   = req.body.cust_id;
   
    var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
    var customer_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
-   var product_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: form_data.pro_price, pro_url: form_data.pro_url };
+   var product_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url };
    
    var obj = {};
    obj['wish_list_data'] = wish_list_data;
