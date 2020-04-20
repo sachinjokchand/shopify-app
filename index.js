@@ -194,8 +194,13 @@ app.post('/add-to-wish',(req, res) => {
    var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
    var customer_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
    var product_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: form_data.pro_price, pro_url: form_data.pro_url };
-  
-   res.send(wish_list_data+ +customer_data+ +product_data);
+   
+   var obj = {};
+   obj['wish_list_data'] = wish_list_data;
+    obj['customer_data'] = customer_data;
+     obj['product_data'] = product_data;
+
+   res.send(obj);
    //  const  query = {
    //          text: 'INSERT INTO shop_data(shop_name, customer_id, product_id ) VALUES($1, $2, $3)',
    //          values: [data.shop_name, data.cust_id, data.pro_id ],
