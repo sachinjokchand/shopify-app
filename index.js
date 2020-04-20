@@ -212,7 +212,7 @@ app.post('/add-to-wish',(req, res) => {
               if (err) { res.send("222222222"); } 
               else {
                      const  query = {
-                        text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5)',
+                        text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5, $6, $7)',
                         values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url ],
                        }
                        conn.query(query, (err, results) => {
