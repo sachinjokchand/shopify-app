@@ -198,7 +198,7 @@ app.post('/add-to-wish',(req, res) => {
    var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url };
    
     const  query = {
-            text: 'INSERT INTO wish_list(shop_name, customer_id ) VALUES($1, $2,)',
+            text: 'INSERT INTO wish_list(shop_name, customer_id ) VALUES($1, $2)',
             values: [wish_list_data.shop_name, wish_list_data.cust_id ],
            }
      conn.query(query, (err, results) => {
