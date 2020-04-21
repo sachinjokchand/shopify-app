@@ -194,35 +194,43 @@ app.post('/add-to-wish',(req, res) => {
    var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
    var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
    var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url };
-   
-    const  query = {
-            text: 'INSERT INTO wish_list(shop_name, customer_id ) VALUES($1, $2)',
-            values: [wish_list_data.shop_name, wish_list_data.cust_id ],
-           }
-     conn.query(query, (err, results) => {
-      if (err) { res.send("111111"); } 
-      else {
+     
+      let sql = "SELECT * FROM user_data WHERE shop_name='"+shop+"'";
+      let query = conn.query(sql, (err, results) => {
+        // console.log(results);
+       if (! results.rows.length>0) 
+            {
              const  query = {
               text: 'INSERT INTO user_data(shop_name, customer_id, customer_name, customer_email ) VALUES($1, $2, $3, $4)',
               values: [cust_data.shop_name, cust_data.cust_id, cust_data.cust_name, cust_data.cust_email ],
              }
              conn.query(query, (err, results) => {
               if (err) { res.send("222222222"); } 
-              else {
-                     const  query = {
-                        text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5, $6, $7)',
-                        values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url ],
-                       }
-                       conn.query(query, (err, results) => {
-                        if (err) { res.send("333333333"); } 
-                        else {
-                             res.send(query);
-                           }
+              else { }  
+             });
+          }
+       else {
+          const  query = {
+                text: 'INSERT INTO wish_list(shop_name, customer_id ) VALUES($1, $2)',
+                values: [wish_list_data.shop_name, wish_list_data.cust_id ],
+               }
+          conn.query(query, (err, results) => {
+          if (err) { res.send("111111"); } 
+          else {            
+                   const  query = {
+                      text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5, $6, $7)',
+                      values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url ],
+                     }
+                     conn.query(query, (err, results) => {
+                      if (err) { res.send("333333333"); } 
+                      else {
+                           res.send(query);
+                         }
                      });
                  }
             });
          }
-   });
+     });       
 });
 
 // app.get('/dashboard',(req, res) => {  
