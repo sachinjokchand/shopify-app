@@ -199,7 +199,7 @@ app.post('/add-to-wish',(req, res) => {
       let query = conn.query(sql, (err, results) => {
          // res.send(results.);
         // console.log(results);
-       if ( 1> results.rows.length  ) 
+       if ( results.rows.length != 1  ) 
             {
              const  query = {
               text: 'INSERT INTO user_data(shop_name, customer_id, customer_name, customer_email ) VALUES($1, $2, $3, $4)',
@@ -222,7 +222,7 @@ app.post('/add-to-wish',(req, res) => {
        else {
               let sql = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
               let query = conn.query(sql, (err, results) => {
-               if ( 1 > results.rows.length  ) 
+               if (  results.rows.length != 1  ) 
                {  
                   const  query = {
                         text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5, $6, $7)',
