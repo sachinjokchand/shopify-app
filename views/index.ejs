@@ -315,7 +315,7 @@
                       <% cust_total = 0 ; 
                           for(var j=0; j < shop_data.product_data.length ; j++) { 
                            if( shop_data.product_data[j].customer_id ==  shop_data.user_data[i].customer_id) {
-                              remove_currency = shop_data.product_data[i].product_price.split(' '); 
+                              remove_currency = shop_data.product_data[j].product_price.split(' '); 
                               cust_total = +cust_total + +remove_currency[1]; 
                             }
                           } %> 
