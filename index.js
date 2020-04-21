@@ -149,7 +149,7 @@ app.get('/shopify/callback', (req, res) => {
             let sql_user = "SELECT * FROM user_data WHERE shop_name='"+shop+"'";
             let query_user = conn.query(sql_user, (err, results) => {
               // console.log(results);
-             if (results.rows.len gth>0) 
+             if (results.rows.length>0) 
                 {
                    shop_data['user_data'] =  results.rows;
                    let sql_pro = "SELECT * FROM user_data WHERE shop_name='"+shop+"'";
