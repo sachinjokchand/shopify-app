@@ -39,8 +39,8 @@ const conn = new Pool({
 // 'CREATE TABLE user_data(id SERIAL PRIMARY KEY, customer_id VARCHAR(255) not null, customer_name VARCHAR(255), customer_email VARCHAR(255), shop_name VARCHAR(255) not null)');
 
 
-conn.query(
-'CREATE TABLE product_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null, product_title VARCHAR(255) not null, product_src VARCHAR(255) not null, product_price VARCHAR(255) not null, product_url VARCHAR(255) not null, product_time VARCHAR(255) not null)');
+// conn.query(
+// 'CREATE TABLE product_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null, product_title VARCHAR(255) not null, product_src VARCHAR(255) not null, product_price VARCHAR(255) not null, product_url VARCHAR(255) not null, product_time VARCHAR(255) not null)');
 
 // conn.query(
 // 'CREATE TABLE wish_list(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255))');
@@ -191,11 +191,12 @@ app.post('/add-to-wish',(req, res) => {
   var remove_currency = form_data.pro_price.split(' ');
   var price = parseInt(remove_currency[1])/100;
   var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
+  var pro_time = new Date();
   // var cust_id   = req.body.cust_id;
   
    var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
    var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
-   var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url };
+   var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
      
       let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
       let query_pro = conn.query(sql_cust, (err, results) => {
@@ -232,8 +233,8 @@ app.post('/add-to-wish',(req, res) => {
                {  console.log("product already exist."); }
                else{
                   const query = {
-                        text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5, $6, $7)',
-                        values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url ],
+                        text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
+                        values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url, prod_data.pro_time ],
                        }
                        conn.query(query, (err, results) => {
                         if (err) { res.send(err); } 
