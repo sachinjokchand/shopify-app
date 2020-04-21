@@ -195,8 +195,8 @@ app.post('/add-to-wish',(req, res) => {
    var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
    var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url };
      
-      var sql = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
-      var query = conn.query(sql, (err, results) => {
+      let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
+      let query_pro = conn.query(sql_cust, (err, results) => {
     
        if ( results.rows.length > 0 ) 
             { console.log("user already exist.");  }
@@ -220,12 +220,12 @@ app.post('/add-to-wish',(req, res) => {
                      }  
                });
 
-              var sql = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
-              var query = conn.query(sql, (err, results) => {
+              let sql_pro = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
+              let query_pro = conn.query(sql_pro, (err, results) => {
                if (  results.rows.length > 1  ) 
                {  console.log("product already exist."); }
                else{
-                  const  query = {
+                  const query = {
                         text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url ) VALUES($1, $2, $3, $4, $5, $6, $7)',
                         values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url ],
                        }
