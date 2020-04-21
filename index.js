@@ -32,28 +32,18 @@ const conn = new Pool({
 });
 // conn.query(
 //   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
-
 // conn.query(
-// 'CREATE TABLE user_data(id SERIAL PRIMARY KEY, customer_id VARCHAR(255) not null, customer_name VARCHAR(255), customer_email VARCHAR(255), shop_name VARCHAR(255) not null)');
+// 'DROP TABLE shop_data');
 
 conn.query(
-'DROP TABLE shop_data');
+'CREATE TABLE user_data(id SERIAL PRIMARY KEY, customer_id VARCHAR(255) not null, customer_name VARCHAR(255), customer_email VARCHAR(255), shop_name VARCHAR(255) not null)');
+
 
 conn.query(
-'DROP TABLE user_data');
+'CREATE TABLE product_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null, product_title VARCHAR(255) not null, product_src VARCHAR(255) not null, product_price VARCHAR(255) not null, product_url VARCHAR(255) not null)');
 
 conn.query(
-'DROP TABLE product_data');
-
-conn.query(
-'DROP TABLE wish_list');
-
-
-// conn.query(
-// 'CREATE TABLE product_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null, product_title VARCHAR(255) not null, product_src VARCHAR(255) not null, product_price VARCHAR(255) not null, product_url VARCHAR(255) not null)');
-
-// conn.query(
-// 'CREATE TABLE wish_list(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255))');
+'CREATE TABLE wish_list(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255))');
 
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
