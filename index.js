@@ -146,21 +146,22 @@ app.get('/shopify/callback', (req, res) => {
       // request.get(shopRequestUrl, { headers: shopRequestHeaders })
       // .then((shopResponse) => {
             var shop_data = {};
-            let sql = "SELECT * FROM user_data WHERE shop_name='"+shop+"'";
-            let query = conn.query(sql, (err, results) => {
+            let sql_user = "SELECT * FROM user_data WHERE shop_name='"+shop+"'";
+            let query_user = conn.query(sql_user, (err, results) => {
               // console.log(results);
-             if (results.rows.length>0) 
+             if (results.rows.len gth>0) 
                 {
                    shop_data['user_data'] =  results.rows;
-
-                   // console.log( results.rows );
-                   // console.log( obj );
-
-                   // app.use('/', express.static('./node_modules/admin-lte'));
-                   // app.use('/admin', express.static('./node_modules/admin-lte-express/public'))
-                   // app.use('/', require('admin-lte-express'));
-                  res.render('index' ,{ shop_data : shop_data });
-                } 
+                   let sql_pro = "SELECT * FROM user_data WHERE shop_name='"+shop+"'";
+                    let query_pro = conn.query(sql_pro, (err, results) => {
+                      // console.log(results);
+                     if (results.rows.length>0) 
+                        {  
+                          shop_data['product_data'] =  results.rows;
+                          res.render('index' ,{ shop_data : shop_data });
+                        } 
+                 });
+              }
              else {
                   // res.render('home',{ shop_data : err });
                  }
@@ -201,7 +202,7 @@ app.post('/add-to-wish',(req, res) => {
        if ( results.rows.length > 0 ) 
             { console.log("user already exist.");  }
           
-       else {
+       else {  
                const  query = {
                 text: 'INSERT INTO user_data(shop_name, customer_id, customer_name, customer_email ) VALUES($1, $2, $3, $4)',
                 values: [cust_data.shop_name, cust_data.cust_id, cust_data.cust_name, cust_data.cust_email ],
