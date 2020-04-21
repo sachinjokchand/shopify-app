@@ -197,7 +197,8 @@ app.post('/add-to-wish',(req, res) => {
      
       let sql = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
       let query = conn.query(sql, (err, results) => {
-         res.send(results.rows.length);
+        var len = results.rows.length;
+         res.send(len);
         // console.log(results);
        if ( results.rows.length != 1  ) 
             {
