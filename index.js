@@ -235,7 +235,7 @@ app.post('/add-to-wish',(req, res) => {
                        });                
                    }
               });
-           }
+          }
      });       
 });
 
