@@ -237,7 +237,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">WISHLISTS</span>
                 <span class="info-box-number">
-                  10
+                 <%= shop_data.user_data.length %>
                   <small></small>
                 </span>
               </div>
@@ -252,7 +252,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">TOTAL ITMES</span>
-                <span class="info-box-number">48</span>
+                <span class="info-box-number"> <%= shop_data.product_data.length %></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -269,7 +269,14 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">TOTAL VALUE</span>
-                <span class="info-box-number">760 $</span>
+                <% total = 0 ; %>
+                <% currency = ''; %>
+                <% for(var i=0; i < shop_data.product_data.length ; i++) { %>
+                   <% remove_currency = shop_data.product_data[i].product_price.split(' '); %>
+                   <% currency = remove_currency[0]; %>
+                   <% total = total + remove_currency[1]; %>
+                <% } %>  
+                <span class="info-box-number"><%= currency %> <%= shop_data.user_data[i].customer_name %></span>
               </div>
               <!-- /.info-box-content -->
             </div>
