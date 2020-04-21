@@ -234,7 +234,7 @@ app.post('/add-to-wish',(req, res) => {
                         values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url ],
                        }
                        conn.query(query, (err, results) => {
-                        if (err) { res.send("333333333"); } 
+                        if (err) { res.send(err); } 
                         else {
                              res.send(query);
                              }
