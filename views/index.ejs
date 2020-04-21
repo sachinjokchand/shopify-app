@@ -255,7 +255,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-      <%= JSON.stringify(shop_data) %>
+<!--       <%= JSON.stringify(shop_data) %> -->
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
@@ -367,9 +367,9 @@
                <% for(var i=0; i < shop_data.product_data.length ; i++) { %>                      
                   <tr>
                     <td>
-                     <%= shop_data.user_data[i].product_title %>
+                     <%= shop_data.product_data[i].product_title %>
                     </td>
-                    <td>$<%= shop_data.user_data[i].product_price %> USD</td>
+                    <td>$<%= shop_data.product_data[i].product_price %> USD</td>
                     <td>
                       1
                     </td>
