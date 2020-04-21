@@ -328,41 +328,17 @@
                   </tr>
                   </thead>
                   <tbody>
+                   <% for(var i=0; i < shop_data.user_data.length ; i++) { %>  
                   <tr>
                     <td>
-                      username
+                      <%= shop_data.user_data[j].customer_name %>
                     </td>
-                    <td>$13 USD</td>
+                    <td>$ <%= shop_data.user_data[j].product_price %> USD</td>
                     <td>
-                        12%
-                      </small>
-                      12,000 Sold
+                      RECENT
                     </td>
                   </tr>
-
-                  <tr>
-                    <td>
-                      username2
-                    </td>
-                    <td>$13 USD</td>
-                    <td>
-                        12%
-                      </small>
-                      12,000 Sold
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      username3
-                    </td>
-                    <td>$13 USD</td>
-                    <td>
-                        12%
-                      </small>
-                      12,000 Sold
-                    </td>
-                  </tr>
+                   <% } %>  
                   </tbody>
                 </table>
               </div>
@@ -388,41 +364,17 @@
                   </tr>
                   </thead>
                   <tbody>
+               <% for(var i=0; i < shop_data.product_data.length ; i++) { %>                      
                   <tr>
                     <td>
-                      PRODUCT1
+                     <%= shop_data.user_data[j].product_title %>
                     </td>
-                    <td>$13 USD</td>
+                    <td>$<%= shop_data.user_data[j].product_price %> USD</td>
                     <td>
-                        12%
-                      </small>
-                      12,000 Sold
+                      1
                     </td>
                   </tr>
-
-                  <tr>
-                    <td>
-                      PRODUCT12
-                    </td>
-                    <td>$13 USD</td>
-                    <td>
-                        12%
-                      </small>
-                      12,000 Sold
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      PRODUCT1
-                    </td>
-                    <td>$13 USD</td>
-                    <td>
-                        12%
-                      </small>
-                      12,000 Sold
-                    </td>
-                  </tr>
+              <% } %>  
                   </tbody>
                 </table>
               </div>
