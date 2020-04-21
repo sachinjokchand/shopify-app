@@ -190,7 +190,7 @@ app.post('/add-to-wish',(req, res) => {
   var cust_name = form_data.cust_first_name+' '+ form_data.cust_last_name;
   var remove_currency = form_data.pro_price.split(' ');
   var price = parseInt(remove_currency[1])/100;
-  var pro_price = parseInt(price).toFixed(2);
+  var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
   // var cust_id   = req.body.cust_id;
   
    var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
