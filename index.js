@@ -222,7 +222,7 @@ app.post('/add-to-wish',(req, res) => {
 
               let sql_pro = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
               let query_pro = conn.query(sql_pro, (err, results) => {
-               if (  results.rows.length > 1  ) 
+               if (  results.rows.length > 0  ) 
                {  console.log("product already exist."); }
                else{
                   const query = {
