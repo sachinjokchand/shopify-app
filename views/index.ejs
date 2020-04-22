@@ -134,7 +134,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="by_customer nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>By customer</p>
                 </a>
@@ -474,7 +474,7 @@
             
             <% count = 0; %>
             <% for(var i=0; i < shop_data.product_data.length ; i++) { %>
-              <% if(shop_data.product_data[i].customer_id == shop_data.user_data[i].customer_id ) { %>
+              <% if(shop_data.product_data[i].customer_id == shop_data.user_data[j].customer_id ) { %>
                <% count++; %>
             <% } %>
             <% } %>
@@ -542,13 +542,21 @@
   jQuery(document).ready(function(){
     jQuery(document).on('click','.by_product',function(){
        console.log("ssssssssss");
+       jQuery('.customer_content').addClass('hide_class');
        jQuery('.main_content').addClass('hide_class');
        jQuery('.product_content').removeClass('hide_class');
     });
     jQuery(document).on('click','.show_main_content',function(){
        console.log("ssssssssss");
+       jQuery('.customer_content').addClass('hide_class');
        jQuery('.product_content').addClass('hide_class');
        jQuery('.main_content').removeClass('hide_class');
+    });
+    jQuery(document).on('click','.by_customer',function(){
+       console.log("ssssssssss");
+       jQuery('.product_content').addClass('hide_class');
+       uery('.main_content').addClass('hide_class');
+       jQuery('.customer_content').removeClass('hide_class');
     });
   });
 </script>
