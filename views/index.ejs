@@ -328,12 +328,9 @@
                        var date1 = date_obj[0];
                        var pro_time = shop_data.product_data[i].product_time.split('T'); 
                        var date2 = pro_time[0];
-
-                       diff  = new Date(date2 - date1);
-                       days  = diff/1000/60/60/24;
                        date3 = (Date.parse(date1) - Date.parse(date2)) / 86400000;
                        %> 
-                        <%= date1+' '+date2 %> <%= date3 %>
+                        <%= date3+' days ago' %>
                     </td>
                   </tr>
                    <% } %>  
