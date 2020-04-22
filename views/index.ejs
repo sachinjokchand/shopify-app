@@ -332,11 +332,14 @@
                        
                        var time1 = date_obj[1].split('.');
                        var time2 = pro_time[1].split('.');
-                       var diff = ( new Date(date1+' ' +  time1[0] ) - new Date(date1+' '+ time2[0] ))/1000/60/60;  
+                       var diff  = ( new Date(date1+' ' +  time1[0] ) - new Date(date1+' '+ time2[0] ))/1000/60/60;
+                       var hour  = diff.split('.');
                        %> 
+                       <% if(date3 == 0) { %>
+                        <%= hour[0] +' hour ago' %>
+                      <% } else { %>
                         <%= date3+' days ago' %>
-                        <%= diff %>
-                        <%= time1+' '+ time2 %>
+                       <% } %> 
                     </td>
                   </tr>
                    <% } %>  
