@@ -158,7 +158,7 @@ app.get('/shopify/callback', (req, res) => {
                      if (results.rows.length>0) 
                         {  
                           shop_data['product_data'] =  results.rows;
-                          shop_data['current_time'] =  new Date();
+                          shop_data['current_time'] = new Date().toISOString();
                           res.render('index' ,{ shop_data : shop_data });
                         } 
                  });
@@ -192,7 +192,7 @@ app.post('/add-to-wish',(req, res) => {
   var remove_currency = form_data.pro_price.split(' ');
   var price = parseInt(remove_currency[1])/100;
   var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
-  var pro_time = new Date();
+  var pro_time = new Date().toISOString();
   // var cust_id   = req.body.cust_id;
   
    var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
