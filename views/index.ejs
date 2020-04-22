@@ -336,7 +336,7 @@
                       
                        %> 
                        <% if(date3 == 0) { %>
-                        <%= parseInt(diff) +' hour ago' %>
+                        <%= Math.floor(diff) +' hour ago' %>
                        <% } else { %>
                         <%= date3+' days ago' %>
                        <% } %> 
