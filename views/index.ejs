@@ -329,10 +329,11 @@
                        var pro_time = shop_data.product_data[i].product_time.split('T'); 
                        var date2 = pro_time[0];
 
-                       diff  = new Date(date2 - date1),
+                       diff  = new Date(date2 - date1);
                        days  = diff/1000/60/60/24;
+                       date3 = (Date.parse(date2) - Date.parse(date1)) / 86400000;
                        %> 
-                        <%= days %>
+                        <%= days+'111111' %> <%= date3 %>
                     </td>
                   </tr>
                    <% } %>  
