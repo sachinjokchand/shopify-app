@@ -158,6 +158,7 @@ app.get('/shopify/callback', (req, res) => {
                      if (results.rows.length>0) 
                         {  
                           shop_data['product_data'] =  results.rows;
+                          shop_data['current_time'] =  new Date();
                           res.render('index' ,{ shop_data : shop_data });
                         } 
                  });
