@@ -250,6 +250,24 @@ app.post('/add-to-wish',(req, res) => {
 
 app.post('/remove_prod',(req, res) => {  
   var pro_id = req.body.pro_id;
+  var cust_id = req.body.cust_id;
+  var shop_name = req.body.shop_name;
+
+  let sql_user = "SELECT * FROM product_data WHERE shop_name='"+shop+"' AND product_id='"+pro_id+"'";
+            let query_user = conn.query(sql_user, (err, results) => {
+              // console.log(results);
+             if (results.rows.length >1) 
+                {
+                   
+               }
+             else if(results.rows.length == 1) 
+             {
+
+             }
+             else {
+                  // res.render('home',{ shop_data : err });
+                 }
+           });
   
 });
 
