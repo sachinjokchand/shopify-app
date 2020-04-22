@@ -330,9 +330,12 @@
                        var date2 = pro_time[0];
                        var date3 = (Date.parse(date1) - Date.parse(date2)) / 86400000;
                        
+                       var time1 = date_obj[1].split('.');
+                       var time2 = pro_time[1].split('.');
+                       var timeDiff = (time1 - time2)/3600;
                        %> 
                         <%= date3+' days ago' %>
-                        <%= date_obj %>
+                        <%= timeDiff %>
                         
                     </td>
                   </tr>
