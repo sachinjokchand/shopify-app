@@ -329,7 +329,7 @@
                        var pro_time = shop_data.product_data[i].product_time.split('T'); 
                        var date2 = pro_time[0];
                        var date3 = (Date.parse(date1) - Date.parse(date2)) / 86400000;
-                       var diff = Math.abs(date1.getTime() - date2.getTime()) / 3600000;
+                       
                        %> 
                         <%= date3+' days ago' %>
                         <%= date_obj %>
