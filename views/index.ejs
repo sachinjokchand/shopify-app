@@ -332,11 +332,11 @@
                        
                        var time1 = date_obj[1].split('.');
                        var time2 = pro_time[1].split('.');
-                       var timeDiff = (time1 - time2)/3600;
+                       var timeDiff = (time1[0] - time2[0])/3600;
                        %> 
                         <%= date3+' days ago' %>
                         <%= timeDiff %>
-                        
+                        <%= time1+' '+ time2 %>
                     </td>
                   </tr>
                    <% } %>  
