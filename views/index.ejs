@@ -431,7 +431,7 @@
             <td class="table_data"><img src="https://<%= shop_data.product_data[j].shop_name+'/'+shop_data.product_data[j].product_src %>" height="50" width="50" alt=""></td>
             <td class="table_data"><a target="_blank" href="https://<%= shop_data.product_data[j].shop_name+'/'+shop_data.product_data[j].product_url %>"><%= shop_data.product_data[j].product_title %></a></td>
             <td  class="table_data">1</td>
-            <td class="table_data"><a href="#"><i class="fa fa-user" aria-hidden="true"></i> View</a> | <a href="#" class="recDelete"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></td>
+            <td class="table_data"><a href="#"><i class="fa fa-user" aria-hidden="true"></i> View</a> | <a href="#" pro_id="<%= shop_data.product_data[j].product_id %>" class="recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></td>
           </tr>
       </tbody>
          <% } %>
@@ -457,7 +457,7 @@
         <thead>
           <tr role="row">
             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 105px;"><input name="select-all" value="1" id="select-all" type="checkbox"> Select All</th>
-            <th width="10%" class="sorting_disabled" rowspan="1" colspan="1" style="width: 105px;">Customer Name</th>
+            <th width="10%" class="sorting_disabled" rowspan="1" colspan="1" style="width: 140px;">Customer Name</th>
             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 196px;">Email ID</th>
             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 130px;">No. of Products</th>
             <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 230px;">Action</th>
@@ -469,7 +469,7 @@
       <tbody>
         <tr role="row" class="odd">
            <td class="table_data"><input name="select_all[]" value="<%= shop_data.user_data[j].customer_id %>" type="checkbox"></td>
-            <td class="table_data"><img src="https://<%= shop_data.user_data[j].shop_name+'/'+shop_data.user_data[j].customer_name %>" height="50" width="50" alt=""></td>
+            <td class="table_data"><%= shop_data.user_data[j].customer_name %></td>
             <td class="table_data"><a target="_blank" href="#"><%= shop_data.user_data[j].customer_email %></a></td>
             
             <% count = 0; %>
@@ -479,7 +479,7 @@
             <% } %>
             <% } %>
             <td  class="table_data"><%= count %></td>
-            <td class="table_data"><a href="#"><i class="fa fa-user" aria-hidden="true"></i> View</a> | <a href="#" class="recDelete"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></td>
+            <td class="table_data"><a href="#"><i class="fa fa-user" aria-hidden="true"></i> View</a> | <a href="#" cust_id="<%= shop_data.user_data[j].customer_id %>" class="recDelete_cust"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></td>
           </tr>
       </tbody>
          <% } %>
@@ -558,6 +558,45 @@
        jQuery('.main_content').addClass('hide_class');
        jQuery('.customer_content').removeClass('hide_class');
     });
+
+      jQuery(document).on('click','.recDelete_cust',function()
+        {
+        var cust_id = jQuery(this).attr('cust_id');
+         console.log("call_ajax") 
+             jQuery.ajax({
+                      type:'POSt',
+                      url: '/remove_cust',
+                      data: "5555555555555555",
+                      dataType: "jsonp",
+                      success: function (data) {
+                         jQuery(this).parent().parent().remove();
+                      },
+                      error: function (xhr, status, error) {
+                          console.log('Error: ' + error.message);
+                          jQuery('#lblResponse').html('Error connecting to the server.');
+                      },
+                   
+                  });
+        });
+       jQuery(document).on('click','.recDelete_pro',function()
+        {
+         var pro_id = jQuery(this).attr('pro_id');
+         console.log("call_ajax") 
+             jQuery.ajax({
+                      type:'POSt',
+                      url: '/remove_prod',
+                      data: "5555555555555555",
+                      dataType: "jsonp",
+                      success: function (data) {
+                         jQuery(this).parent().parent().remove();           
+                      },
+                      error: function (xhr, status, error) {
+                          console.log('Error: ' + error.message);
+                          jQuery('#lblResponse').html('Error connecting to the server.');
+                      },
+                   
+                  });
+        });
   });
 </script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

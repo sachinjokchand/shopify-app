@@ -248,6 +248,11 @@ app.post('/add-to-wish',(req, res) => {
      });       
 });
 
+app.post('/remove_prod',(req, res) => {  
+  var pro_id = req.body.pro_id;
+  
+});
+
 // app.get('/dashboard',(req, res) => {  
 //   res.render('dashboard' ,{ "shop_data" : shop_data } );
 // });
