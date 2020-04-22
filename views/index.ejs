@@ -40,7 +40,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link show_main_content">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -80,14 +80,14 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="#" class="show_main_content nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <!-- <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
@@ -106,7 +106,7 @@
                   <p>Dashboard v3</p>
                 </a>
               </li>
-            </ul>
+            </ul> -->
           </li>
 
           <li class="nav-item">
@@ -496,6 +496,11 @@
        console.log("ssssssssss");
        jQuery('.main_content').addClass('hide_class');
        jQuery('.product_content').removeClass('hide_class');
+    });
+    jQuery(document).on('click','.show_main_content',function(){
+       console.log("ssssssssss");
+       jQuery('.product_content').addClass('hide_class');
+       jQuery('.main_content').removeClass('hide_class');
     });
   });
 </script>
