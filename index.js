@@ -156,7 +156,7 @@ app.get('/shopify/callback', (req, res) => {
          'X-Shopify-Access-Token': accessToken
         };
 
-        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
+        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index1.liquid';
            request.get(asetsFileUrl, { headers: asetsheader})
           .then(function (response) {
                  const parsedResponce = JSON.parse(response);
@@ -165,7 +165,7 @@ app.get('/shopify/callback', (req, res) => {
 
      let add_assets_asset = {
                     "asset": {
-                      "key": "templates/index.liquid",
+                      "key": "templates/index1.liquid",
                      "value": filedata
                     }
                 };
