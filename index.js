@@ -152,6 +152,7 @@ app.get('/shopify/callback', (req, res) => {
            console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
            const themeid=parseInt(padata.themes[0].id);
            console.log(themeid);
+           console.log("themeid");
            //assets json data
         const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
         const asetsheader = {
