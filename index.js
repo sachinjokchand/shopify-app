@@ -62,7 +62,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET|| 'shpss_f974e725cae30a01afb7bc
 
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 
-const scopes = 'read_products,write_script_tags'; 
+const scopes = 'read_products,write_script_tags,read_themes,write_themes'; 
 
 const port = process.env.PORT || 6000;
 
@@ -137,10 +137,59 @@ app.get('/shopify/callback', (req, res) => {
     .then((accessTokenResponse) => {
       const accessToken = accessTokenResponse.access_token;
       // DONE: Use access token to make API call to 'shop' endpoint
-      const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
-      const shopRequestHeaders = {
-        'X-Shopify-Access-Token': accessToken,
-      };
+          const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
+     const loadd = {
+     'X-Shopify-Access-Token': accessToken,
+     };
+
+         request.get(themeJsonUrl, { headers: loadd})
+        .then(function (response) {
+           const padata = JSON.parse(response);
+           const themeid=parseInt(padata.themes[0].id);
+
+        const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
+        const asetsheader = {
+         'X-Shopify-Access-Token': accessToken
+        };
+
+        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
+           request.get(asetsFileUrl, { headers: asetsheader})
+          .then(function (response) {
+                 const parsedResponce = JSON.parse(response);
+
+     const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
+     let add_assets_asset = {
+                    "asset": {
+                      "key": "templates/index.liquid",
+                     "value": filedata
+                    }
+                };
+     let assests_optionssss = {
+        method: 'PUT',
+        uri: asetsJsonUrl,
+        json: true,
+        resolveWithFullResponse: true,//added this to view status code
+        headers: {
+            'X-Shopify-Access-Token':accessToken
+        },
+         body: add_assets_asset//pass new product object - NEW - request-promise problably updated
+     };  
+     request.put(assests_optionssss)
+        .then(function (response) {
+            console.log("response");
+         return res.status(200).send(response);
+        })
+        .catch(function (err) {
+             console.log(err);
+            res.json(false);
+        });
+
+           })
+          .catch(function (error) {
+                res.end(error);
+          });
+
+        });
       
       // res.render('home',{ shop_data : "hello sachin" });
       // request.get(shopRequestUrl, { headers: shopRequestHeaders })
