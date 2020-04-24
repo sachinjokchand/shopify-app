@@ -62,7 +62,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET|| 'shpss_f974e725cae30a01afb7bc
 
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 
-const scopes = 'read_products,write_script_tags,read_themes,write_themes'; 
+const scopes = 'read_content,write_content,read_themes,write_themes,read_checkouts,write_checkouts,write_price_rules,write_script_tags,read_script_tags,read_products,write_products';
 
 const port = process.env.PORT || 6000;
 
@@ -137,27 +137,49 @@ app.get('/shopify/callback', (req, res) => {
     .then((accessTokenResponse) => {
       const accessToken = accessTokenResponse.access_token;
       // DONE: Use access token to make API call to 'shop' endpoint
+      // const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
+      // const shopRequestHeaders = {
+      //   'X-Shopify-Access-Token': accessToken,
+      // }; 
      const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
      const loadd = {
      'X-Shopify-Access-Token': accessToken,
      };
-
-         request.get(themeJsonUrl, { headers: loadd})
+    request.get(themeJsonUrl, { headers: loadd})
+    // request.post(optionss)
         .then(function (response) {
            const padata = JSON.parse(response);
+           console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
            const themeid=parseInt(padata.themes[0].id);
-
+           console.log(themeid);
+           //assets json data
         const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
         const asetsheader = {
          'X-Shopify-Access-Token': accessToken
         };
-
+//*************************get assets***************************
+        //    request.get(asetsJsonUrl, { headers: asetsheader})
+         //  .then(function (response) {
+        //          console.log('response');
+        //   return res.status(200).send(response);
+        //    })
+         //  .catch(function (error) {
+         //        console.log('error');
+        //         console.log(error);
+        //         res.end(error);
+         //       //res.status(error).send(error);       
+        // // res.json(false);
+         //  });
+//*************************get assets end***************************************
+//*************************get specific file start******************************
         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
            request.get(asetsFileUrl, { headers: asetsheader})
           .then(function (response) {
                  const parsedResponce = JSON.parse(response);
-
+//  console.log(parsedResponce.asset.key);
      const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
+ //*********************get upload data start********************
+
      let add_assets_asset = {
                     "asset": {
                       "key": "templates/index.liquid",
@@ -177,18 +199,62 @@ app.get('/shopify/callback', (req, res) => {
      request.put(assests_optionssss)
         .then(function (response) {
             console.log("response");
-         return res.status(200).send(response);
+         // return res.status(200).send(response);
         })
         .catch(function (err) {
              console.log(err);
-            res.json(false);
+            // res.json(false);
         });
 
+
+
+ //*********************get upload data end**********************
+         // return res.status(200).send(parsedResponce.asset.value);
            })
           .catch(function (error) {
-                res.end(error);
+                console.log('error');
+                console.log(error);
+                // res.end(error);
+               //res.status(error).send(error);       
+        // res.json(false);
           });
 
+
+  //*********************get specific file end*******************
+
+  //***************put assests file add start***************
+    // let add_assets = {
+    //                 "asset": {
+    //                   "key": "assets/script.js",
+    //                   "src": "https://newdiscount.000webhostapp.com/script.js"
+    //                 }
+    //               };
+    //  let assests_options = {
+    //     method: 'PUT',
+    //     uri: asetsJsonUrl,
+    //     json: true,
+    //     resolveWithFullResponse: true,//added this to view status code
+    //     headers: {
+    //         'X-Shopify-Access-Token':accessToken
+    //     },
+    //      body: add_assets//pass new product object - NEW - request-promise problably updated
+    //  };  
+    //      request.put(assests_options)
+    //     .then(function (response) {
+    //         console.log(response);
+    //      return res.status(200).send(response);
+    //     })
+    //     .catch(function (err) {
+    //          console.log(err);
+    //         res.json(false);
+    //     });
+  //***************put assests file add end***************
+        })
+        .catch(function (error) {
+             // console.log(err);
+          // res.status(error.statusCode).send(error);
+   
+            // res.json(false);
         });
       
       // res.render('home',{ shop_data : "hello sachin" });
