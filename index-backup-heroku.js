@@ -141,71 +141,37 @@ app.get('/shopify/callback', (req, res) => {
       const shopRequestHeaders = {
         'X-Shopify-Access-Token': accessToken,
       }; 
-
-         const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
-     const loadd = {
-     'X-Shopify-Access-Token': accessToken,
-     };
-    request.get(themeJsonUrl, { headers: loadd})
-    // request.post(optionss)
-        .then(function (response) {
-           const padata = JSON.parse(response);
-           console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
-           const themeid=parseInt(padata.themes[0].id);
-           console.log(themeid);
-           //assets json data
-        const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
-        const asetsheader = {
-         'X-Shopify-Access-Token': accessToken
-        };
-
-        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index1.liquid';
-           request.get(asetsFileUrl, { headers: asetsheader})
-          .then(function (response) {
-                 const parsedResponce = JSON.parse(response);
-
-         const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
- 
-         let add_assets_asset = {
-                        "asset": {
-                          "key": "templates/index1.liquid",
-                         "value": filedata
-                        }
-                    };
-         let assests_optionssss = {
-            method: 'PUT',
-            uri: asetsJsonUrl,
-            json: true,
-            resolveWithFullResponse: true,//added this to view status code
-            headers: {
-                'X-Shopify-Access-Token':accessToken
-            },
-             body: add_assets_asset//pass new product object - NEW - request-promise problably updated
-         };  
-         request.put(assests_optionssss)
-            .then(function (response) {
-                console.log("response");
-             return res.status(200).send(response);
-            })
-            .catch(function (err) {
-                 console.log(err);
-                res.json(false);
-            });
-           })
-          .catch(function (error) {
-                res.end(error);
-          });
-
-
-        })
-        .catch(function (error) {
-             // console.log(err);
-          res.status(error.statusCode).send(error);
-   
-            // res.json(false);
-        });
       
-   
+      // res.render('home',{ shop_data : "hello sachin" });
+      // request.get(shopRequestUrl, { headers: shopRequestHeaders })
+      // .then((shopResponse) => {
+            var shop_data = {};
+            let sql_user = "SELECT * FROM user_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
+            let query_user = conn.query(sql_user, (err, results) => {
+              // console.log(results);
+             if (results.rows.length>0) 
+                {
+                   shop_data['user_data'] =  results.rows;
+                   let sql_pro = "SELECT * FROM product_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
+                    let query_pro = conn.query(sql_pro, (err, results) => {
+                      // console.log(results);
+                     if (results.rows.length>0) 
+                        {  
+                          shop_data['product_data'] =  results.rows;
+                          shop_data['current_time'] = new Date().toISOString();
+                          res.render('index' ,{ shop_data : shop_data });
+                        } 
+                 });
+              }
+             else {
+                  // res.render('home',{ shop_data : err });
+                 }
+           });
+        // res.status(200).end(shopResponse);
+      // })
+      // .catch((error) => {
+      //   res.status(error.statusCode).send(error.error.error_description);
+      // });
     })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
