@@ -16,7 +16,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET|| 'shpss_f974e725cae30a01afb7bc
 
 // const apiSecret = process.env.SHOPIFY_API_SECRET;
 // read_content,write_content,read_themes,write_themes,read_checkouts,write_checkouts,write_price_rules,write_script_tags,read_script_tags,read_products,write_products
-const scopes = 'read_content,write_content,read_themes,write_themes,read_checkouts,write_checkouts,write_price_rules,write_script_tags,read_script_tags,read_products,write_products';
+const scopes = 'read_themes';
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 app.get('/', (req, res) => {
   // console.log(GraphQLClient);
