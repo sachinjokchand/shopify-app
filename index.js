@@ -82,7 +82,7 @@ app.get('/shopify', (req, res) => {
       '/admin/oauth/authorize?client_id=' + apiKey +
       '&scope=' + scopes +
       '&state=' + state +
-      '&redirect_uri=' + redirectUri;
+      '&redirect_uri=' + redirectUri +'&output=embed';
 
     res.cookie('state', state);
     res.redirect(installUrl);
