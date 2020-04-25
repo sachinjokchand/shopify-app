@@ -6,72 +6,84 @@ const cookie = require('cookie');
 const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
+var graphqlHTTP = require('express-graphql');
+var { buildSchema } = require('graphql');
+const { Client }=require('graphql-js-client');
+var schema = buildSchema(`type Query {hello: String}`);
+// const { Client }  = require('graphql-js-client');
+const types= require('./types.js');
 
+// const gclient = new Client(types, {
+//   url: 'https://jayka-new.myshopify.com/api/graphql',
+//   fetcherOptions: {
+//     headers: { 
+//       // Authorization: 'Basic aGV5LXRoZXJlLWZyZWluZCA=' 
+// 'X-Shopify-Storefront-Access-Token': 'b1a3ae8e5c637e903c33c1d31b7b90c1'
+//     }
+//   }
+// });
+//  const query = gclient.query((root) => {
+//   root.add('shop', (shop) => {
+//     shop.add('name');
+//     shop.addConnection('products', {args: {first: 10}}, (product) => {
+//       product.add('title');
+//     });
+//   });
+// });
+// let objects;
+// gclient.send(query);
+// .then(({model, data}) => {
+//   objects = model;
+//   console.log(model); // The serialized model with rich features
+//   console.log(data); // The raw data returned from the API endpoint
+// });
+ // console.log("over");
 
-const path = require('path');
-const session = require('express-session');
-const ejs = require('ejs');
-const bodyParser = require('body-parser');
-const mysql = require('mysql');
+// const query = client.query((root) => {
+//   root.add('shop', (shop) => {
+//     shop.add('name');
+//     shop.addConnection('products', {args: {first: 10}}, (product) => {
+//       product.add('title');
+//     });
+//   });
+// });
 
-var createError = require("http-errors");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var query_string = require('querystring')
-
-let pg = require('pg');
-if (process.env.DATABASE_URL) {
-  pg.defaults.ssl = true;
-}
-
-let connString = process.env.DATABASE_URL || 'postgres://vhoxtymthgmope:ad8f78b9a8d8c73ffbb40c45092acefdb7dd3c38af5810ee374c99503bd60cbd@ec2-34-204-22-76.compute-1.amazonaws.com:5432/dcq47h4pjsdfrk';
-const { Pool } = require('pg');
-
-const conn = new Pool({
-  connectionString : connString
-});
-// conn.query(
-//   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
-// conn.query(
-// 'DROP TABLE product_data');
-
-// conn.query(
-// 'CREATE TABLE user_data(id SERIAL PRIMARY KEY, customer_id VARCHAR(255) not null, customer_name VARCHAR(255), customer_email VARCHAR(255), shop_name VARCHAR(255) not null)');
-
-
-// conn.query(
-// 'CREATE TABLE product_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null, product_title VARCHAR(255) not null, product_src VARCHAR(255) not null, product_price VARCHAR(255) not null, product_url VARCHAR(255) not null, product_time VARCHAR(255) not null)');
-
-// conn.query(
-// 'CREATE TABLE wish_list(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255))');
-
-app.set('views',path.join(__dirname,'views'));
-app.set('view engine', 'ejs');
-
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-
-app.use('/assets',express.static(__dirname + '/public'));
+var root = {
+  hello: () => {
+    return 'Hello world!';
+  },
+};
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
+// const apiKey = process.env.SHOPIFY_API_KEY;
 
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
 const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
 
+ const globalShop='';
+ const globalAccessToken='';
 
+// const apiSecret = process.env.SHOPIFY_API_SECRET;
+// read_content,write_content,read_themes,write_themes,read_checkouts,write_checkouts,write_price_rules,write_script_tags,read_script_tags,read_products,write_products
+const scopes = 'read_content,write_content,read_themes,write_themes,read_checkouts,write_checkouts,write_price_rules,write_script_tags,read_script_tags,read_products,write_products';
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
-
-const scopes = 'read_products,write_script_tags,read_themes,write_themes,';
-
-const port = process.env.PORT || 6000;
-
-app.listen(port, () => console.log(`Listening on ${ port }`));
-
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  // console.log(GraphQLClient);
+// console.log(req);  
+  res.send('inside app');
+// res.redirect(installUrl);
 });
-
+// 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
+// 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
+// https://e5575b26.ngrok.io/shopify?shop=jayka-new.myshopify.com
+// https://jayka-new.myshopify.com/admin/oauth/authorize?client_id=f9593c4010eb0dd6bfc86e3828234140&scope=read_products&state=158616823714000&redirect_uri=https://e8a9f169.ngrok.io/shopify/callback
+// https://https//jayka-new.myshopify.com/admin/oauth/authorize?client_id=f9593c4010eb0dd6bfc86e3828234140&scope=read_products&state=158616795608900&redirect_uri=https://e8a9f169.ngrok.io/shopify/callback
+app.listen(3000, () => {
+  console.log('Example app listening on port 3000!');
+});
 
 app.get('/shopify', (req, res) => {
   const shop = req.query.shop;
@@ -83,7 +95,7 @@ app.get('/shopify', (req, res) => {
       '&scope=' + scopes +
       '&state=' + state +
       '&redirect_uri=' + redirectUri;
-
+    // console.log(installUrl);
     res.cookie('state', state);
     res.redirect(installUrl);
   } else {
@@ -92,13 +104,13 @@ app.get('/shopify', (req, res) => {
 });
 
 app.get('/shopify/callback', (req, res) => {
+  // console.log("callback"+req);
   const { shop, hmac, code, state } = req.query;
   const stateCookie = cookie.parse(req.headers.cookie).state;
 
   if (state !== stateCookie) {
     return res.status(403).send('Request origin cannot be verified');
   }
-
   if (shop && hmac && code) {
     // DONE: Validate request is from Shopify
     const map = Object.assign({}, req.query);
@@ -114,7 +126,6 @@ app.get('/shopify/callback', (req, res) => {
         'utf-8'
       );
     let hashEquals = false;
-
     try {
       hashEquals = crypto.timingSafeEqual(generatedHash, providedHmac)
     } catch (e) {
@@ -136,13 +147,54 @@ app.get('/shopify/callback', (req, res) => {
     request.post(accessTokenRequestUrl, { json: accessTokenPayload })
     .then((accessTokenResponse) => {
       const accessToken = accessTokenResponse.access_token;
-      // DONE: Use access token to make API call to 'shop' endpoint
-      const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
-      const shopRequestHeaders = {
-        'X-Shopify-Access-Token': accessToken,
-      }; 
+       // globalShop=shop;
+       // globalAccessToken=accessToken;      
+      console.log(accessToken);
+      // res.status(200).send("Got an access token, let's do something with it");
+      // TODO
+ // POST /admin/api/2020-01/products.json
+// https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com
+  
+  // ****************add new product to store*********************
+   // let new_product = {
+   //      product: {
+   //          title: "Burton Custom Freestyle 151",
+   //          body_html: "<strong>Good snowboard!</strong>",
+   //          vendor: "Burton",
+   //          product_type: "Snowboard"
+   //          // tags: req.body.tags
+   //      }
+   //  };
+     // const shopUrl = 'https://' + shop;
+    //  let url = 'https://' + shop + '/admin/api/2020-04/products.json';
+    //  let options = {
+    //     method: 'POST',
+    //     uri: url,
+    //     json: true,
+    //     resolveWithFullResponse: true,//added this to view status code
+    //     headers: {
+    //         'X-Shopify-Access-Token':accessToken,
+    //         'content-type': 'application/json'
+    //     },
+    //      body: new_product//pass new product object - NEW - request-promise problably updated
+    // };
+    // request.post(options)
+    //     .then(function (response) {
+    //         console.log(response.body);
+    //         if (response.statusCode == 201) {
+    //             res.json(true);
+    //         } else {
+    //             res.json(false);
+    //         }
+    //     })
+    //     .catch(function (err) {
+    //          console.log(err);
+    //         res.json(false);
+    //     });
+   // **********************end product add************************
 
-         const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
+   // ***************theme get product*****************// 
+   const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
      const loadd = {
      'X-Shopify-Access-Token': accessToken,
      };
@@ -158,45 +210,98 @@ app.get('/shopify/callback', (req, res) => {
         const asetsheader = {
          'X-Shopify-Access-Token': accessToken
         };
-
+//*************************get assets***************************
+        //    request.get(asetsJsonUrl, { headers: asetsheader})
+         //  .then(function (response) {
+        //          console.log('response');
+        //   return res.status(200).send(response);
+        //    })
+         //  .catch(function (error) {
+         //        console.log('error');
+        //         console.log(error);
+        //         res.end(error);
+         //       //res.status(error).send(error);       
+        // // res.json(false);
+         //  });
+//*************************get assets end***************************************
+//*************************get specific file start******************************
         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index1.liquid';
            request.get(asetsFileUrl, { headers: asetsheader})
           .then(function (response) {
                  const parsedResponce = JSON.parse(response);
+//  console.log(parsedResponce.asset.key);
+     const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
+ //*********************get upload data start********************
 
-         const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
- 
-         let add_assets_asset = {
-                        "asset": {
-                          "key": "templates/index1.liquid",
-                         "value": filedata
-                        }
-                    };
-         let assests_optionssss = {
-            method: 'PUT',
-            uri: asetsJsonUrl,
-            json: true,
-            resolveWithFullResponse: true,//added this to view status code
-            headers: {
-                'X-Shopify-Access-Token':accessToken
-            },
-             body: add_assets_asset//pass new product object - NEW - request-promise problably updated
-         };  
-         request.put(assests_optionssss)
-            .then(function (response) {
-                console.log("response");
-             return res.status(200).send(response);
-            })
-            .catch(function (err) {
-                 console.log(err);
-                res.json(false);
-            });
+     let add_assets_asset = {
+                    "asset": {
+                      "key": "templates/index1.liquid",
+                     "value": filedata
+                    }
+                };
+     let assests_optionssss = {
+        method: 'PUT',
+        uri: asetsJsonUrl,
+        json: true,
+        resolveWithFullResponse: true,//added this to view status code
+        headers: {
+            'X-Shopify-Access-Token':accessToken
+        },
+         body: add_assets_asset//pass new product object - NEW - request-promise problably updated
+     };  
+     request.put(assests_optionssss)
+        .then(function (response) {
+            console.log("response");
+         return res.status(200).send(response);
+        })
+        .catch(function (err) {
+             console.log(err);
+            res.json(false);
+        });
+
+
+
+ //*********************get upload data end**********************
+         // return res.status(200).send(parsedResponce.asset.value);
            })
           .catch(function (error) {
+                console.log('error');
+                console.log(error);
                 res.end(error);
+               //res.status(error).send(error);       
+        // res.json(false);
           });
 
 
+  //*********************get specific file end*******************
+
+  //***************put assests file add start***************
+    // let add_assets = {
+    //                 "asset": {
+    //                   "key": "assets/script.js",
+    //                   "src": "https://newdiscount.000webhostapp.com/script.js"
+    //                 }
+    //               };
+    //  let assests_options = {
+    //     method: 'PUT',
+    //     uri: asetsJsonUrl,
+    //     json: true,
+    //     resolveWithFullResponse: true,//added this to view status code
+    //     headers: {
+    //         'X-Shopify-Access-Token':accessToken
+    //     },
+    //      body: add_assets//pass new product object - NEW - request-promise problably updated
+    //  };  
+    //      request.put(assests_options)
+    //     .then(function (response) {
+    //         console.log(response);
+    //      return res.status(200).send(response);
+    //     })
+    //     .catch(function (err) {
+    //          console.log(err);
+    //         res.json(false);
+    //     });
+  //***************put assests file add end***************
         })
         .catch(function (error) {
              // console.log(err);
@@ -204,9 +309,22 @@ app.get('/shopify/callback', (req, res) => {
    
             // res.json(false);
         });
-      
-   
-    })
+      // const graphqlpath = 'https://' + shop + '/admin/api/graphql';
+     // const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
+     // const shopRequestHeaders = {
+     // 'X-Shopify-Access-Token': accessToken,
+     // };
+     //   request.get(shopRequestUrl, {
+     //    headers: shopRequestHeaders 
+     //   })
+     //   .then((shopResponse) => {
+     //   res.end(shopResponse);
+     //   })
+       // .catch((error) => {
+       //   res.status(error.statusCode).send(error.error.error_description);
+       // });
+      // Use access token to make API call to 'shop' endpoint
+     })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
     });
@@ -215,98 +333,51 @@ app.get('/shopify/callback', (req, res) => {
     res.status(400).send('Required parameters missing');
   }
 });
-
-app.post('/add-to-wish',(req, res) => {  
-  
-  var form_obj = req.body.form_data;
-  var form_data = query_string.parse(form_obj);
-  var shop_name = req.body.shop_name;
-  var cust_id = form_data.cust_id;
-  var cust_name = form_data.cust_first_name+' '+ form_data.cust_last_name;
-  var remove_currency = form_data.pro_price.split(' ');
-  var price = parseInt(remove_currency[1])/100;
-  var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
-  var pro_time = new Date().toISOString();
-  // var cust_id   = req.body.cust_id;
-  
-   var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
-   var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
-   var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
-     
-      let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
-      let query_pro = conn.query(sql_cust, (err, results) => {
-    
-       if ( results.rows.length > 0 ) 
-            { console.log("user already exist.");  }
-          
-       else {  
-               const  query = {
-                text: 'INSERT INTO user_data(shop_name, customer_id, customer_name, customer_email ) VALUES($1, $2, $3, $4)',
-                values: [cust_data.shop_name, cust_data.cust_id, cust_data.cust_name, cust_data.cust_email ],
-               }
-               conn.query(query, (err, results) => {
-                if (err) { console.log("111"); } 
-                else { 
-                         const  query = {
-                                text: 'INSERT INTO wish_list(shop_name, customer_id ) VALUES($1, $2)',
-                                values: [wish_list_data.shop_name, wish_list_data.cust_id ],
-                               }
-                          conn.query(query, (err, results) => {
-                          if (err) { console.log("222"); } 
-                          else { }
-                        });
-                     }  
-               });
-             }
-              let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
-              let query_pro = conn.query(sql_pro, (err, results) => {
-               // var obj = {};
-               // obj['err'] = err;
-               //  obj['results'] = results;
-               //  res.send(obj);
-               if (  results.rows.length > 0  ) 
-               {  console.log("product already exist."); }
-               else{
-                  const query = {
-                        text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
-                        values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url, prod_data.pro_time ],
-                       }
-                       conn.query(query, (err, results) => {
-                        if (err) { res.send(err); } 
-                        else {
-                             res.send(query);
-                             }
-                       });                
-                   }
-              });
-     });       
-});
-
-app.post('/remove_prod',(req, res) => {  
-  var pro_id = req.body.pro_id;
-  var cust_id = req.body.cust_id;
-  var shop_name = req.body.shop_name;
-
-  let sql_user = "SELECT * FROM product_data WHERE shop_name='"+shop+"' AND product_id='"+pro_id+"'";
-            let query_user = conn.query(sql_user, (err, results) => {
-              // console.log(results);
-             if (results.rows.length >1) 
-                {
-                   
-               }
-             else if(results.rows.length == 1) 
-             {
-
-             }
-             else {
-                  // res.render('home',{ shop_data : err });
-                 }
-           });
-  
-});
-
-// app.get('/dashboard',(req, res) => {  
-//   res.render('dashboard' ,{ "shop_data" : shop_data } );
+// const path=require('path');
+// const fs=require('fs');
+// const http=require('http');
+// const hostname="localhost";
+// const port =3000;
+// const server=http.createServer((req,res)=>{
+//  // console.log(req.headers);
+//  console.log('request' +req.url+'by method'+req.method);
+// if(req.method=='GET'){
+//  var fileURL;
+//  if(req.url=='/'){
+//    fileURL='/index.html';
+//  }else{
+//    fileURL=req.url;
+//  }
+// var filePath=path.resolve('public'+fileURL);
+// // console.log(filePath);
+// const fileExt=path.extname(filePath);
+//   if(fileExt=='.html'){
+//     fs.exists(filePath,(exists)=>{
+//      if(!exists){
+//      res.statusCode=404;
+//      res.setHeader('Content-Type','text/html');
+//      res.end('<html><body><h1>error 404:'+fileURL+' does not exists</h1></body></html>');
+//        }
+//     res.statusCode=200;
+//  res.setHeader('Content-Type','text/html');
+//  fs.createReadStream(filePath).pipe(res);// for convert whole responce into byte and show via pipe// its ver important
+//  // res.end('<html><body><h1>server connection success:)</h1></body></html>');   
+//     })
+//    }else{
+//      res.statusCode=404;
+//      res.setHeader('Content-Type','text/html');
+//      res.end('<html><body><h1>error 404:'+fileURL+' does not a html file</h1></body></html>');
+//    }
+// }else{
+//      res.statusCode=404;
+//      res.setHeader('Content-Type','text/html');
+//      res.end('<html><body><h1>error 404:'+fileURL+' does not supported (comes other files)</h1></body></html>');
+ 
+// }
+//  // res.statusCode=200;
+//  // res.setHeader('Content-Type','text/html');
+//  // res.end('<html><body><h1>server connection success:)</h1></body></html>');
 // });
-
-// app.use('/admin', express.static('./node_modules/admin-lte'));
+// server.listen(port,hostname,()=>{
+//  console.log(`server running at http://${hostname}:${port}`);
+// });
