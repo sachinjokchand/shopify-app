@@ -92,102 +92,103 @@ app.get('/shopify', (req, res) => {
 });
 
 app.get('/shopify/callback', (req, res) => {
-  const { shop, hmac, code, state } = req.query;
-  const stateCookie = cookie.parse(req.headers.cookie).state;
+  res.send("Ssssssss");
+//   const { shop, hmac, code, state } = req.query;
+//   const stateCookie = cookie.parse(req.headers.cookie).state;
 
-  if (state !== stateCookie) {
-    return res.status(403).send('Request origin cannot be verified');
-  }
+//   if (state !== stateCookie) {
+//     return res.status(403).send('Request origin cannot be verified');
+//   }
 
-  if (shop && hmac && code) {
-    // DONE: Validate request is from Shopify
-    const map = Object.assign({}, req.query);
-    delete map['signature'];
-    delete map['hmac'];
-    const message = querystring.stringify(map);
-    const providedHmac = Buffer.from(hmac, 'utf-8');
-    const generatedHash = Buffer.from(
-      crypto
-        .createHmac('sha256', apiSecret)
-        .update(message)
-        .digest('hex'),
-        'utf-8'
-      );
-    let hashEquals = false;
+//   if (shop && hmac && code) {
+//     // DONE: Validate request is from Shopify
+//     const map = Object.assign({}, req.query);
+//     delete map['signature'];
+//     delete map['hmac'];
+//     const message = querystring.stringify(map);
+//     const providedHmac = Buffer.from(hmac, 'utf-8');
+//     const generatedHash = Buffer.from(
+//       crypto
+//         .createHmac('sha256', apiSecret)
+//         .update(message)
+//         .digest('hex'),
+//         'utf-8'
+//       );
+//     let hashEquals = false;
 
-    try {
-      hashEquals = crypto.timingSafeEqual(generatedHash, providedHmac)
-    } catch (e) {
-      hashEquals = false;
-    };
+//     try {
+//       hashEquals = crypto.timingSafeEqual(generatedHash, providedHmac)
+//     } catch (e) {
+//       hashEquals = false;
+//     };
 
-    if (!hashEquals) {
-      return res.status(400).send('HMAC validation failed');
-    }
+//     if (!hashEquals) {
+//       return res.status(400).send('HMAC validation failed');
+//     }
 
-    // DONE: Exchange temporary code for a permanent access token
-    const accessTokenRequestUrl = 'https://' + shop + '/admin/oauth/access_token';
-    const accessTokenPayload = {
-      client_id: apiKey,
-      client_secret: apiSecret,
-      code,
-    };
+//     // DONE: Exchange temporary code for a permanent access token
+//     const accessTokenRequestUrl = 'https://' + shop + '/admin/oauth/access_token';
+//     const accessTokenPayload = {
+//       client_id: apiKey,
+//       client_secret: apiSecret,
+//       code,
+//     };
 
-    request.post(accessTokenRequestUrl, { json: accessTokenPayload })
-    .then((accessTokenResponse) => {
-      const accessToken = accessTokenResponse.access_token;
+//     request.post(accessTokenRequestUrl, { json: accessTokenPayload })
+//     .then((accessTokenResponse) => {
+//       const accessToken = accessTokenResponse.access_token;
      
-       const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
-     const loadd = {
-     'X-Shopify-Access-Token': accessToken,
-     };
-    request.get(themeJsonUrl, { headers: loadd})
-    // request.post(optionss)
-        .then(function (response) {
-           const padata = JSON.parse(response);
-           console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
-           const themeid=parseInt(padata.themes[0].id);
-           console.log(themeid);
-           res.send(response);
-           //assets json data
-        // const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
-        // const asetsheader = {
-        //  'X-Shopify-Access-Token': accessToken
-        // };
+//        const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
+//      const loadd = {
+//      'X-Shopify-Access-Token': accessToken,
+//      };
+//     request.get(themeJsonUrl, { headers: loadd})
+//     // request.post(optionss)
+//         .then(function (response) {
+//            const padata = JSON.parse(response);
+//            console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
+//            const themeid=parseInt(padata.themes[0].id);
+//            console.log(themeid);
+//            res.send(response);
+//            //assets json data
+//         // const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
+//         // const asetsheader = {
+//         //  'X-Shopify-Access-Token': accessToken
+//         // };
 
-//         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
-//            request.get(asetsFileUrl, { headers: asetsheader})
-//           .then(function (response) {
-//                  const parsedResponce = JSON.parse(response);
-// //  console.log(parsedResponce.asset.key);
-//      const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
-//  //*********************get upload data start********************
+// //         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
+// //            request.get(asetsFileUrl, { headers: asetsheader})
+// //           .then(function (response) {
+// //                  const parsedResponce = JSON.parse(response);
+// // //  console.log(parsedResponce.asset.key);
+// //      const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
+// //  //*********************get upload data start********************
 
-//      let add_assets_asset = {
-//                     "asset": {
-//                       "key": "templates/index.liquid",
-//                      "value": filedata
-//                     }
-//                 };
-//            })
-//           .catch(function (error) {
-//                 console.log('error');
-//                 console.log(error);
-//                 res.end(error);
-//           });
+// //      let add_assets_asset = {
+// //                     "asset": {
+// //                       "key": "templates/index.liquid",
+// //                      "value": filedata
+// //                     }
+// //                 };
+// //            })
+// //           .catch(function (error) {
+// //                 console.log('error');
+// //                 console.log(error);
+// //                 res.end(error);
+// //           });
 
-        })
-        .catch(function (error) {
-          res.status(error.statusCode).send(error);
-        });
-    })
-    .catch((error) => {
-      res.status(error.statusCode).send(error.error.error_description);
-    });
+//         })
+//         .catch(function (error) {
+//           res.status(error.statusCode).send(error);
+//         });
+//     })
+//     .catch((error) => {
+//       res.status(error.statusCode).send(error.error.error_description);
+//     });
 
-  } else {
-    res.status(400).send('Required parameters missing');
-  }
+//   } else {
+//     res.status(400).send('Required parameters missing');
+//   }
 });
 
 app.post('/add-to-wish',(req, res) => {  
