@@ -98,50 +98,7 @@ app.get('/shopify/callback', (req, res) => {
        // globalShop=shop;
        // globalAccessToken=accessToken;      
       console.log(accessToken);
-      // res.status(200).send("Got an access token, let's do something with it");
-      // TODO
- // POST /admin/api/2020-01/products.json
-// https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com
-  
-  // ****************add new product to store*********************
-   // let new_product = {
-   //      product: {
-   //          title: "Burton Custom Freestyle 151",
-   //          body_html: "<strong>Good snowboard!</strong>",
-   //          vendor: "Burton",
-   //          product_type: "Snowboard"
-   //          // tags: req.body.tags
-   //      }
-   //  };
-     // const shopUrl = 'https://' + shop;
-    //  let url = 'https://' + shop + '/admin/api/2020-04/products.json';
-    //  let options = {
-    //     method: 'POST',
-    //     uri: url,
-    //     json: true,
-    //     resolveWithFullResponse: true,//added this to view status code
-    //     headers: {
-    //         'X-Shopify-Access-Token':accessToken,
-    //         'content-type': 'application/json'
-    //     },
-    //      body: new_product//pass new product object - NEW - request-promise problably updated
-    // };
-    // request.post(options)
-    //     .then(function (response) {
-    //         console.log(response.body);
-    //         if (response.statusCode == 201) {
-    //             res.json(true);
-    //         } else {
-    //             res.json(false);
-    //         }
-    //     })
-    //     .catch(function (err) {
-    //          console.log(err);
-    //         res.json(false);
-    //     });
-   // **********************end product add************************
 
-   // ***************theme get product*****************// 
    const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
      const loadd = {
      'X-Shopify-Access-Token': accessToken,
@@ -158,29 +115,13 @@ app.get('/shopify/callback', (req, res) => {
         const asetsheader = {
          'X-Shopify-Access-Token': accessToken
         };
-//*************************get assets***************************
-        //    request.get(asetsJsonUrl, { headers: asetsheader})
-         //  .then(function (response) {
-        //          console.log('response');
-        //   return res.status(200).send(response);
-        //    })
-         //  .catch(function (error) {
-         //        console.log('error');
-        //         console.log(error);
-        //         res.end(error);
-         //       //res.status(error).send(error);       
-        // // res.json(false);
-         //  });
-//*************************get assets end***************************************
-//*************************get specific file start******************************
+
         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index1.liquid';
            request.get(asetsFileUrl, { headers: asetsheader})
           .then(function (response) {
                  const parsedResponce = JSON.parse(response);
-//  console.log(parsedResponce.asset.key);
-     const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
- //*********************get upload data start********************
 
+     const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
      let add_assets_asset = {
                     "asset": {
                       "key": "templates/index1.liquid",
@@ -207,49 +148,14 @@ app.get('/shopify/callback', (req, res) => {
             res.json(false);
         });
 
-
-
- //*********************get upload data end**********************
-         // return res.status(200).send(parsedResponce.asset.value);
            })
           .catch(function (error) {
                 console.log('error');
                 console.log(error);
                 res.end(error);
-               //res.status(error).send(error);       
-        // res.json(false);
+
           });
 
-
-  //*********************get specific file end*******************
-
-  //***************put assests file add start***************
-    // let add_assets = {
-    //                 "asset": {
-    //                   "key": "assets/script.js",
-    //                   "src": "https://newdiscount.000webhostapp.com/script.js"
-    //                 }
-    //               };
-    //  let assests_options = {
-    //     method: 'PUT',
-    //     uri: asetsJsonUrl,
-    //     json: true,
-    //     resolveWithFullResponse: true,//added this to view status code
-    //     headers: {
-    //         'X-Shopify-Access-Token':accessToken
-    //     },
-    //      body: add_assets//pass new product object - NEW - request-promise problably updated
-    //  };  
-    //      request.put(assests_options)
-    //     .then(function (response) {
-    //         console.log(response);
-    //      return res.status(200).send(response);
-    //     })
-    //     .catch(function (err) {
-    //          console.log(err);
-    //         res.json(false);
-    //     });
-  //***************put assests file add end***************
         })
         .catch(function (error) {
              // console.log(err);
@@ -257,21 +163,7 @@ app.get('/shopify/callback', (req, res) => {
    
             // res.json(false);
         });
-      // const graphqlpath = 'https://' + shop + '/admin/api/graphql';
-     // const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
-     // const shopRequestHeaders = {
-     // 'X-Shopify-Access-Token': accessToken,
-     // };
-     //   request.get(shopRequestUrl, {
-     //    headers: shopRequestHeaders 
-     //   })
-     //   .then((shopResponse) => {
-     //   res.end(shopResponse);
-     //   })
-       // .catch((error) => {
-       //   res.status(error.statusCode).send(error.error.error_description);
-       // });
-      // Use access token to make API call to 'shop' endpoint
+     
      })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
@@ -281,51 +173,3 @@ app.get('/shopify/callback', (req, res) => {
     res.status(400).send('Required parameters missing');
   }
 });
-// const path=require('path');
-// const fs=require('fs');
-// const http=require('http');
-// const hostname="localhost";
-// const port =3000;
-// const server=http.createServer((req,res)=>{
-//  // console.log(req.headers);
-//  console.log('request' +req.url+'by method'+req.method);
-// if(req.method=='GET'){
-//  var fileURL;
-//  if(req.url=='/'){
-//    fileURL='/index.html';
-//  }else{
-//    fileURL=req.url;
-//  }
-// var filePath=path.resolve('public'+fileURL);
-// // console.log(filePath);
-// const fileExt=path.extname(filePath);
-//   if(fileExt=='.html'){
-//     fs.exists(filePath,(exists)=>{
-//      if(!exists){
-//      res.statusCode=404;
-//      res.setHeader('Content-Type','text/html');
-//      res.end('<html><body><h1>error 404:'+fileURL+' does not exists</h1></body></html>');
-//        }
-//     res.statusCode=200;
-//  res.setHeader('Content-Type','text/html');
-//  fs.createReadStream(filePath).pipe(res);// for convert whole responce into byte and show via pipe// its ver important
-//  // res.end('<html><body><h1>server connection success:)</h1></body></html>');   
-//     })
-//    }else{
-//      res.statusCode=404;
-//      res.setHeader('Content-Type','text/html');
-//      res.end('<html><body><h1>error 404:'+fileURL+' does not a html file</h1></body></html>');
-//    }
-// }else{
-//      res.statusCode=404;
-//      res.setHeader('Content-Type','text/html');
-//      res.end('<html><body><h1>error 404:'+fileURL+' does not supported (comes other files)</h1></body></html>');
- 
-// }
-//  // res.statusCode=200;
-//  // res.setHeader('Content-Type','text/html');
-//  // res.end('<html><body><h1>server connection success:)</h1></body></html>');
-// });
-// server.listen(port,hostname,()=>{
-//  console.log(`server running at http://${hostname}:${port}`);
-// });
