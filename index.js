@@ -142,7 +142,7 @@ app.get('/shopify/callback', (req, res) => {
         'X-Shopify-Access-Token': accessToken,
       }; 
       
-      res.render('home',{ shop_data : "hello sachin" });
+      // res.render('home',{ shop_data : "hello sachin" });
       // request.get(shopRequestUrl, { headers: shopRequestHeaders })
       // .then((shopResponse) => {
             var shop_data = {};
