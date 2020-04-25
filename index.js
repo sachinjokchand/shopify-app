@@ -104,79 +104,80 @@ app.get('/shopify', (req, res) => {
 });
 
 app.get('/shopify/callback', (req, res) => {
+  res.send("hhhhhhhhhh");
   // console.log("callback"+req);
-  const { shop, hmac, code, state } = req.query;
-  const stateCookie = cookie.parse(req.headers.cookie).state;
+  // const { shop, hmac, code, state } = req.query;
+  // const stateCookie = cookie.parse(req.headers.cookie).state;
 
-  if (state !== stateCookie) {
-    return res.status(403).send('Request origin cannot be verified');
-  }
-  if (shop && hmac && code) {
-    // DONE: Validate request is from Shopify
-    const map = Object.assign({}, req.query);
-    delete map['signature'];
-    delete map['hmac'];
-    const message = querystring.stringify(map);
-    const providedHmac = Buffer.from(hmac, 'utf-8');
-    const generatedHash = Buffer.from(
-      crypto
-        .createHmac('sha256', apiSecret)
-        .update(message)
-        .digest('hex'),
-        'utf-8'
-      );
-    let hashEquals = false;
-    try {
-      hashEquals = crypto.timingSafeEqual(generatedHash, providedHmac)
-    } catch (e) {
-      hashEquals = false;
-    };
+  // if (state !== stateCookie) {
+  //   return res.status(403).send('Request origin cannot be verified');
+  // }
+  // if (shop && hmac && code) {
+  //   // DONE: Validate request is from Shopify
+  //   const map = Object.assign({}, req.query);
+  //   delete map['signature'];
+  //   delete map['hmac'];
+  //   const message = querystring.stringify(map);
+  //   const providedHmac = Buffer.from(hmac, 'utf-8');
+  //   const generatedHash = Buffer.from(
+  //     crypto
+  //       .createHmac('sha256', apiSecret)
+  //       .update(message)
+  //       .digest('hex'),
+  //       'utf-8'
+  //     );
+  //   let hashEquals = false;
+  //   try {
+  //     hashEquals = crypto.timingSafeEqual(generatedHash, providedHmac)
+  //   } catch (e) {
+  //     hashEquals = false;
+  //   };
 
-    if (!hashEquals) {
-      return res.status(400).send('HMAC validation failed');
-    }
+  //   if (!hashEquals) {
+  //     return res.status(400).send('HMAC validation failed');
+  //   }
 
-    // DONE: Exchange temporary code for a permanent access token
-    const accessTokenRequestUrl = 'https://' + shop + '/admin/oauth/access_token';
-    const accessTokenPayload = {
-      client_id: apiKey,
-      client_secret: apiSecret,
-      code,
-    };
+  //   // DONE: Exchange temporary code for a permanent access token
+  //   const accessTokenRequestUrl = 'https://' + shop + '/admin/oauth/access_token';
+  //   const accessTokenPayload = {
+  //     client_id: apiKey,
+  //     client_secret: apiSecret,
+  //     code,
+  //   };
 
-    request.post(accessTokenRequestUrl, { json: accessTokenPayload })
-    .then((accessTokenResponse) => {
-      const accessToken = accessTokenResponse.access_token;
-       // globalShop=shop;
-       // globalAccessToken=accessToken;      
-       res.send(accessToken);
-      console.log(accessToken);
-      // res.status(200).send("Got an access token, let's do something with it");
-      // TODO
+  //   request.post(accessTokenRequestUrl, { json: accessTokenPayload })
+  //   .then((accessTokenResponse) => {
+  //     const accessToken = accessTokenResponse.access_token;
+  //      // globalShop=shop;
+  //      // globalAccessToken=accessToken;      
+  //      res.send(accessToken);
+  //     console.log(accessToken);
+  //     // res.status(200).send("Got an access token, let's do something with it");
+  //     // TODO
 
-      // const graphqlpath = 'https://' + shop + '/admin/api/graphql';
-     // const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
-     // const shopRequestHeaders = {
-     // 'X-Shopify-Access-Token': accessToken,
-     // };
-     //   request.get(shopRequestUrl, {
-     //    headers: shopRequestHeaders 
-     //   })
-     //   .then((shopResponse) => {
-     //   res.end(shopResponse);
-     //   })
-       // .catch((error) => {
-       //   res.status(error.statusCode).send(error.error.error_description);
-       // });
-      // Use access token to make API call to 'shop' endpoint
-     })
-    .catch((error) => {
-      res.status(error.statusCode).send(error.error.error_description);
-    });
+  //     // const graphqlpath = 'https://' + shop + '/admin/api/graphql';
+  //    // const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
+  //    // const shopRequestHeaders = {
+  //    // 'X-Shopify-Access-Token': accessToken,
+  //    // };
+  //    //   request.get(shopRequestUrl, {
+  //    //    headers: shopRequestHeaders 
+  //    //   })
+  //    //   .then((shopResponse) => {
+  //    //   res.end(shopResponse);
+  //    //   })
+  //      // .catch((error) => {
+  //      //   res.status(error.statusCode).send(error.error.error_description);
+  //      // });
+  //     // Use access token to make API call to 'shop' endpoint
+  //    })
+  //   .catch((error) => {
+  //     res.status(error.statusCode).send(error.error.error_description);
+  //   });
 
-  } else {
-    res.status(400).send('Required parameters missing');
-  }
+  // } else {
+  //   res.status(400).send('Required parameters missing');
+  // }
 });
 // const path=require('path');
 // const fs=require('fs');
