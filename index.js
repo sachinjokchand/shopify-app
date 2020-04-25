@@ -6,59 +6,7 @@ const cookie = require('cookie');
 const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
-// var graphqlHTTP = require('express-graphql');
-// var { buildSchema } = require('graphql');
-// const { Client }=require('graphql-js-client');
-// var schema = buildSchema(`type Query {hello: String}`);
-// // const { Client }  = require('graphql-js-client');
-// const types= require('./types.js');
 
-// const gclient = new Client(types, {
-//   url: 'https://jayka-new.myshopify.com/api/graphql',
-//   fetcherOptions: {
-//     headers: { 
-//       // Authorization: 'Basic aGV5LXRoZXJlLWZyZWluZCA=' 
-// 'X-Shopify-Storefront-Access-Token': 'b1a3ae8e5c637e903c33c1d31b7b90c1'
-//     }
-//   }
-// });
-//  const query = gclient.query((root) => {
-//   root.add('shop', (shop) => {
-//     shop.add('name');
-//     shop.addConnection('products', {args: {first: 10}}, (product) => {
-//       product.add('title');
-//     });
-//   });
-// });
-// let objects;
-// gclient.send(query);
-// .then(({model, data}) => {
-//   objects = model;
-//   console.log(model); // The serialized model with rich features
-//   console.log(data); // The raw data returned from the API endpoint
-// });
- // console.log("over");
-
-// const query = client.query((root) => {
-//   root.add('shop', (shop) => {
-//     shop.add('name');
-//     shop.addConnection('products', {args: {first: 10}}, (product) => {
-//       product.add('title');
-//     });
-//   });
-// });
-
-// var root = {
-//   hello: () => {
-//     return 'Hello world!';
-//   },
-// };
-// app.use('/graphql', graphqlHTTP({
-//   schema: schema,
-//   rootValue: root,
-//   graphiql: true,
-// }));
-// const apiKey = process.env.SHOPIFY_API_KEY;
 
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
 const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
