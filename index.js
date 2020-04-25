@@ -6,12 +6,12 @@ const cookie = require('cookie');
 const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
-const { Client }=require('graphql-js-client');
-var schema = buildSchema(`type Query {hello: String}`);
-// const { Client }  = require('graphql-js-client');
-const types= require('./types.js');
+// var graphqlHTTP = require('express-graphql');
+// var { buildSchema } = require('graphql');
+// const { Client }=require('graphql-js-client');
+// var schema = buildSchema(`type Query {hello: String}`);
+// // const { Client }  = require('graphql-js-client');
+// const types= require('./types.js');
 
 // const gclient = new Client(types, {
 //   url: 'https://jayka-new.myshopify.com/api/graphql',
@@ -48,16 +48,16 @@ const types= require('./types.js');
 //   });
 // });
 
-var root = {
-  hello: () => {
-    return 'Hello world!';
-  },
-};
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
+// var root = {
+//   hello: () => {
+//     return 'Hello world!';
+//   },
+// };
+// app.use('/graphql', graphqlHTTP({
+//   schema: schema,
+//   rootValue: root,
+//   graphiql: true,
+// }));
 // const apiKey = process.env.SHOPIFY_API_KEY;
 
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
