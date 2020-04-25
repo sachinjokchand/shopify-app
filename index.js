@@ -6,7 +6,59 @@ const cookie = require('cookie');
 const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
+// var graphqlHTTP = require('express-graphql');
+// var { buildSchema } = require('graphql');
+// const { Client }=require('graphql-js-client');
+// var schema = buildSchema(`type Query {hello: String}`);
+// // const { Client }  = require('graphql-js-client');
+// const types= require('./types.js');
 
+// const gclient = new Client(types, {
+//   url: 'https://jayka-new.myshopify.com/api/graphql',
+//   fetcherOptions: {
+//     headers: { 
+//       // Authorization: 'Basic aGV5LXRoZXJlLWZyZWluZCA=' 
+// 'X-Shopify-Storefront-Access-Token': 'b1a3ae8e5c637e903c33c1d31b7b90c1'
+//     }
+//   }
+// });
+//  const query = gclient.query((root) => {
+//   root.add('shop', (shop) => {
+//     shop.add('name');
+//     shop.addConnection('products', {args: {first: 10}}, (product) => {
+//       product.add('title');
+//     });
+//   });
+// });
+// let objects;
+// gclient.send(query);
+// .then(({model, data}) => {
+//   objects = model;
+//   console.log(model); // The serialized model with rich features
+//   console.log(data); // The raw data returned from the API endpoint
+// });
+ // console.log("over");
+
+// const query = client.query((root) => {
+//   root.add('shop', (shop) => {
+//     shop.add('name');
+//     shop.addConnection('products', {args: {first: 10}}, (product) => {
+//       product.add('title');
+//     });
+//   });
+// });
+
+// var root = {
+//   hello: () => {
+//     return 'Hello world!';
+//   },
+// };
+// app.use('/graphql', graphqlHTTP({
+//   schema: schema,
+//   rootValue: root,
+//   graphiql: true,
+// }));
+// const apiKey = process.env.SHOPIFY_API_KEY;
 
 const apiKey = process.env.SHOPIFY_API_KEY || '1c9be099aa9c15a6e4cfb342e22e495c';
 const apiSecret = process.env.SHOPIFY_API_SECRET|| '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';
@@ -16,7 +68,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET|| 'shpss_f974e725cae30a01afb7bc
 
 // const apiSecret = process.env.SHOPIFY_API_SECRET;
 // read_content,write_content,read_themes,write_themes,read_checkouts,write_checkouts,write_price_rules,write_script_tags,read_script_tags,read_products,write_products
-const scopes = 'read_themes';
+const scopes = 'read_content,write_content,read_themes,write_themes,read_checkouts,write_checkouts,write_price_rules,write_script_tags,read_script_tags,read_products,write_products';
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 app.get('/', (req, res) => {
   // console.log(GraphQLClient);
@@ -29,9 +81,9 @@ app.get('/', (req, res) => {
 // https://e5575b26.ngrok.io/shopify?shop=jayka-new.myshopify.com
 // https://jayka-new.myshopify.com/admin/oauth/authorize?client_id=f9593c4010eb0dd6bfc86e3828234140&scope=read_products&state=158616823714000&redirect_uri=https://e8a9f169.ngrok.io/shopify/callback
 // https://https//jayka-new.myshopify.com/admin/oauth/authorize?client_id=f9593c4010eb0dd6bfc86e3828234140&scope=read_products&state=158616795608900&redirect_uri=https://e8a9f169.ngrok.io/shopify/callback
-const port = process.env.PORT || 6000;
-
-app.listen(port, () => console.log(`Listening on ${ port }`));
+app.listen(3000, () => {
+  console.log('Example app listening on port 3000!');
+});
 
 app.get('/shopify', (req, res) => {
   const shop = req.query.shop;
@@ -97,75 +149,26 @@ app.get('/shopify/callback', (req, res) => {
       const accessToken = accessTokenResponse.access_token;
        // globalShop=shop;
        // globalAccessToken=accessToken;      
+       res.send(accessToken);
       console.log(accessToken);
-      res.send(accessToken);
+      // res.status(200).send("Got an access token, let's do something with it");
+      // TODO
 
-   const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
-     const loadd = {
-     'X-Shopify-Access-Token': accessToken,
-     };
-    request.get(themeJsonUrl, { headers: loadd})
-    // request.post(optionss)
-        .then(function (response) {
-           const padata = JSON.parse(response);
-           console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
-           const themeid=parseInt(padata.themes[0].id);
-           console.log(themeid);
-           //assets json data
-          res.send(response);
-        const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
-        const asetsheader = {
-         'X-Shopify-Access-Token': accessToken
-        };
-
-        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index1.liquid';
-           request.get(asetsFileUrl, { headers: asetsheader})
-          .then(function (response) {
-                 const parsedResponce = JSON.parse(response);
-
-     const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
-     let add_assets_asset = {
-                    "asset": {
-                      "key": "templates/index1.liquid",
-                     "value": filedata
-                    }
-                };
-     let assests_optionssss = {
-        method: 'PUT',
-        uri: asetsJsonUrl,
-        json: true,
-        resolveWithFullResponse: true,//added this to view status code
-        headers: {
-            'X-Shopify-Access-Token':accessToken
-        },
-         body: add_assets_asset//pass new product object - NEW - request-promise problably updated
-     };  
-     request.put(assests_optionssss)
-        .then(function (response) {
-            console.log("response");
-         return res.status(200).send(response);
-        })
-        .catch(function (err) {
-             console.log(err);
-            res.json(false);
-        });
-
-           })
-          .catch(function (error) {
-                console.log('error');
-                console.log(error);
-                res.end(error);
-
-          });
-
-        })
-        .catch(function (error) {
-             // console.log(err);
-          res.status(error.statusCode).send(error);
-   
-            // res.json(false);
-        });
-     
+      // const graphqlpath = 'https://' + shop + '/admin/api/graphql';
+     // const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
+     // const shopRequestHeaders = {
+     // 'X-Shopify-Access-Token': accessToken,
+     // };
+     //   request.get(shopRequestUrl, {
+     //    headers: shopRequestHeaders 
+     //   })
+     //   .then((shopResponse) => {
+     //   res.end(shopResponse);
+     //   })
+       // .catch((error) => {
+       //   res.status(error.statusCode).send(error.error.error_description);
+       // });
+      // Use access token to make API call to 'shop' endpoint
      })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
@@ -175,3 +178,51 @@ app.get('/shopify/callback', (req, res) => {
     res.status(400).send('Required parameters missing');
   }
 });
+// const path=require('path');
+// const fs=require('fs');
+// const http=require('http');
+// const hostname="localhost";
+// const port =3000;
+// const server=http.createServer((req,res)=>{
+//  // console.log(req.headers);
+//  console.log('request' +req.url+'by method'+req.method);
+// if(req.method=='GET'){
+//  var fileURL;
+//  if(req.url=='/'){
+//    fileURL='/index.html';
+//  }else{
+//    fileURL=req.url;
+//  }
+// var filePath=path.resolve('public'+fileURL);
+// // console.log(filePath);
+// const fileExt=path.extname(filePath);
+//   if(fileExt=='.html'){
+//     fs.exists(filePath,(exists)=>{
+//      if(!exists){
+//      res.statusCode=404;
+//      res.setHeader('Content-Type','text/html');
+//      res.end('<html><body><h1>error 404:'+fileURL+' does not exists</h1></body></html>');
+//        }
+//     res.statusCode=200;
+//  res.setHeader('Content-Type','text/html');
+//  fs.createReadStream(filePath).pipe(res);// for convert whole responce into byte and show via pipe// its ver important
+//  // res.end('<html><body><h1>server connection success:)</h1></body></html>');   
+//     })
+//    }else{
+//      res.statusCode=404;
+//      res.setHeader('Content-Type','text/html');
+//      res.end('<html><body><h1>error 404:'+fileURL+' does not a html file</h1></body></html>');
+//    }
+// }else{
+//      res.statusCode=404;
+//      res.setHeader('Content-Type','text/html');
+//      res.end('<html><body><h1>error 404:'+fileURL+' does not supported (comes other files)</h1></body></html>');
+ 
+// }
+//  // res.statusCode=200;
+//  // res.setHeader('Content-Type','text/html');
+//  // res.end('<html><body><h1>server connection success:)</h1></body></html>');
+// });
+// server.listen(port,hostname,()=>{
+//  console.log(`server running at http://${hostname}:${port}`);
+// });
