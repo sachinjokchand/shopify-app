@@ -106,6 +106,7 @@ app.get('/shopify/callback', (req, res) => {
     request.get(themeJsonUrl, { headers: loadd})
     // request.post(optionss)
         .then(function (response) {
+          res.send(response);
            const padata = JSON.parse(response);
            console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
            const themeid=parseInt(padata.themes[0].id);
