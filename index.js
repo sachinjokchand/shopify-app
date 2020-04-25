@@ -29,9 +29,9 @@ app.get('/', (req, res) => {
 // https://e5575b26.ngrok.io/shopify?shop=jayka-new.myshopify.com
 // https://jayka-new.myshopify.com/admin/oauth/authorize?client_id=f9593c4010eb0dd6bfc86e3828234140&scope=read_products&state=158616823714000&redirect_uri=https://e8a9f169.ngrok.io/shopify/callback
 // https://https//jayka-new.myshopify.com/admin/oauth/authorize?client_id=f9593c4010eb0dd6bfc86e3828234140&scope=read_products&state=158616795608900&redirect_uri=https://e8a9f169.ngrok.io/shopify/callback
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
-});
+const port = process.env.PORT || 6000;
+
+app.listen(port, () => console.log(`Listening on ${ port }`));
 
 app.get('/shopify', (req, res) => {
   const shop = req.query.shop;
