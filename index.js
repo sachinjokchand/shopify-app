@@ -156,9 +156,9 @@ app.get('/shopify/callback', (req, res) => {
     // request.post(optionss)
         .then(function (response) {
            const padata = JSON.parse(response);
-           console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
            const themeid=parseInt(padata.themes[0].id);
-           console.log(themeid);
+           // console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
+           // console.log(themeid);
            //assets json data
         const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
         const asetsheader = {
@@ -179,12 +179,12 @@ app.get('/shopify/callback', (req, res) => {
          //  });
 //*************************get assets end***************************************
 //*************************get specific file start******************************
-        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
-           request.get(asetsFileUrl, { headers: asetsheader})
-          .then(function (response) {
-                 const parsedResponce = JSON.parse(response);
-//  console.log(parsedResponce.asset.key);
-     const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
+//         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
+//            request.get(asetsFileUrl, { headers: asetsheader})
+//           .then(function (response) {
+//                  const parsedResponce = JSON.parse(response);
+// //  console.log(parsedResponce.asset.key);
+//      const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
  //*********************get upload data start********************
 
      let add_assets_asset = {
@@ -217,14 +217,14 @@ app.get('/shopify/callback', (req, res) => {
 
  //*********************get upload data end**********************
          // return res.status(200).send(parsedResponce.asset.value);
-           })
-          .catch(function (error) {
-                console.log('error');
-                console.log(error);
-                // res.end(error);
-               //res.status(error).send(error);       
-        // res.json(false);
-          });
+        //    })
+        //   .catch(function (error) {
+        //         console.log('error');
+        //         console.log(error);
+        //         // res.end(error);
+        //        //res.status(error).send(error);       
+        // // res.json(false);
+        //   });
 
 
   //*********************get specific file end*******************
