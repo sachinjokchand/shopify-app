@@ -62,7 +62,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET|| 'shpss_f974e725cae30a01afb7bc
 
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 
-const scopes = 'read_themes,read_products,write_script_tags';
+const scopes = 'read_content,write_content,read_themes,write_themes,read_products,write_script_tags';
 
 const port = process.env.PORT || 6000;
 
@@ -82,7 +82,7 @@ app.get('/shopify', (req, res) => {
       '/admin/oauth/authorize?client_id=' + apiKey +
       '&scope=' + scopes +
       '&state=' + state +
-      '&redirect_uri=' + redirectUri +'&output=embed';
+      '&redirect_uri=' + redirectUri;
 
     res.cookie('state', state);
     res.redirect(installUrl);
