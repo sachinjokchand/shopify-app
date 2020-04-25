@@ -189,8 +189,8 @@ app.get('/shopify/callback', (req, res) => {
 
      let add_assets_asset = {
                     "asset": {
-    "key": "assets/bg-body.gif",
-    "src": "http://apple.com/new_bg.gif"
+    "key": "layout/alternate.liquid",
+    "source_key": "https://github.com/sachincodingkart/new-demo-quiz/blob/master/index.liquid"
   }
                 };
      let assests_optionssss = {
