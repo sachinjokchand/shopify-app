@@ -189,8 +189,8 @@ app.get('/shopify/callback', (req, res) => {
 
      let add_assets_asset = {
                     "asset": {
-    "key":"sections\/blog-template-new.liquid","public_url":null,"created_at":"2020-01-22T02:42:07-05:00","updated_at":"2020-01-22T02:42:07-05:00","content_type":"text\/x-liquid","size":13172,"theme_id":84269137964
-    "value": "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
+    "key": "layout/alternate.liquid",
+    "source_key": "layout/theme.liquid"
   }
                 };
      let assests_optionssss = {
