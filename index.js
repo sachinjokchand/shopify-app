@@ -189,7 +189,7 @@ app.get('/shopify/callback', (req, res) => {
 
      let add_assets_asset = {
                     "asset": {
-    "key": "templates/my-wish-list.liquid",
+    "key": "templates/my-wish-list.js",
     "src": "https://github.com/sachincodingkart/new-demo-quiz/index.js"
   }
                 };
