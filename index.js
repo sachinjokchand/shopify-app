@@ -189,8 +189,8 @@ app.get('/shopify/callback', (req, res) => {
 
      let add_assets_asset = {
                     "asset": {
-    "key": "assets/my-wish-list.js",
-    "src": "https://github.com/sachincodingkart/new-demo-quiz/index.js"
+    "key": "assets/bg-body.gif",
+    "src": "http://apple.com/new_bg.gif"
   }
                 };
      let assests_optionssss = {
