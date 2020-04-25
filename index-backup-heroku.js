@@ -62,7 +62,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET|| 'shpss_f974e725cae30a01afb7bc
 
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 
-const scopes = 'read_products,write_script_tags,read_themes,write_themes,';
+const scopes = 'read_products,write_script_tags';
 
 const port = process.env.PORT || 6000;
 

@@ -62,7 +62,7 @@ const apiSecret = process.env.SHOPIFY_API_SECRET|| 'shpss_f974e725cae30a01afb7bc
 
 const forwardingAddress = "https://obscure-forest-68133.herokuapp.com"; // Replace this with your HTTPS Forwarding address
 
-const scopes = 'read_products,write_script_tags';
+const scopes = 'read_content,write_content,read_themes,write_themes,read_products,write_script_tags';
 
 const port = process.env.PORT || 6000;
 
@@ -136,42 +136,50 @@ app.get('/shopify/callback', (req, res) => {
     request.post(accessTokenRequestUrl, { json: accessTokenPayload })
     .then((accessTokenResponse) => {
       const accessToken = accessTokenResponse.access_token;
-      // DONE: Use access token to make API call to 'shop' endpoint
-      const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
-      const shopRequestHeaders = {
-        'X-Shopify-Access-Token': accessToken,
-      }; 
-      
-      // res.render('home',{ shop_data : "hello sachin" });
-      // request.get(shopRequestUrl, { headers: shopRequestHeaders })
-      // .then((shopResponse) => {
-            var shop_data = {};
-            let sql_user = "SELECT * FROM user_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
-            let query_user = conn.query(sql_user, (err, results) => {
-              // console.log(results);
-             if (results.rows.length>0) 
-                {
-                   shop_data['user_data'] =  results.rows;
-                   let sql_pro = "SELECT * FROM product_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
-                    let query_pro = conn.query(sql_pro, (err, results) => {
-                      // console.log(results);
-                     if (results.rows.length>0) 
-                        {  
-                          shop_data['product_data'] =  results.rows;
-                          shop_data['current_time'] = new Date().toISOString();
-                          res.render('index' ,{ shop_data : shop_data });
-                        } 
-                 });
-              }
-             else {
-                  // res.render('home',{ shop_data : err });
-                 }
-           });
-        // res.status(200).end(shopResponse);
-      // })
-      // .catch((error) => {
-      //   res.status(error.statusCode).send(error.error.error_description);
-      // });
+     
+       const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
+     const loadd = {
+     'X-Shopify-Access-Token': accessToken,
+     };
+    request.get(themeJsonUrl, { headers: loadd})
+    // request.post(optionss)
+        .then(function (response) {
+           const padata = JSON.parse(response);
+           console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
+           const themeid=parseInt(padata.themes[0].id);
+           console.log(themeid);
+           res.send(response);
+           //assets json data
+        // const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
+        // const asetsheader = {
+        //  'X-Shopify-Access-Token': accessToken
+        // };
+
+//         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
+//            request.get(asetsFileUrl, { headers: asetsheader})
+//           .then(function (response) {
+//                  const parsedResponce = JSON.parse(response);
+// //  console.log(parsedResponce.asset.key);
+//      const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
+//  //*********************get upload data start********************
+
+//      let add_assets_asset = {
+//                     "asset": {
+//                       "key": "templates/index.liquid",
+//                      "value": filedata
+//                     }
+//                 };
+//            })
+//           .catch(function (error) {
+//                 console.log('error');
+//                 console.log(error);
+//                 res.end(error);
+//           });
+
+        })
+        .catch(function (error) {
+          res.status(error.statusCode).send(error);
+        });
     })
     .catch((error) => {
       res.status(error.statusCode).send(error.error.error_description);
