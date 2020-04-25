@@ -81,7 +81,6 @@ app.get('/shopify', (req, res) => {
     const installUrl = 'https://' + shop +
       '/admin/oauth/authorize?client_id=' + apiKey +
       '&scope=' + scopes +
-      '&state=' + state +
       '&redirect_uri=' + redirectUri +'&output=embed';
 
     res.cookie('state', state);
