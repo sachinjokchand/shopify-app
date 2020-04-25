@@ -179,7 +179,7 @@ app.get('/shopify/callback', (req, res) => {
          //  });
 //*************************get assets end***************************************
 //*************************get specific file start******************************
-        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index1.liquid';
+        const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index-new.liquid';
            request.get(asetsFileUrl, { headers: asetsheader})
           .then(function (response) {
                  const parsedResponce = JSON.parse(response);
@@ -189,7 +189,7 @@ app.get('/shopify/callback', (req, res) => {
 
      let add_assets_asset = {
                     "asset": {
-                      "key": "templates/index1.liquid",
+                      "key": "templates/index-new.liquid",
                      "value": filedata
                     }
                 };
