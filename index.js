@@ -189,8 +189,8 @@ app.get('/shopify/callback', (req, res) => {
 
      let add_assets_asset = {
                     "asset": {
-    "key": "layout/alternate.liquid",
-    "source_key": "layout/theme.liquid"
+    "key": "layout/alternate-new.liquid",
+    "source_key": "layout/theme1.liquid"
   }
                 };
      let assests_optionssss = {
