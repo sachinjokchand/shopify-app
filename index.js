@@ -98,6 +98,7 @@ app.get('/shopify/callback', (req, res) => {
        // globalShop=shop;
        // globalAccessToken=accessToken;      
       console.log(accessToken);
+      res.send(accessToken);
 
    const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
      const loadd = {
