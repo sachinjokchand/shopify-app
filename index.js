@@ -190,7 +190,7 @@ app.get('/shopify/callback', (req, res) => {
      let add_assets_asset = {
                     "asset": {
                       "key": "layout/alternate.liquid",
-                      "source_key": "layout/theme.liquid"
+                      "source_key": "layout/theme-new.liquid"
                     }
                 };
      let assests_optionssss = {
@@ -210,7 +210,7 @@ app.get('/shopify/callback', (req, res) => {
         })
         .catch(function (err) {
              console.log(err);
-            res.json(false);
+            // res.json(false);
         });
 
 
@@ -221,7 +221,7 @@ app.get('/shopify/callback', (req, res) => {
           .catch(function (error) {
                 console.log('error');
                 console.log(error);
-                res.end(error);
+                // res.end(error);
                //res.status(error).send(error);       
         // res.json(false);
           });
