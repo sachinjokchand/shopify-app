@@ -137,131 +137,110 @@ app.get('/shopify/callback', (req, res) => {
     .then((accessTokenResponse) => {
       const accessToken = accessTokenResponse.access_token;
       // DONE: Use access token to make API call to 'shop' endpoint
-      const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
-      const shopRequestHeaders = {
-        'X-Shopify-Access-Token': accessToken,
-      }; 
+      // const shopRequestUrl = 'https://' + shop + '/admin/api/2020-04/products.json';
+      // const shopRequestHeaders = {
+      //   'X-Shopify-Access-Token': accessToken,
+      // }; 
       
-  console.log(accessToken);
-      // res.status(200).send("Got an access token, let's do something with it");
-      // TODO
-
-
-   // ***************theme get product*****************// 
-   const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
-     const loadd = {
-     'X-Shopify-Access-Token': accessToken,
-     };
-    request.get(themeJsonUrl, { headers: loadd})
-    // request.post(optionss)
-        .then(function (response) {
-           const padata = JSON.parse(response);
-           const themeid=parseInt(padata.themes[0].id);
-           // console.log('https://c1c73404.ngrok.io/shopify?shop=jayka-new.myshopify.com');
-           // console.log(themeid);
-           //assets json data
-        const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
-        const asetsheader = {
-         'X-Shopify-Access-Token': accessToken
-        };
-//*************************get assets***************************
-        //    request.get(asetsJsonUrl, { headers: asetsheader})
-         //  .then(function (response) {
-        //          console.log('response');
-        //   return res.status(200).send(response);
-        //    })
-         //  .catch(function (error) {
-         //        console.log('error');
-        //         console.log(error);
-        //         res.end(error);
-         //       //res.status(error).send(error);       
-        // // res.json(false);
-         //  });
-//*************************get assets end***************************************
-//*************************get specific file start******************************
-//         const asetsFileUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json?asset[key]=templates/index.liquid';
-//            request.get(asetsFileUrl, { headers: asetsheader})
-//           .then(function (response) {
-//                  const parsedResponce = JSON.parse(response);
-// //  console.log(parsedResponce.asset.key);
-//      const filedata=parsedResponce.asset.value+'{{helooo successfully updated}}';
- //*********************get upload data start********************
-
-     let add_assets_asset = {
-                    "asset": {
-    "key": "layout/alternate.liquid",
-    "source_key": "https://github.com/sachincodingkart/new-demo-quiz/blob/master/index.liquid"
-  }
+       const themeJsonUrl = 'https://' + shop + '/admin/themes.json';
+         const loadd = {
+         'X-Shopify-Access-Token': accessToken,
+         };
+        request.get(themeJsonUrl, { headers: loadd})
+            .then(function (response) {
+               const padata = JSON.parse(response);
+               const themeid=parseInt(padata.themes[0].id);
+         
+                const asetsJsonUrl ='https://' + shop + '/admin/api/2020-04/themes/'+themeid+'/assets.json';
+                const asetsheader = {
+                 'X-Shopify-Access-Token': accessToken
                 };
-     let assests_optionssss = {
-        method: 'PUT',
-        uri: asetsJsonUrl,
-        json: true,
-        resolveWithFullResponse: true,//added this to view status code
-        headers: {
-            'X-Shopify-Access-Token':accessToken
-        },
-         body: add_assets_asset//pass new product object - NEW - request-promise problably updated
-     };  
-     request.put(assests_optionssss)
-        .then(function (response) {
-            console.log("response");
-         return res.status(200).send(response);
-        })
-        .catch(function (err) {
-             console.log(err);
-            // res.json(false);
-        });
 
 
-
- //*********************get upload data end**********************
-         // return res.status(200).send(parsedResponce.asset.value);
-        //    })
-        //   .catch(function (error) {
-        //         console.log('error');
-        //         console.log(error);
-        //         // res.end(error);
-        //        //res.status(error).send(error);       
-        // // res.json(false);
-        //   });
-
-
-  //*********************get specific file end*******************
-
-  //***************put assests file add start***************
-    // let add_assets = {
-    //                 "asset": {
-    //                   "key": "assets/script.js",
-    //                   "src": "https://newdiscount.000webhostapp.com/script.js"
-    //                 }
-    //               };
-    //  let assests_options = {
-    //     method: 'PUT',
-    //     uri: asetsJsonUrl,
-    //     json: true,
-    //     resolveWithFullResponse: true,//added this to view status code
-    //     headers: {
-    //         'X-Shopify-Access-Token':accessToken
-    //     },
-    //      body: add_assets//pass new product object - NEW - request-promise problably updated
-    //  };  
-    //      request.put(assests_options)
-    //     .then(function (response) {
-    //         console.log(response);
-    //      return res.status(200).send(response);
-    //     })
-    //     .catch(function (err) {
-    //          console.log(err);
-    //         res.json(false);
-    //     });
-  //***************put assests file add end***************
-        })
+               let add_assets_asset = {
+                                "asset": {
+                                "key": "templates/index.liquid",
+                                "value": "{% if iwish_v2 == 'iwishlink' %}
+  <a class="iWishView" href="/apps/iwish">Wishlist (<span class="iWishCount">0</span>)</a>
+{% elsif iwish_v2 == 'iwishproduct' %}
+<div class="iwishAddWrap">
+  <a class="iWishAdd" href="#" data-product="{{ product.id }}" data-pTitle="{{ product.title | escape }}">Add to Wishlist</a>
+  {% unless customer %}<p class="iWishLoginMsg" style="display: none;">Your wishlist has been temporarily saved. Please <a href="/account/login">Log in</a> to save it permanently.</p>{% endunless %}
+</div>
+{% elsif iwish_v2 == 'iwishCollection' %}
+  <a class="iWishAddColl iwishcheck" href="#" data-variant="{{ product.variants.first.id }}" data-product="{{ product.id }}" data-pTitle="{{ product.title | escape }}">Add to Wishlist</a>
+{% elsif iwish_v2 == 'iwishfooter' %}
+<script type="text/javascript">
+var iwish_shop = "{{ shop.permanent_domain }}";
+var iwish_pro_template = {% if template contains 'product' %}true{% else %}false{% endif %};
+var iwish_cid = "{{ customer.id }}";
+//Add to Wishlist - Product Page Text
+var iwish_added_txt = 'Added in Wishlist';
+var iwish_add_txt = 'Add to Wishlist';
+//Add to Wishlist - Collection Page Text
+var iwish_added_txt_col = 'Added in Wishlist';
+var iwish_add_txt_col = 'Add to Wishlist';
+//Quick View - Classes
+//var iwish_qvButton = '.quick_view';
+//var iwish_qvWrapper = '.reveal-modal';
+</script>
+<script src="https://cdn.myshopapps.com/iwish/iwishlist.js"></script>
+<script type="text/javascript">
+jQuery( document ).ready(function() {
+  jQuery("a[href='/apps/iwish']").click(function(e) {
+    if(typeof(Storage) !== "undefined") {
+      e.preventDefault();
+      iWishPost('/apps/iwish',{iwishlist:JSON.stringify(iWishlistmain),cId:iwish_cid});
+    }
+  });
+  jQuery(".iWishAdd").click(function() {
+    var iWishvId = jQuery(this).parents(iwishWrapperClass).find(iWishVarSelector).val();
+    iwish_add(jQuery(this), iWishvId);
+    return false;
+  });
+  jQuery(".iWishAddColl").click(function() {
+    var iWishvId = jQuery(this).attr("data-variant");
+          iwish_addCollection(jQuery(this),iWishvId);
+          return false;
+  });
+  iwishCheckColl();
+});
+function iwishCheckColl(){
+  if(jQuery(".iwishcheck").length > 0) {
+  jQuery(".iwishcheck").each(function() {
+    var iWishvId = jQuery(this).attr("data-variant");
+    var iWishpId = jQuery(this).attr("data-product");
+    if(isInWishlist(iWishpId,iWishvId)){ jQuery(this).addClass("iwishAdded").html(iwish_added_txt_col); }
+    jQuery(this).removeClass("iwishcheck");
+  });
+  }
+}
+</script>
+{% endif %}"
+                              }
+                          };
+               let assests_optionssss = {
+                  method: 'PUT',
+                  uri: asetsJsonUrl,
+                  json: true,
+                  resolveWithFullResponse: true,//added this to view status code
+                  headers: {
+                      'X-Shopify-Access-Token':accessToken
+                  },
+                   body: add_assets_asset//pass new product object - NEW - request-promise problably updated
+               };  
+                   request.put(assests_optionssss)
+                      .then(function (response) {
+                          console.log("response");
+                       return res.status(200).send(response);
+                      })
+                      .catch(function (err) {
+                           console.log(err);
+                          // res.json(false);
+                      });
+         })
         .catch(function (error) {
-             // console.log(err);
           res.status(error.statusCode).send(error);
-   
-            // res.json(false);
         });
 
     })
