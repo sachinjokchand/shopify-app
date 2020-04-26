@@ -159,9 +159,9 @@ app.get('/shopify/callback', (req, res) => {
 
                let add_assets_asset = {
                                 "asset": {
-    "key": "assets/bg-body.gif",
-    "src": "http://apple.com/new_bg.gif"
-  }
+                                "key": "templates/index.liquid",
+                                "value": "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
+                              }
                           };
                let assests_optionssss = {
                   method: 'PUT',
