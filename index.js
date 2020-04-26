@@ -159,8 +159,8 @@ app.get('/shopify/callback', (req, res) => {
 
                let add_assets_asset = {
                                 "asset": {
-                                "key": "templates/index.liquid",
-                                "value": "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
+                                "key": "layout/alternate.liquid",
+                                "source_key": "layout/theme.liquid"
                               }
                           };
                let assests_optionssss = {
