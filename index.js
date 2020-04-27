@@ -79,10 +79,11 @@ const fs = require('fs')
 fs.readFileSync('test.txt', (err, data) => {
   if (err) {
     console.error(err)
-    return
+  console.error("5555555555555555555555555555555")
+    return;
   }
   console.error(filedata)
-  console.error("5555555555555555555555555555555")
+   console.error("111111111111111111111111111111")
   filedata = data;
 })
 
