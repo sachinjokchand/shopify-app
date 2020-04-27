@@ -76,7 +76,7 @@ var filedata = '';
 
 const fs = require('fs')
 
-fs.readFileSync('test.txt', (err, data) => {
+fs.readFileSync('./test.txt', (err, data) => {
   if (err) {
     console.error(err)
   console.error("5555555555555555555555555555555")
