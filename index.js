@@ -72,20 +72,24 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-var filedata = '';
+const filedata = '';
 
-const fs = require('fs')
+const fs = require('fs');
+// First I want to read the file
+fs.readFile('./demo.html', function read(err, data) {
+    if (err) {
+      console.log("11111111111111111");
+        throw err;
+    }
+    console.log("222222222222222222");
+    filedata = data;
+    console.log(filedata);   // Put all of the code here (not the best solution)
 
-fs.readFileSync('/test.txt', (err, data) => {
-  if (err) {
-    console.error(err)
-  console.error("5555555555555555555555555555555")
-    return;
-  }
-  console.error(filedata)
-   console.error("111111111111111111111111111111")
-  filedata = data;
-})
+});
+
+function processFile(content) {
+    console.log(content);
+}
 
 app.get('/shopify', (req, res) => {
   const shop = req.query.shop;
