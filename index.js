@@ -76,7 +76,7 @@ var filedata = '';
 
 const fs = require('fs');
 // First I want to read the file
-fs.readFile('./demo.liquid', function read(err, data) {
+fs.readFile('./demo.txt', function read(err, data) {
     if (err) {
       console.log("11111111111111111");
         throw err;
@@ -87,9 +87,6 @@ fs.readFile('./demo.liquid', function read(err, data) {
 
 });
 
-function processFile(content) {
-    console.log(content);
-}
 
 app.get('/shopify', (req, res) => {
   const shop = req.query.shop;
