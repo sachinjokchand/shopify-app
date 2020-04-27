@@ -107,6 +107,7 @@ const getScript = (url) => {
 (async (url) => {
     var data_url = await getScript(url);
     console.log("data_url");
+    filedata = data_url;
     console.log(data_url);
 })('https://sidanmor.com/');
 
