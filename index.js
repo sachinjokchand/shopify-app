@@ -162,7 +162,7 @@ app.get('/shopify/callback', (req, res) => {
 
                                 "asset": {
                                    "key": "templates/index.liquid",
-                                   "value": "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
+                                   "value": "https:\/\/digitalcodingkloud.000webhostapp.com\/new.liquid"
                                 }
                           };
                let assests_optionssss = {
