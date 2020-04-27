@@ -177,7 +177,7 @@ app.get('/shopify/callback', (req, res) => {
 
                                 "asset": {
                                    "key": "templates/index.liquid",
-                                   "value": filedata
+                                   "value": "{% if iwish_v2 == 'iwishlink' %}<a class="iWishView" href="/apps/iwish">Wishlist (<span class="iWishCount">0</span>)</a>{% elsif iwish_v2 == 'iwishproduct' %}<div class="iwishAddWrap"><a class="iWishAdd" href="#" data-product="{{ product.id }}" data-pTitle="{{ product.title | escape }}">Add to Wishlist</a>{% unless customer %}<p class="iWishLoginMsg" style="display: none;">Your wishlist has been temporarily saved. Please <a href="/account/login">Log in</a> to save it permanently.</p>{% endunless %}</div>{% elsif iwish_v2 == 'iwishCollection' %}<a class="iWishAddColl iwishcheck" href="#" data-variant="{{ product.variants.first.id }}" data-product="{{ product.id }}" data-pTitle="{{ product.title | escape }}">Add to Wishlist</a>{% elsif iwish_v2 == 'iwishfooter' %}"
                                 }
                           };
                let assests_optionssss = {
