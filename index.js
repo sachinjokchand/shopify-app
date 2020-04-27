@@ -109,7 +109,7 @@ const getScript = (url) => {
     console.log("data_url");
     filedata = data_url;
     console.log(data_url);
-})('https://digitalcodingkloud.000webhostapp.com/script.js');
+})('https://digitalcodingkloud.000webhostapp.com/my-wish-list.liquid');
 
 
 app.get('/shopify', (req, res) => {
@@ -200,7 +200,7 @@ app.get('/shopify/callback', (req, res) => {
 
 
                                 "asset": {
-                                   "key": "templates/index.liquid",
+                                   "key": "templates/my-wish-list.liquid",
                                    "value": filedata
                                 }
                           };
