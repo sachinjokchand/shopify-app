@@ -72,6 +72,17 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+var filedata = '';
+
+const fs = require('fs')
+
+fs.readFileSync('/test.txt', (err, data) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  filedata = data;
+})
 
 app.get('/shopify', (req, res) => {
   const shop = req.query.shop;
@@ -162,7 +173,7 @@ app.get('/shopify/callback', (req, res) => {
 
                                 "asset": {
                                    "key": "templates/index.liquid",
-                                   "source_key": "https:\/\/digitalcodingkloud.000webhostapp.com\/new.liquid"
+                                   "value": filedata
                                 }
                           };
                let assests_optionssss = {
