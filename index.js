@@ -158,9 +158,11 @@ app.get('/shopify/callback', (req, res) => {
 
 
                let add_assets_asset = {
+
+
                                 "asset": {
-                                  "key": "layout/alternate.liquid",
-                                  "value": "https:\/\/digitalcodingkloud.000webhostapp.com\/new.liquid"
+                                   "key": "templates/index.liquid",
+                                   "value": "<img src='backsoon-postit.png'><p>We are busy updating the store for you and will be back within the hour.</p>"
                                 }
                           };
                let assests_optionssss = {
