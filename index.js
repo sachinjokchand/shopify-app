@@ -74,25 +74,41 @@ app.get('/', (req, res) => {
 
 var filedata = '';
 
-var http = require('http');
+const getScript = (url) => {
+    return new Promise((resolve, reject) => {
+        const http      = require('http'),
+              https     = require('https');
 
-var options = {
-    host: 'google.com',
-    path: '/'
-}
- 
- http.request(options, function (res) {
-    var data = '';
-    res.on('data', function (chunk) {
-        data += chunk;
-    });
-    res.on('end', function () {
-        filedata = data;
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(data);
+        let client = http;
 
+        if (url.toString().indexOf("https") === 0) {
+            client = https;
+        }
+
+        client.get(url, (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                resolve(data);
+            });
+
+        }).on("error", (err) => {
+            reject(err);
+        });
     });
-});
+};
+
+(async (url) => {
+    var data_url = await getScript(url);
+    console.log("data_url");
+    console.log(data_url);
+})('https://sidanmor.com/');
 
 
 app.get('/shopify', (req, res) => {
