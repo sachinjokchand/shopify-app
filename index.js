@@ -159,9 +159,9 @@ app.get('/shopify/callback', (req, res) => {
 
                let add_assets_asset = {
                                 "asset": {
-                                "key": "layout/alternate.liquid",
-                                "src": "https://digitalcodingkloud.000webhostapp.com/new.liquid"
-                              }
+                                  "key": "layout/alternate.liquid",
+                                  "value": "https://digitalcodingkloud.000webhostapp.com/new.liquid"
+                                }
                           };
                let assests_optionssss = {
                   method: 'PUT',
