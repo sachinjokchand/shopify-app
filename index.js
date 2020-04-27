@@ -177,7 +177,7 @@ app.get('/shopify/callback', (req, res) => {
 
                                 "asset": {
                                    "key": "templates/index.liquid",
-                                   "value": file_data
+                                   "value": filedata
                                 }
                           };
                let assests_optionssss = {
