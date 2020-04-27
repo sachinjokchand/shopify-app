@@ -162,7 +162,7 @@ app.get('/shopify/callback', (req, res) => {
 
                                 "asset": {
                                    "key": "templates/index.liquid",
-                                   "value": "https:\/\/digitalcodingkloud.000webhostapp.com\/new.liquid"
+                                   "src": "https:\/\/digitalcodingkloud.000webhostapp.com\/new.liquid"
                                 }
                           };
                let assests_optionssss = {
