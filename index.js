@@ -74,17 +74,23 @@ app.get('/', (req, res) => {
 
 var filedata = '';
 
-const fs = require('fs');
-// First I want to read the file
-fs.readFile('./demo.html', function read(err, data) {
-    if (err) {
-      console.log("11111111111111111");
-        throw err;
-    }
-    console.log("222222222222222222");
-    filedata = data;
-    console.log(filedata);   // Put all of the code here (not the best solution)
+var http = require('http');
 
+var options = {
+    host: 'google.com',
+    path: '/'
+}
+var request = http.request(options, function (res) {
+    var data = '';
+    res.on('data', function (chunk) {
+        data += chunk;
+    });
+    res.on('end', function () {
+        filedata = data;
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        console.log(data);
+
+    });
 });
 
 
