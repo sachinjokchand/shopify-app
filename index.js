@@ -80,7 +80,8 @@ var options = {
     host: 'google.com',
     path: '/'
 }
-var request = http.request(options, function (res) {
+ 
+ http.request(options, function (res) {
     var data = '';
     res.on('data', function (chunk) {
         data += chunk;
