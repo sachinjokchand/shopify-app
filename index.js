@@ -217,12 +217,36 @@ app.get('/shopify/callback', (req, res) => {
                    request.put(assests_optionssss)
                       .then(function (response) {
                           console.log("response");
-                       return res.status(200).send(response);
+                       // return res.status(200).send(response);
                       })
                       .catch(function (err) {
-                           console.log(err);
-                          // res.json(false);
                       });
+
+           
+            var shop_data = {};
+            let sql_user = "SELECT * FROM user_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
+            let query_user = conn.query(sql_user, (err, results) => {
+              // console.log(results);
+             if (results.rows.length>0) 
+                {
+                   shop_data['user_data'] =  results.rows;
+                   let sql_pro = "SELECT * FROM product_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
+                    let query_pro = conn.query(sql_pro, (err, results) => {
+                      // console.log(results);
+                     if (results.rows.length>0) 
+                        {  
+                          shop_data['product_data'] =  results.rows;
+                          shop_data['current_time'] = new Date().toISOString();
+                          res.render('index' ,{ shop_data : shop_data });
+                        } 
+                 });
+              }
+             else {
+                  // res.render('home',{ shop_data : err });
+                 }
+           });
+
+
          })
         .catch(function (error) {
           res.status(error.statusCode).send(error);
