@@ -72,11 +72,11 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-const filedata = '';
+var filedata = '';
 
 const fs = require('fs');
 // First I want to read the file
-fs.readFile('./demo.html', function read(err, data) {
+fs.readFile('./demo.liquid', function read(err, data) {
     if (err) {
       console.log("11111111111111111");
         throw err;
