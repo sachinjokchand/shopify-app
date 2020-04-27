@@ -82,6 +82,7 @@ fs.readFileSync('test.txt', (err, data) => {
     return
   }
   console.error(filedata)
+  console.error("5555555555555555555555555555555")
   filedata = data;
 })
 
