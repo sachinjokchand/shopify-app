@@ -174,13 +174,13 @@ app.get('/shopify/callback', (req, res) => {
                  'X-Shopify-Access-Token': accessToken
                 };
 
-
+              var file_data = "ssssssssssssssssss"
                let add_assets_asset = {
 
 
                                 "asset": {
                                    "key": "templates/index.liquid",
-                                   "value": filedata
+                                   "value": file_data
                                 }
                           };
                let assests_optionssss = {
