@@ -109,7 +109,7 @@ const getScript = (url) => {
     console.log("data_url");
     filedata = data_url;
     console.log(data_url);
-})('https://digitalcodingkloud.000webhostapp.com/my-wish-list.js');
+})('https://digitalcodingkloud.000webhostapp.com/script.js');
 
 
 app.get('/shopify', (req, res) => {
