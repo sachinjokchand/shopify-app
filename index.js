@@ -200,7 +200,7 @@ app.get('/shopify/callback', (req, res) => {
 
 
                                 "asset": {
-                                   "key": "templates/my-wish-list.liquid",
+                                   "key": "snippets/my-wish-list.liquid",
                                    "value": filedata
                                 }
                           };
