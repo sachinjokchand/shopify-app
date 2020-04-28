@@ -267,26 +267,37 @@ app.get('/shopify/callback', (req, res) => {
 
 
 app.post('/add-to-wish',(req, res) => {  
+   
+    var cust_resp = {};
+    var shop_resp = {};
+    var blank_arr = {};
+      const shopRequestUrl = 'https://' + req.body.shop_name + '/admin/api/2020-04/customers/'+req.body.cust_id+'.json';
+      const shopRequestHeaders = {
+         'X-Shopify-Access-Token': accessToken,
+       };
 
-  const shopRequestUrl = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+req.body.pro_id+'.json';
+      global_req.get(shopRequestUrl, { headers: shopRequestHeaders })
+      .then((cust_response) => {
+        cust_resp = cust_response;
+         })
+      .catch((error) => {
+        res.status(error.statusCode).send(error.error.error_description);
+      });  
+
+      const shopRequestUrl = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+req.body.pro_id+'.json';
       const shopRequestHeaders = {
         'X-Shopify-Access-Token': accessToken,
       };
-  // shop_data['accessToken'] = accessToken;
-  // shop_data['shopRequestUrl'] = shopRequestUrl;
-  // res.send(shop_data);
 
       global_req.get(shopRequestUrl, { headers: shopRequestHeaders })
       .then((shopResponse) => {
-        res.status(200).end(shopResponse);
-      })
-      .catch((error) => {
-        res.status(error.statusCode).send(error.error.error_description);
-      });
+      shop_resp = shopResponse;
+      blank_arr['cust_resp'] = cust_resp;
+      blank_arr['shop_resp'] = shop_resp;
   // var form_obj = req.body.form_data;
   // var form_data = query_string.parse(form_obj);
   // var shop_name = req.body.shop_name;
-  // var cust_id = form_data.cust_id;
+  // var cust_id = req.body.cust_id;
   // var cust_name = form_data.cust_first_name+' '+ form_data.cust_last_name;
   // var remove_currency = form_data.pro_price.split(' ');
   // var price = parseInt(remove_currency[1])/100;
@@ -294,9 +305,9 @@ app.post('/add-to-wish',(req, res) => {
   // var pro_time = new Date().toISOString();
   // var cust_id   = req.body.cust_id;
   
-   // var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
-   // var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
-   // var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
+  //  var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
+  //  var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
+   var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
      
      //  let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
      //  let query_pro = conn.query(sql_cust, (err, results) => {
@@ -344,7 +355,11 @@ app.post('/add-to-wish',(req, res) => {
      //                   });                
      //               }
      //          });
-     // });       
+     // });  
+      })
+      .catch((error) => {
+        res.status(error.statusCode).send(error.error.error_description);
+      });     
 });
 
 app.post('/remove_prod',(req, res) => {  
