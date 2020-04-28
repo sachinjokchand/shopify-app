@@ -270,6 +270,7 @@ app.post('/add-to-wish',(req, res) => {
    
     var cust_resp = {};
     var shop_resp = {};
+    var blank_arr = {};
 
       const shopRequestUrl_cust = 'https://' + req.body.shop_name + '/admin/api/2020-04/customers/'+req.body.cust_id+'.json';
       const shopRequestHeaders_cust = {
@@ -292,21 +293,23 @@ app.post('/add-to-wish',(req, res) => {
       global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
       .then((shopResponse) => {
       shop_resp = shopResponse;
-    
-      // res.send(blank_arr);
+      blank_arr['cust_resp'] = cust_resp;
+      blank_arr['shop_resp'] = shop_resp;
+      
+      res.send(blank_arr);
   // var form_obj = req.body.form_data;
   // var form_data = query_string.parse(form_obj);
   // var shop_name = req.body.shop_name;
   // var cust_id = req.body.cust_id;
-  // var cust_name = cust_resp.first_name+' '+ cust_resp.last_name;
-  res.send(shop_resp);
+  // var cust_name = form_data.cust_first_name+' '+ form_data.cust_last_name;
   // var remove_currency = form_data.pro_price.split(' ');
   // var price = parseInt(remove_currency[1])/100;
   // var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
   // var pro_time = new Date().toISOString();
+  // var cust_id   = req.body.cust_id;
   
-   // var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
-   // var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
+  //  var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
+  //  var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
    // var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
      
      //  let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
