@@ -283,17 +283,17 @@ app.post('/add-to-wish',(req, res) => {
       const shopRequestHeaders = {
         'X-Shopify-Access-Token': accessToken,
       };
-  shop_data['accessToken'] = accessToken;
-  shop_data['shopRequestUrl'] = shopRequestUrl;
-  res.send(shop_data);
+  // shop_data['accessToken'] = accessToken;
+  // shop_data['shopRequestUrl'] = shopRequestUrl;
+  // res.send(shop_data);
 
-      // request.get(shopRequestUrl, { headers: shopRequestHeaders })
-      // .then((shopResponse) => {
-      //   res.status(200).end(shopResponse);
-      // })
-      // .catch((error) => {
-      //   res.status(error.statusCode).send(error.error.error_description);
-      // });
+      req.get(shopRequestUrl, { headers: shopRequestHeaders })
+      .then((shopResponse) => {
+        res.status(200).end(shopResponse);
+      })
+      .catch((error) => {
+        res.status(error.statusCode).send(error.error.error_description);
+      });
   // var cust_id   = req.body.cust_id;
   
    // var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
