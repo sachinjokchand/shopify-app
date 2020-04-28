@@ -295,8 +295,8 @@ app.post('/add-to-wish',(req, res) => {
       shop_resp = shopResponse;
       blank_arr['cust_resp'] = cust_resp;
       blank_arr['shop_resp'] = shop_resp;
-      
-      res.send(blank_arr);
+
+      res.send(cust_resp.customer.first_name);
   // var form_obj = req.body.form_data;
   // var form_data = query_string.parse(form_obj);
   // var shop_name = req.body.shop_name;
