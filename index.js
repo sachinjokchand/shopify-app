@@ -298,7 +298,7 @@ app.post('/add-to-wish',(req, res) => {
   var shop_name = req.body.shop_name;
   var cust_id = req.body.cust_id;
   var cust_name = cust_resp['first_name']+' '+ cust_resp['last_name'];
-  res.send(shop_resp);
+  res.send(shop_resp.image.src);
   // var remove_currency = form_data.pro_price.split(' ');
   // var price = parseInt(remove_currency[1])/100;
   // var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
