@@ -272,11 +272,11 @@ app.post('/add-to-wish',(req, res) => {
     var shop_resp = {};
     var blank_arr = {};
       const shopRequestUrl_cust = 'https://' + req.body.shop_name + '/admin/api/2020-04/customers/'+req.body.cust_id+'.json';
-      const shopRequestHeaders = {
+      const shopRequestHeaders_cust = {
          'X-Shopify-Access-Token': accessToken,
        };
 
-      global_req.get(shopRequestUrl_cust, { headers: shopRequestHeaders })
+      global_req.get(shopRequestUrl_cust, { headers: shopRequestHeaders_cust })
       .then((cust_response) => {
         cust_resp = cust_response;
          })
@@ -285,11 +285,11 @@ app.post('/add-to-wish',(req, res) => {
       });  
 
       const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+req.body.pro_id+'.json';
-      const shopRequestHeaders = {
+      const shopRequestHeaders_prod = {
         'X-Shopify-Access-Token': accessToken,
       };
 
-      global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders })
+      global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
       .then((shopResponse) => {
       shop_resp = shopResponse;
       blank_arr['cust_resp'] = cust_resp;
