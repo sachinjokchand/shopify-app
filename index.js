@@ -279,7 +279,7 @@ app.post('/add-to-wish',(req, res) => {
 
       global_req.get(shopRequestUrl_cust, { headers: shopRequestHeaders_cust })
       .then((cust_response) => {
-        cust_resp = cust_response;
+        cust_resp = JSON.parse(cust_response);
          })
       .catch((error) => {
         res.send(error);
@@ -292,13 +292,13 @@ app.post('/add-to-wish',(req, res) => {
 
       global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
       .then((shopResponse) => {
-      shop_resp = shopResponse;
+      shop_resp = JSON.parse(shopResponse);
       blank_arr['cust_resp'] = cust_resp;
       blank_arr['shop_resp'] = shop_resp;
 
       console.log("ssssssssss");
        // console.log(shopResponse);
-        console.log(JSON.parse(shopResponse));
+        console.log(shop_resp.product.image);
          console.log("ssssssssss");
       res.send(blank_arr);
   // var form_obj = req.body.form_data;
