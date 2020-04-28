@@ -296,9 +296,9 @@ app.post('/add-to-wish',(req, res) => {
       // res.send(blank_arr);
   // var form_obj = req.body.form_data;
   // var form_data = query_string.parse(form_obj);
-  var shop_name = req.body.shop_name;
-  var cust_id = req.body.cust_id;
-  var cust_name = cust_resp.first_name+' '+ cust_resp.last_name;
+  // var shop_name = req.body.shop_name;
+  // var cust_id = req.body.cust_id;
+  // var cust_name = cust_resp.first_name+' '+ cust_resp.last_name;
   res.send(shop_resp);
   // var remove_currency = form_data.pro_price.split(' ');
   // var price = parseInt(remove_currency[1])/100;
