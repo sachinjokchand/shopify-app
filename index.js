@@ -107,9 +107,9 @@ const getScript = (url) => {
 
 (async (url) => {
     var data_url = await getScript(url);
-    console.log("data_url");
     filedata = data_url;
-    console.log(data_url);
+    // console.log("data_url");
+    // console.log(data_url);
 })('https://digitalcodingkloud.000webhostapp.com/my-wish-list.liquid');
 
 
@@ -218,7 +218,7 @@ app.get('/shopify/callback', (req, res) => {
                };  
                    request.put(assests_optionssss)
                       .then(function (response) {
-                          console.log("response");
+                          // console.log("response");
                        // return res.status(200).send(response);
                       })
                       .catch(function (err) {
@@ -276,20 +276,24 @@ app.post('/add-to-wish',(req, res) => {
   // var price = parseInt(remove_currency[1])/100;
   // var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
   // var pro_time = new Date().toISOString();
+  var shop_data =  {};
   console.log(accessToken);
 
   const shopRequestUrl = 'https://' + req.body.shop_name + '/admin/api/2020-04/shop.json';
       const shopRequestHeaders = {
         'X-Shopify-Access-Token': accessToken,
       };
+  shop_data['accessToken'] = accessToken;
+  shop_data['shopRequestUrl'] = shopRequestUrl;
+  res.send(shop_data);
 
-      request.get(shopRequestUrl, { headers: shopRequestHeaders })
-      .then((shopResponse) => {
-        res.status(200).end(shopResponse);
-      })
-      .catch((error) => {
-        res.status(error.statusCode).send(error.error.error_description);
-      });
+      // request.get(shopRequestUrl, { headers: shopRequestHeaders })
+      // .then((shopResponse) => {
+      //   res.status(200).end(shopResponse);
+      // })
+      // .catch((error) => {
+      //   res.status(error.statusCode).send(error.error.error_description);
+      // });
   // var cust_id   = req.body.cust_id;
   
    // var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
