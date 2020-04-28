@@ -270,7 +270,6 @@ app.post('/add-to-wish',(req, res) => {
    
     var cust_resp = {};
     var shop_resp = {};
-    var blank_arr = {};
 
       const shopRequestUrl_cust = 'https://' + req.body.shop_name + '/admin/api/2020-04/customers/'+req.body.cust_id+'.json';
       const shopRequestHeaders_cust = {
@@ -293,72 +292,71 @@ app.post('/add-to-wish',(req, res) => {
       global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
       .then((shopResponse) => {
       shop_resp = shopResponse;
-      // blank_arr['cust_resp'] = cust_resp;
-      // blank_arr['shop_resp'] = shop_resp;
-
+    
       // res.send(blank_arr);
   // var form_obj = req.body.form_data;
   // var form_data = query_string.parse(form_obj);
   var shop_name = req.body.shop_name;
   var cust_id = req.body.cust_id;
   var cust_name = cust_resp.first_name+' '+ cust_resp.last_name;
+  res.send(shop_resp);
   // var remove_currency = form_data.pro_price.split(' ');
   // var price = parseInt(remove_currency[1])/100;
   // var pro_price = remove_currency[0]+' '+parseInt(price).toFixed(2);
-  // var pro_time  = new Date().toISOString();
-  res.send(shopResponse);
+  // var pro_time = new Date().toISOString();
+  
    // var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
    // var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
    // var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
      
-      // let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
-      // let query_pro = conn.query(sql_cust, (err, results) => {
+     //  let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
+     //  let query_pro = conn.query(sql_cust, (err, results) => {
     
-      //  if ( results.rows.length > 0 ) 
-      //       { console.log("user already exist.");  }
+     //   if ( results.rows.length > 0 ) 
+     //        { console.log("user already exist.");  }
           
-      //  else {  
-      //          const  query = {
-      //           text: 'INSERT INTO user_data(shop_name, customer_id, customer_name, customer_email ) VALUES($1, $2, $3, $4)',
-      //           values: [cust_data.shop_name, cust_data.cust_id, cust_data.cust_name, cust_data.cust_email ],
-      //          }
-      //          conn.query(query, (err, results) => {
-      //           if (err) { console.log("111"); } 
-      //           else { 
-      //                    const  query = {
-      //                           text: 'INSERT INTO wish_list(shop_name, customer_id ) VALUES($1, $2)',
-      //                           values: [wish_list_data.shop_name, wish_list_data.cust_id ],
-      //                          }
-      //                     conn.query(query, (err, results) => {
-      //                     if (err) { console.log("222"); } 
-      //                     else { }
-      //                   });
-      //                }  
-      //          });
-      //        }
-      //         let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
-      //         let query_pro = conn.query(sql_pro, (err, results) => {
-      //          // var obj = {};
-      //          // obj['err'] = err;
-      //          //  obj['results'] = results;
-      //          //  res.send(obj);
-      //          if (  results.rows.length > 0  ) 
-      //          {  console.log("product already exist."); }
-      //          else{
-      //             const query = {
-      //                   text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
-      //                   values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url, prod_data.pro_time ],
-      //                  }
-      //                  conn.query(query, (err, results) => {
-      //                   if (err) { res.send(err); } 
-      //                   else {
-      //                        res.send(query);
-      //                        }
-      //                  });                
-      //              }
-      //         });
-      //     });  
-      // })
+     //   else {  
+     //           const  query = {
+     //            text: 'INSERT INTO user_data(shop_name, customer_id, customer_name, customer_email ) VALUES($1, $2, $3, $4)',
+     //            values: [cust_data.shop_name, cust_data.cust_id, cust_data.cust_name, cust_data.cust_email ],
+     //           }
+     //           conn.query(query, (err, results) => {
+     //            if (err) { console.log("111"); } 
+     //            else { 
+     //                     const  query = {
+     //                            text: 'INSERT INTO wish_list(shop_name, customer_id ) VALUES($1, $2)',
+     //                            values: [wish_list_data.shop_name, wish_list_data.cust_id ],
+     //                           }
+     //                      conn.query(query, (err, results) => {
+     //                      if (err) { console.log("222"); } 
+     //                      else { }
+     //                    });
+     //                 }  
+     //           });
+     //         }
+     //          let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
+     //          let query_pro = conn.query(sql_pro, (err, results) => {
+     //           // var obj = {};
+     //           // obj['err'] = err;
+     //           //  obj['results'] = results;
+     //           //  res.send(obj);
+     //           if (  results.rows.length > 0  ) 
+     //           {  console.log("product already exist."); }
+     //           else{
+     //              const query = {
+     //                    text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
+     //                    values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url, prod_data.pro_time ],
+     //                   }
+     //                   conn.query(query, (err, results) => {
+     //                    if (err) { res.send(err); } 
+     //                    else {
+     //                         res.send(query);
+     //                         }
+     //                   });                
+     //               }
+     //          });
+     // });  
+      })
       .catch((error) => {
         res.send(error);
       });     
