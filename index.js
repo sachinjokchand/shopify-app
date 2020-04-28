@@ -297,8 +297,8 @@ app.post('/add-to-wish',(req, res) => {
       blank_arr['shop_resp'] = shop_resp;
 
       console.log("ssssssssss");
-       console.log(shopResponse);
-        console.log(shopResponse['product']);
+       // console.log(shopResponse);
+        console.log(jQuery.parseJSON(shopResponse));
          console.log("ssssssssss");
       res.send(blank_arr);
   // var form_obj = req.body.form_data;
