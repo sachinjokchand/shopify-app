@@ -72,8 +72,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-var accessToken = '';
-var filedata = '';
+var accessToken = '' ;
+var filedata    = '' ;
+var global_req  = '' ;
 
 const getScript = (url) => {
     return new Promise((resolve, reject) => {
@@ -173,7 +174,7 @@ app.get('/shopify/callback', (req, res) => {
       client_secret: apiSecret,
       code,
     };
-
+    global_req = request ;
     request.post(accessTokenRequestUrl, { json: accessTokenPayload })
     .then((accessTokenResponse) => {
        accessToken = accessTokenResponse.access_token;
@@ -287,7 +288,7 @@ app.post('/add-to-wish',(req, res) => {
   // shop_data['shopRequestUrl'] = shopRequestUrl;
   // res.send(shop_data);
 
-      req.get(shopRequestUrl, { headers: shopRequestHeaders })
+      global_req.get(shopRequestUrl, { headers: shopRequestHeaders })
       .then((shopResponse) => {
         res.status(200).end(shopResponse);
       })
