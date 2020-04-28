@@ -280,6 +280,7 @@ app.post('/add-to-wish',(req, res) => {
       global_req.get(shopRequestUrl_cust, { headers: shopRequestHeaders_cust })
       .then((cust_response) => {
         cust_resp = cust_response;
+        res.send(cust_response);
          })
       .catch((error) => {
         res.send(error);
