@@ -295,7 +295,7 @@ app.post('/add-to-wish',(req, res) => {
       shop_resp = shopResponse;
       blank_arr['cust_resp'] = cust_resp;
       blank_arr['shop_resp'] = shop_resp;
-      blank_arr['ssssssss'] = "ssssssssssss";
+      
       res.send(blank_arr);
   // var form_obj = req.body.form_data;
   // var form_data = query_string.parse(form_obj);
@@ -310,7 +310,7 @@ app.post('/add-to-wish',(req, res) => {
   
   //  var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
   //  var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: form_data.cust_email };
-   var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
+   // var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: form_data.pro_id, pro_title: form_data.pro_title, pro_img: form_data.pro_img, pro_price: pro_price, pro_url: form_data.pro_url, pro_time: pro_time };
      
      //  let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
      //  let query_pro = conn.query(sql_cust, (err, results) => {
