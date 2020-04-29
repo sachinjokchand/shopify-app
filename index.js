@@ -312,11 +312,11 @@ app.post('/add-to-wish',(req, res) => {
   var pro_price = shop_resp.product.variants[0].price;
   var pro_time  = new Date().toISOString();
   
-   var wish_list_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id };
-   var cust_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, cust_name: cust_name, cust_email: cust_email };
-   var prod_data = {shop_name: req.body.shop_name, cust_id: form_data.cust_id, pro_id: shop_resp.product.id, pro_title: shop_resp.product.title, pro_img: shop_resp.product.image.src, pro_price: pro_price, pro_url: pro_url, pro_time: pro_time };
+   var wish_list_data = {shop_name: shop_name, cust_id: cust_id };
+   var cust_data = {shop_name: shop_name, cust_id: cust_id, cust_name: cust_name, cust_email: cust_email };
+   var prod_data = {shop_name: shop_name, cust_id: cust_id, pro_id: shop_resp.product.id, pro_title: shop_resp.product.title, pro_img: shop_resp.product.image.src, pro_price: pro_price, pro_url: pro_url, pro_time: pro_time };
      
-      let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+form_data.cust_id+"'";
+      let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
       let query_pro = conn.query(sql_cust, (err, results) => {
     
        if ( results.rows.length > 0 ) 
@@ -341,7 +341,7 @@ app.post('/add-to-wish',(req, res) => {
                      }  
                });
              }
-              let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+form_data.cust_id+"' AND product_id='"+prod_data.pro_id+"'";
+              let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND product_id='"+prod_data.pro_id+"' AND shop_name='"+shop_name+"'";
               let query_pro = conn.query(sql_pro, (err, results) => {
                // var obj = {};
                // obj['err'] = err;
