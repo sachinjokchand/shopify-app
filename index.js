@@ -32,12 +32,12 @@ const conn = new Pool({
 });
 // conn.query(
 //   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
-conn.query(
-'DELETE FROM user_data');
-conn.query(
-'DELETE FROM wish_list');
-conn.query(
-'DELETE FROM product_data');
+// conn.query(
+// 'DELETE FROM user_data');
+// conn.query(
+// 'DELETE FROM wish_list');
+// conn.query(
+// 'DELETE FROM product_data');
 
 // conn.query(
 // 'CREATE TABLE user_data(id SERIAL PRIMARY KEY, customer_id VARCHAR(255) not null, customer_name VARCHAR(255), customer_email VARCHAR(255), shop_name VARCHAR(255) not null)');
@@ -312,6 +312,11 @@ app.post('/add-to-wish',(req, res) => {
    var cust_data = {shop_name: shop_name, cust_id: cust_id, cust_name: cust_name, cust_email: cust_email };
    var prod_data = {shop_name: shop_name, cust_id: cust_id, pro_id: shop_resp.product.id, pro_title: shop_resp.product.title, pro_img: shop_resp.product.image.src, pro_price: pro_price, pro_url: pro_url, pro_time: pro_time };
      
+     blank_arr['wish_list_data'] = wish_list_data;
+     blank_arr['cust_data'] = cust_data;
+     blank_arr['prod_data'] = prod_data;
+     
+     res.send(blank_arr)
       // let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
       // let query_pro = conn.query(sql_cust, (err, results) => {
     
