@@ -300,8 +300,8 @@ app.post('/add-to-wish',(req, res) => {
   
   var shop_name  = req.body.shop_name;
   var cust_id    = req.body.cust_id;
-  var cust_name  = cust_resp.first_name+' '+ cust_resp.last_name;
-  var cust_email = cust_resp.email;
+  var cust_name  = cust_resp.customer.first_name+' '+ cust_resp.customer.last_name;
+  var cust_email = cust_resp.customer.email;
   var pro_url    = 'https://' + req.body.shop_name+'/products/'+shop_resp.product.title;
   // var remove_currency = form_data.pro_price.split(' ');
   // var price = parseInt(remove_currency[1])/100;
