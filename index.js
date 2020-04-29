@@ -351,7 +351,7 @@ app.post('/add-to-wish',(req, res) => {
                        conn.query(query, (err, results) => {
                         if (err) { res.send(err); } 
                         else {
-                             res.send( 1);
+                             res.send(1);
                              }
                        });                
                    }
