@@ -230,13 +230,13 @@ app.get('/shopify/callback', (req, res) => {
             let sql_user = "SELECT * FROM user_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
             let query_user = conn.query(sql_user, (err, results) => {
               // console.log(results);
-             if (results.rows.length>0) 
+             if (results) 
                 {
                    shop_data['user_data'] =  results.rows;
                    let sql_pro = "SELECT * FROM product_data WHERE shop_name='"+shop+"' ORDER BY id DESC";
                     let query_pro = conn.query(sql_pro, (err, results) => {
                       // console.log(results);
-                     if (results.rows.length>0) 
+                     if (results) 
                         {  
                           shop_data['product_data'] =  results.rows;
                           shop_data['current_time'] = new Date().toISOString();
