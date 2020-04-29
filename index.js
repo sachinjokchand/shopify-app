@@ -358,7 +358,7 @@ app.post('/add-to-wish',(req, res) => {
       //              }
       //         });
       //    });  
-      // })
+      })
       .catch((error) => {
         res.send(error);
       });     
