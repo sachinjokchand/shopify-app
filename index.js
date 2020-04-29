@@ -386,11 +386,13 @@ app.post('/remove_prod',(req, res) => {
   
 });
 
-// app.get('/my_wish_link',(req, res) => {  
-//   res.render('my_wish_link' ,{ "shop_data" : "shop_data" } );
-// });
+app.get('/my_wish_link',(req, res) => {  
+  console.log("Ssssssssss");
+ res.render('my_wish_link' ,{ "shop_data" : "shop_data" } );
+});
 
 app.post('/my_wish_link',(req, res) => {  
+  console.log("111111111111");
   res.render('my_wish_link' ,{ "shop_data" : "shop_data" } );
 });
 
