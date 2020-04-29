@@ -316,7 +316,7 @@ app.post('/add-to-wish',(req, res) => {
      blank_arr['cust_data'] = cust_data;
      blank_arr['prod_data'] = prod_data;
      
-     res.send(blank_arr)
+     res.send(blank_arr);
       // let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
       // let query_pro = conn.query(sql_cust, (err, results) => {
     
