@@ -342,7 +342,7 @@ app.post('/add-to-wish',(req, res) => {
                //  obj['results'] = results;
                //  res.send(obj);
                if (  results.rows.length > 0  ) 
-               {  res.send("success" = 0); }
+               {  res.send(0); }
                else{
                   const query = {
                         text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
@@ -351,7 +351,7 @@ app.post('/add-to-wish',(req, res) => {
                        conn.query(query, (err, results) => {
                         if (err) { res.send(err); } 
                         else {
-                             res.send("success" = 1);
+                             res.send( 1);
                              }
                        });                
                    }
