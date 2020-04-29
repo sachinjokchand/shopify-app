@@ -33,7 +33,7 @@ const conn = new Pool({
 // conn.query(
 //   'CREATE TABLE shop_data(id SERIAL PRIMARY KEY, shop_name VARCHAR(255) not null, customer_id VARCHAR(255), product_id VARCHAR(255) not null)');
 conn.query(
-'DELETE TABLE product_data');
+'DELETE FROM product_data');
 
 // conn.query(
 // 'CREATE TABLE user_data(id SERIAL PRIMARY KEY, customer_id VARCHAR(255) not null, customer_name VARCHAR(255), customer_email VARCHAR(255), shop_name VARCHAR(255) not null)');
