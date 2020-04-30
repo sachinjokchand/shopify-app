@@ -386,14 +386,17 @@ app.post('/remove_prod',(req, res) => {
   
 });
 
-app.get('/my_wish_link',(req, res) => {  
-  console.log("Ssssssssss");
- res.render('my_wish_link' ,{ "shop_data" : "shop_data" } );
-});
-
-app.post('/my_wish_link',(req, res) => {  
-  console.log("111111111111");
-  res.render('my_wish_link' ,{ "shop_data" : "shop_data" } );
+app.post('/get_wish_list',(req, res) => {  
+   var shop_name  =  req.body.shop_name;
+   var cust_id    =  req.body.cust_id;
+   let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
+                    let query_pro = conn.query(sql_pro, (err, results) => {
+                      // console.log(results);
+                     if (results) 
+                        {  
+                          res.send(results.rows);
+                        } 
+                 });
 });
 
 // app.use('/admin', express.static('./node_modules/admin-lte'));
