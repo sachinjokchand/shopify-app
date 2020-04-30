@@ -283,7 +283,8 @@ app.post('/add-to-wish',(req, res) => {
 
       global_req.get(shopRequestUrl_cust, { headers: shopRequestHeaders_cust })
       .then((cust_response) => {
-        cust_resp = JSON.parse(cust_response);
+           cust_resp = JSON.parse(cust_response);
+            blank_arr['cust_resp'] = shop_resp;
          })
       .catch((error) => {
         res.send(error);
@@ -297,6 +298,8 @@ app.post('/add-to-wish',(req, res) => {
       global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
       .then((shopResponse) => {
       shop_resp = JSON.parse(shopResponse);
+      blank_arr['shop_resp'] = shop_resp;
+      blank_arr['blank_arr'] = "sssssssssssssssssss";
   
     var shop_name  = req.body.shop_name;
     var cust_id    = req.body.cust_id;
@@ -305,7 +308,8 @@ app.post('/add-to-wish',(req, res) => {
     var pro_url    = 'https://' + req.body.shop_name+'/products/'+shop_resp.product.title;
     var pro_price =  req.body.p_currency+' '+shop_resp.product.variants[0].price;
     var pro_time  = new Date().toISOString();
-    req.send(shop_resp);
+    
+    req.send(blank_arr);
   
     // var wish_list_data = {shop_name: shop_name, cust_id: cust_id };
     // var cust_data = {shop_name: shop_name, cust_id: cust_id, cust_name: cust_name, cust_email: cust_email };
