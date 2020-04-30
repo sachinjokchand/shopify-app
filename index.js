@@ -272,6 +272,7 @@ app.get('/shopify/callback', (req, res) => {
 
 app.post('/add-to-wish',(req, res) => {  
    
+   res.send("ehhhh");
     var cust_resp = {};
     var shop_resp = {};
     var blank_arr = {};
@@ -301,6 +302,7 @@ app.post('/add-to-wish',(req, res) => {
       blank_arr['shop_resp'] = shop_resp;
       blank_arr['blank_arr'] = "sssssssssssssssssss";
   
+    res.send(blank_arr);
     var shop_name  = req.body.shop_name;
     var cust_id    = req.body.cust_id;
     var cust_name  = cust_resp.customer.first_name+' '+ cust_resp.customer.last_name;
@@ -309,7 +311,6 @@ app.post('/add-to-wish',(req, res) => {
     var pro_price =  req.body.p_currency+' '+shop_resp.product.variants[0].price;
     var pro_time  = new Date().toISOString();
     
-    res.send(blank_arr);
   
     // var wish_list_data = {shop_name: shop_name, cust_id: cust_id };
     // var cust_data = {shop_name: shop_name, cust_id: cust_id, cust_name: cust_name, cust_email: cust_email };
