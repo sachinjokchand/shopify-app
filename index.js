@@ -275,8 +275,7 @@ app.post('/add-to-wish',(req, res) => {
     var cust_resp = {};
     var shop_resp = {};
     var blank_arr = {};
-      blank_arr['blank_arr'] = "sssssssssssssssssss";
-     req.send(blank_arr);
+
       const shopRequestUrl_cust = 'https://' + req.body.shop_name + '/admin/api/2020-01/customers/'+req.body.cust_id+'.json';
       const shopRequestHeaders_cust = {
          'X-Shopify-Access-Token': accessToken,
@@ -310,7 +309,7 @@ app.post('/add-to-wish',(req, res) => {
     var pro_price =  req.body.p_currency+' '+shop_resp.product.variants[0].price;
     var pro_time  = new Date().toISOString();
     
-    req.send(blank_arr);
+    res.send(blank_arr);
   
     // var wish_list_data = {shop_name: shop_name, cust_id: cust_id };
     // var cust_data = {shop_name: shop_name, cust_id: cust_id, cust_name: cust_name, cust_email: cust_email };
