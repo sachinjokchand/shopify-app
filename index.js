@@ -272,7 +272,6 @@ app.get('/shopify/callback', (req, res) => {
 
 app.post('/add-to-wish',(req, res) => {  
    
-   res.send("ehhhh");
     var cust_resp = {};
     var shop_resp = {};
     var blank_arr = {};
@@ -302,7 +301,7 @@ app.post('/add-to-wish',(req, res) => {
       blank_arr['shop_resp'] = shop_resp;
       blank_arr['blank_arr'] = "sssssssssssssssssss";
   
-    res.send(blank_arr);
+     res.send(blank_arr);
     var shop_name  = req.body.shop_name;
     var cust_id    = req.body.cust_id;
     var cust_name  = cust_resp.customer.first_name+' '+ cust_resp.customer.last_name;
