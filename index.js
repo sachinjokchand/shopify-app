@@ -392,7 +392,7 @@ app.post('/remove_prod',(req, res) => {
 });
 
 app.post('/get_wish_list',(req, res) => {  
-   var pro_details_arr = [];
+   var pro_details_arr = {};
    var i  = 0;
    var pro_details     =  {};
    var pro_arr         =  req.body.pro_arr;
