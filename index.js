@@ -272,9 +272,9 @@ app.get('/shopify/callback', (req, res) => {
 
 app.post('/add-to-wish',(req, res) => {  
    
-    var cust_resp = {};
-    var shop_resp = {};
-    var blank_arr = {};
+    var cust_resp = [];
+    var shop_resp = [];
+    var pro_arr = req.body.pro_arr;
 
       const shopRequestUrl_cust = 'https://' + req.body.shop_name + '/admin/api/2020-01/customers/'+req.body.cust_id+'.json';
       const shopRequestHeaders_cust = {
@@ -288,8 +288,10 @@ app.post('/add-to-wish',(req, res) => {
       .catch((error) => {
         res.send(error);
       });  
-
-      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+req.body.pro_id+'.json';
+    
+      for (var i = 0; i < pro_arr.length; i++) {
+        
+      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
       const shopRequestHeaders_prod = {
         'X-Shopify-Access-Token': accessToken,
       };
@@ -362,7 +364,8 @@ app.post('/add-to-wish',(req, res) => {
       })
       .catch((error) => {
         res.send(error);
-      });     
+      });   
+    }  
 });
 
 app.post('/remove_prod',(req, res) => {  
@@ -389,16 +392,47 @@ app.post('/remove_prod',(req, res) => {
 });
 
 app.post('/get_wish_list',(req, res) => {  
-   var shop_name  =  req.body.shop_name;
-   var cust_id    =  req.body.cust_id;
+   var pro_details     = {};
+   var pro_arr         = req.body.pro_arr;
+   var shop_name       =  req.body.shop_name;
+   var cust_id         =  req.body.cust_id;
+   if( cust_id ) {
    let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
-                    let query_pro = conn.query(sql_pro, (err, results) => {
-                      // console.log(results);
-                     if (results) 
-                        {  
-                          res.send(results.rows);
-                        } 
-                 });
+            let query_pro = conn.query(sql_pro, (err, results) => {
+              // console.log(results);
+             if (results) 
+                {  
+                  res.send(results.rows);
+                } 
+         });
+    }
+   else
+   {
+    for (var i = 0; i < pro_arr.length; i++) {
+      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
+      const shopRequestHeaders_prod = {
+        'X-Shopify-Access-Token': accessToken,
+      };
+
+      global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
+      .then((shopResponse) => {
+       shop_resp = JSON.parse(shopResponse);
+
+        var url        = shop_resp.product.title.replace(/\s+/g, '-').toLowerCase();
+        var pro_url    = 'https://' + req.body.shop_name+'/products/'+url;
+
+       pro_details[i]['product_id']    = shop_resp.product.id;
+       pro_details[i]['product_src']   = shop_resp.product.image.src;
+       pro_details[i]['product_title'] = shop_resp.product.title;
+       pro_details[i]['product_url']   =  pro_url; 
+
+       })
+      .catch((error) => {
+        res.send(error);
+      });   
+    }  
+    res.send(pro_details);
+   } 
 });
 
 // app.use('/admin', express.static('./node_modules/admin-lte'));
