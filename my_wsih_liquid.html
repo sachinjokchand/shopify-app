@@ -125,12 +125,12 @@ body {
    });
      
     jQuery(document).on('click','.my_wish_View',function(){ 
-      get_wish_item
+      get_wish_item();
+      jQuery('#mySidenav').css({"width":"350px"});
      });
 
     function get_wish_item()
     {
-     jQuery('#mySidenav').css({"width":"350px"});
      var my_wish_item = localStorage.getItem("my_wish_item");
      var i            = '';
      var trHTML       = '';
