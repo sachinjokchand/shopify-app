@@ -394,11 +394,14 @@ app.post('/remove_prod',(req, res) => {
 app.post('/get_wish_list',(req, res) => {  
    var pro_details_arr = [];
    var i  = 0;
-   var pro_details     = {};
+   var pro_details     =  {};
    var pro_arr         =  req.body.pro_arr;
-   res.send(pro_arr);
-   // var shop_name       =  req.body.shop_name;
-   // var cust_id         =  req.body.cust_id;
+   var shop_name       =  req.body.shop_name;
+   var cust_id         =  req.body.cust_id;
+   pro_details_arr['pro_arr'] = pro_arr;
+   pro_details_arr['shop_name'] = shop_name;
+    pro_details_arr['55555'] = "shop_name";
+   res.send(pro_details_arr);
    // if( cust_id ) {
    // let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
    //          let query_pro = conn.query(sql_pro, (err, results) => {
