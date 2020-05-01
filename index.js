@@ -399,7 +399,7 @@ app.post('/get_wish_list',(req, res) => {
    if( cust_id ) {
    let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
             let query_pro = conn.query(sql_pro, (err, results) => {
-              // console.log(results);
+              console.log("results");
              if (results) 
                 {  
                   res.send(results.rows);
@@ -425,12 +425,12 @@ app.post('/get_wish_list',(req, res) => {
        pro_details[i]['product_src']   = shop_resp.product.image.src;
        pro_details[i]['product_title'] = shop_resp.product.title;
        pro_details[i]['product_url']   =  pro_url; 
-
        })
       .catch((error) => {
         res.send(error);
       });   
     }  
+    console.log(pro_details);
     res.send(pro_details);
    } 
 });
