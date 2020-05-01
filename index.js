@@ -398,52 +398,45 @@ app.post('/get_wish_list',(req, res) => {
    var pro_arr         =  JSON.parse(req.body.pro_arr);
    var shop_name       =  req.body.shop_name;
    var cust_id         =  req.body.cust_id;
-   pro_details_arr['pro_arr'] = pro_arr;
-   pro_details_arr['shop_name'] = shop_name;
-   pro_details_arr['55555'] = "shop_name";
-   for ( i = 0; i < pro_arr.length; i++) {
-    pro_details_arr[i] = pro_arr[i];
-   }
-   res.send(pro_details_arr);
-   // if( cust_id ) {
-   // let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
-   //          let query_pro = conn.query(sql_pro, (err, results) => {
-   //            console.log("results");
-   //           if (results) 
-   //              {  
-   //                res.send(results.rows);
-   //              } 
-   //       });
-   //  }
-   // else
-   // {
-   //  for ( i = 0; i < pro_arr.length; i++) {
-   //     pro_details['product_id']    = pro_arr[i];
-   //     pro_details_arr[i]  = pro_details;
-   //  //   const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
-   //  //   const shopRequestHeaders_prod = {
-   //  //     'X-Shopify-Access-Token': accessToken,
-   //  //   };
+  
+   if( cust_id ) {
+   let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
+            let query_pro = conn.query(sql_pro, (err, results) => {
+              console.log("results");
+             if (results) 
+                {  
+                  res.send(results.rows);
+                } 
+         });
+    }
+   else
+   {
+    for ( i = 0; i < pro_arr.length; i++) {
+      
+      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
+      const shopRequestHeaders_prod = {
+        'X-Shopify-Access-Token': accessToken,
+      };
 
-   //  //   global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
-   //  //   .then((shopResponse) => {
-   //  //    shop_resp = JSON.parse(shopResponse);
+      global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
+      .then((shopResponse) => {
+       shop_resp = JSON.parse(shopResponse);
 
-   //  //     var url        = shop_resp.product.title.replace(/\s+/g, '-').toLowerCase();
-   //  //     var pro_url    = 'https://' + req.body.shop_name+'/products/'+url;
+        var url        = shop_resp.product.title.replace(/\s+/g, '-').toLowerCase();
+        var pro_url    = 'https://' + req.body.shop_name+'/products/'+url;
 
-   //  //    pro_details[i]['product_id']    = shop_resp.product.id;
-   //  //    pro_details[i]['product_src']   = shop_resp.product.image.src;
-   //  //    pro_details[i]['product_url']   =  pro_url; 
-   //  //    pro_details[i]['product_title'] = shop_resp.product.title;
-   //  //    })
-   //  //   .catch((error) => {
-   //  //     res.send(error);
-   //  //   });   
-   //  }  
-   //  // console.log(pro_details);
-   //  res.send(pro_details_arr);
-   // } 
+       pro_details_arr[i]['product_id']    = shop_resp.product.id;
+       pro_details_arr[i]['product_src']   = shop_resp.product.image.src;
+       pro_details_arr[i]['product_url']   =  pro_url; 
+       pro_details_arr[i]['product_title'] = shop_resp.product.title;
+       })
+      .catch((error) => {
+        res.send(error);
+      });   
+    }  
+    console.log(pro_details_arr);
+    res.send(pro_details_arr);
+   } 
 });
 
 // app.use('/admin', express.static('./node_modules/admin-lte'));
