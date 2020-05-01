@@ -392,6 +392,7 @@ app.post('/remove_prod',(req, res) => {
 });
 
 app.post('/get_wish_list',(req, res) => {  
+   var pro_details_arr = [];
    var pro_details     = {};
    var pro_arr         = req.body.pro_arr;
    var shop_name       =  req.body.shop_name;
@@ -409,7 +410,8 @@ app.post('/get_wish_list',(req, res) => {
    else
    {
     for (var i = 0; i < pro_arr.length; i++) {
-       pro_details[[i]['product_id']]    = pro_arr[i];
+       pro_details['product_id']    = pro_arr[i];
+       pro_details_arr[i]  = pro_details;
     //   const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
     //   const shopRequestHeaders_prod = {
     //     'X-Shopify-Access-Token': accessToken,
