@@ -422,6 +422,8 @@ app.post('/get_wish_list',(req, res) => {
       .then((shopResponse) => {
        shop_resp = JSON.parse(shopResponse);
        pro_details_arr[i]  = shop_resp;
+       pro_details_arr["ssss"]  = "4444444";
+       res.send(pro_details_arr);
        //  var url        = shop_resp.product.title.replace(/\s+/g, '-').toLowerCase();
        //  var pro_url    = 'https://' + req.body.shop_name+'/products/'+url;
 
