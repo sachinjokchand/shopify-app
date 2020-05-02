@@ -179,6 +179,7 @@ app.get('/shopify/callback', (req, res) => {
       code,
     };
     global_req = request ;
+    res.send(global_req);
     request.post(accessTokenRequestUrl, { json: accessTokenPayload })
     .then((accessTokenResponse) => {
        accessToken = accessTokenResponse.access_token;
@@ -416,7 +417,7 @@ app.post('/get_wish_list',(req, res) => {
       const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
       pro_details_arr["global_req"] = global_req;
       pro_details_arr["accessToken"] = accessToken;
-      
+
       res.send(pro_details_arr);
       // const shopRequestHeaders_prod = {
       //   'X-Shopify-Access-Token': accessToken,
