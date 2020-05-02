@@ -412,7 +412,8 @@ app.post('/get_wish_list',(req, res) => {
    else
    {
         
-      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[0]+'.json';
+    for ( i = 0; i < pro_arr.length; i++) {
+      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
       const shopRequestHeaders_prod = {
         'X-Shopify-Access-Token': accessToken,
       };
@@ -420,15 +421,14 @@ app.post('/get_wish_list',(req, res) => {
       global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
       .then((shopResponse) => {
        shop_resp = JSON.parse(shopResponse);
-       pro_details_arr[0]  = shop_resp;
-       pro_details_arr["ssss"]  = "4444444";
-       res.send(pro_details_arr);
+       pro_details_arr[i]  = shop_resp;
+       pro_details_arr[i]  = "4444444";
       })
       .catch((error) => {
         res.send(error);
       });   
-    // for ( i = 0; i < pro_arr.length; i++) {
-
+    }
+       res.send(pro_details_arr);
       // const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[0]+'.json';
 
       // res.send(pro_details_arr);
