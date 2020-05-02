@@ -417,7 +417,7 @@ app.post('/get_wish_list',(req, res) => {
       pro_details_arr["global_req"] = global_req;
       pro_details_arr["accessToken"] = accessToken;
       
-      res.send(shopRequestUrl_prod);
+      res.send(pro_details_arr);
       // const shopRequestHeaders_prod = {
       //   'X-Shopify-Access-Token': accessToken,
       // };
