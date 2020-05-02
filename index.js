@@ -414,6 +414,9 @@ app.post('/get_wish_list',(req, res) => {
     for ( i = 0; i < pro_arr.length; i++) {
 
       const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
+      pro_details_arr["global_req"] = global_req;
+      pro_details_arr["accessToken"] = accessToken;
+      
       res.send(shopRequestUrl_prod);
       // const shopRequestHeaders_prod = {
       //   'X-Shopify-Access-Token': accessToken,
