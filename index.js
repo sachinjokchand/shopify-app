@@ -179,7 +179,6 @@ app.get('/shopify/callback', (req, res) => {
       code,
     };
     global_req = request ;
-    res.send(global_req);
     request.post(accessTokenRequestUrl, { json: accessTokenPayload })
     .then((accessTokenResponse) => {
        accessToken = accessTokenResponse.access_token;
@@ -412,37 +411,35 @@ app.post('/get_wish_list',(req, res) => {
     }
    else
    {
-    for ( i = 0; i < pro_arr.length; i++) {
+    // for ( i = 0; i < pro_arr.length; i++) {
 
-      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i]+'.json';
-      pro_details_arr["global_req"] = global_req;
-      pro_details_arr["accessToken"] = accessToken;
+      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[0]+'.json';
 
       res.send(pro_details_arr);
-      // const shopRequestHeaders_prod = {
-      //   'X-Shopify-Access-Token': accessToken,
-      // };
+      const shopRequestHeaders_prod = {
+        'X-Shopify-Access-Token': accessToken,
+      };
 
-      // global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
-      // .then((shopResponse) => {
-      //  shop_resp = JSON.parse(shopResponse);
-      //  pro_details_arr[i]  = shop_resp;
-      //  pro_details_arr["ssss"]  = "4444444";
-      //  res.send(pro_details_arr);
-      //  //  var url        = shop_resp.product.title.replace(/\s+/g, '-').toLowerCase();
-      //  //  var pro_url    = 'https://' + req.body.shop_name+'/products/'+url;
+      global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
+      .then((shopResponse) => {
+       shop_resp = JSON.parse(shopResponse);
+       pro_details_arr[i]  = shop_resp;
+       pro_details_arr["ssss"]  = "4444444";
+       res.send(pro_details_arr);
+       //  var url        = shop_resp.product.title.replace(/\s+/g, '-').toLowerCase();
+       //  var pro_url    = 'https://' + req.body.shop_name+'/products/'+url;
 
-      //  // pro_details_arr[i]['product_id']    = shop_resp.product.id;
-      //  // pro_details_arr[i]['product_src']   = shop_resp.product.image.src;
-      //  // pro_details_arr[i]['product_url']   =  pro_url; 
-      //  // pro_details_arr[i]['product_title'] = shop_resp.product.title;
-      //  })
-      // .catch((error) => {
-      //   res.send(error);
-      // });   
-    }  
-    console.log(pro_details_arr);
-    res.send(pro_details_arr);
+       // pro_details_arr[i]['product_id']    = shop_resp.product.id;
+       // pro_details_arr[i]['product_src']   = shop_resp.product.image.src;
+       // pro_details_arr[i]['product_url']   =  pro_url; 
+       // pro_details_arr[i]['product_title'] = shop_resp.product.title;
+       })
+      .catch((error) => {
+        res.send(error);
+      });   
+    // }  
+    // console.log(pro_details_arr);
+    // res.send(pro_details_arr);
    } 
 });
 
