@@ -86,7 +86,6 @@ body {
  var my_wish_items = [];
 
  jQuery(document).ready(function(){
-  set_wish_item();
   get_wish_item();
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
@@ -109,7 +108,7 @@ body {
       my_wish_items.push(prod_details_arr);
       my_wish_obj =  [...new Set(my_wish_items.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
    
-     jQuery('.my_wish_Count').text(my_wish_obj.length);
+     // jQuery('.my_wish_Count').text(my_wish_obj.length);
      localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj));
          
      data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
@@ -122,7 +121,7 @@ body {
              success: function (data) {
                   console.log(data);
                   localStorage.clear();
-                   // jQuery('.my_wish_Count').text(my_wish_obj.length);
+                   // /jQuery('.my_wish_Count').text(my_wish_obj.length);
                   },
             });
        }
