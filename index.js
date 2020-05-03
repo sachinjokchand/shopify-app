@@ -342,12 +342,9 @@ app.post('/add-to-wish',(req, res) => {
              }
               let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND product_id='"+prod_data.pro_id+"' AND shop_name='"+shop_name+"'";
               let query_pro = conn.query(sql_pro, (err, results) => {
-               // var obj = {};
-               // obj['err'] = err;
-               //  obj['results'] = results;
-               //  res.send(obj);
+
                if (  results.rows.length > 0  ) 
-               {  res.send(0); }
+               {  console.log("product already exist."); }
                else{
                   const query = {
                         text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
