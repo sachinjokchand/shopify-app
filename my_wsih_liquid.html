@@ -114,7 +114,7 @@ body {
    localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj));
      
       
-     data = {"cust_id": cust_id, "pro_id": my_wish_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
+     data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
      if( cust_id ) {
          jQuery.ajax({
              type:'POST',
@@ -143,7 +143,7 @@ body {
      var i            = '';
      var trHTML       = '';
      var cust_id      = __st.cid;
-     data = {"cust_id": cust_id,"shop_name": Shopify.shop, "pro_arr": my_wish_items};
+     data = {"cust_id": cust_id,"shop_name": Shopify.shop};
      if(cust_id) {
        jQuery.ajax({
            type:'POSt',
