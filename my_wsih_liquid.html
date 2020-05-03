@@ -86,6 +86,7 @@ body {
  var my_wish_items = [];
 
  jQuery(document).ready(function(){
+  set_wish_item();
   get_wish_item();
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
@@ -105,15 +106,12 @@ body {
     if(pro_obj != null ){
      my_wish_items = JSON.parse(pro_obj);
      }
-    my_wish_items.push(prod_details_arr);
-    my_wish_obj = my_wish_items.filter(function(elem, index, self) {
-        return index === self.indexOf(elem);
-    });
+      my_wish_items.push(prod_details_arr);
+      my_wish_obj =  [...new Set(my_wish_items.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
    
-   jQuery('.my_wish_Count').text(my_wish_obj.length);
-   localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj));
-     
-      
+     jQuery('.my_wish_Count').text(my_wish_obj.length);
+     localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj));
+         
      data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
      if( cust_id ) {
          jQuery.ajax({
@@ -123,6 +121,7 @@ body {
              dataType: "json",
              success: function (data) {
                   console.log(data);
+                  localStorage.clear();
                    // jQuery('.my_wish_Count').text(my_wish_obj.length);
                   },
             });
@@ -136,7 +135,7 @@ body {
       get_wish_item();
       jQuery('#mySidenav').css({"width":"350px"});
      });
-
+   
     function get_wish_item()
     {
      var my_wish_items = localStorage.getItem("my_wish_items");
