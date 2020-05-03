@@ -65,8 +65,8 @@ body {
             <th class="table_head sorting_disabled" style="width: 100px;">Action</th>
           </tr>
         </thead>    
-      <tbody>
-         <tr role="row" class="replace_row odd">
+      <tbody class="replace_Tbody">
+         <tr role="row" class="odd">
          </tr>
       </tbody>
  </table>
@@ -75,7 +75,7 @@ body {
   <a class="my_wish_View" href="#">Wishlist (<span class="my_wish_Count">0</span>)</a>
 {% elsif my_wish_list == 'my_wish_product' %}
 <div class="my_wish_AddWrap">
-  <a class="my_wish_Add add_to_wish_list" href="#" data-product="{{ product.id }}" data-title="{{ product.title }}" p_currency="{{ cart.currency.symbol }}">Add to Wishlist</a>
+  <a class="my_wish_Add add_to_wish_list" href="#" prod_id="{{ product.id }}" prod_title="{{ product.title }}" p_currency="{{ cart.currency.symbol }}">Add to Wishlist</a>
   {% unless customer %}<p class="my_wish_LoginMsg" style="display: none;">Your wishlist has been temporarily saved. Please <a href="/account/login">Log in</a> to save it permanently.</p>{% endunless %}
 </div>
 {% elsif my_wish_list == 'my_wish_Collection' %}
@@ -83,45 +83,53 @@ body {
 {% elsif my_wish_list == 'my_wish_footer' %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript">
- var my_wish_item = [];
- my_wish_item =  JSON.parse(localStorage.getItem("my_wish_item"));
+ var my_wish_items = [];
 
  jQuery(document).ready(function(){
   get_wish_item();
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
-    var pro_id             = __st.rid;
+    var prod_details_arr   = {};
+    var pro_id             = jQuery(this).attr('prod_id');
+    var prod_title         = jQuery(this).attr('prod_title');
     var cust_id            = __st.cid;
-    var my_wish_list_count =  0;
     var p_currency = jQuery(this).attr('p_currency');
+    var url        = prod_title.replace(/\s+/g, '-').toLowerCase();
+    
+    prod_details_arr['product_id']    = pro_id;
+    prod_details_arr['product_title'] = prod_title;
+    prod_details_arr['product_src']   = prod_title;
+    prod_details_arr['product_url']   = url;
+    
+    var pro_obj  =  localStorage.getItem("my_wish_items");
+    if(pro_obj != null ){
+     my_wish_items = JSON.parse(pro_obj);
+     }
+    my_wish_items.push(prod_details_arr);
+    my_wish_obj = my_wish_items.filter(function(elem, index, self) {
+        return index === self.indexOf(elem);
+    });
+   
+   jQuery('.my_wish_Count').text(my_wish_obj.length);
+   localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj));
+     
       
-     data = {"cust_id": cust_id, "pro_id": pro_id,"p_currency": p_currency, "shop_name": Shopify.shop}; 
+     data = {"cust_id": cust_id, "pro_id": my_wish_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
      if( cust_id ) {
          jQuery.ajax({
-             type:'POSt',
+             type:'POST',
              url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/add-to-wish',
              data: data,
              dataType: "json",
              success: function (data) {
                   console.log(data);
-      //             if(data == 1){
-      //               my_wish_list_count++;
-      //               jQuery('.my_wish_Count').text(my_wish_list_count);
-      //              }
-      //              else
-      //              {
-                   
-      //              }
+                   // jQuery('.my_wish_Count').text(my_wish_obj.length);
                   },
             });
        }
       else{
-          my_wish_item.push(pro_id);
-          my_wish_obj = my_wish_item.filter(function(elem, index, self) {
-                return index === self.indexOf(elem);
-            });
-          localStorage.setItem('my_wish_item', JSON.stringify(my_wish_obj));
-         }
+         jQuery('.my_wish_LoginMsg').css({"display":"block"});     
+      }
    });
      
     jQuery(document).on('click','.my_wish_View',function(){ 
@@ -131,32 +139,53 @@ body {
 
     function get_wish_item()
     {
-     var my_wish_item = localStorage.getItem("my_wish_item");
+     var my_wish_items = localStorage.getItem("my_wish_items");
      var i            = '';
      var trHTML       = '';
      var cust_id      = __st.cid;
-     data = {"cust_id": cust_id,"shop_name": Shopify.shop, "pro_arr": my_wish_item};
-   
+     data = {"cust_id": cust_id,"shop_name": Shopify.shop, "pro_arr": my_wish_items};
+     if(cust_id) {
        jQuery.ajax({
            type:'POSt',
            url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/get_wish_list',
            data: data,
            dataType: "json",
            success: function (data) {
+              trHTML += '<tbody class="replace_Tbody">';
+              for(i = 0; i< data.length; i++ )
+               {
+                trHTML += '<tr role="row" class="odd">';
+                trHTML +='<td class="table_data"><a href="'+data[i].product_url+'" class="my_wish_pro"><img src="'+data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+data[i].product_url+'" class="my_wish_pro">Antique Drawers</a></td>'
 
-                trHTML += '<tr role="row" class="replace_row odd">';
-                for(i = 0; i< data.length; i++ )
-                 {
-                  console.log(data[i]);
-                 trHTML +='<td class="table_data"><a href="'+data[i].product_url+'" class="my_wish_pro"><img src="'+data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+data[i].product_url+'" class="my_wish_pro">Antique Drawers</a></td>'
-
-                 trHTML +='<td class="table_data"><a href="#" pro_id="'+data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
-                 }
-                 trHTML +='</tr>'
-                jQuery('.replace_row').replaceWith(trHTML);
+               trHTML +='<td class="table_data"><a href="#" pro_id="'+data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
+               trHTML +='</tr>'
+               }
+                trHTML += '</tbody>';
+                jQuery('.my_wish_Count').text(data.length);
+                jQuery('.replace_Tbody').replaceWith(trHTML);
                }
            });
+      } 
+  else{ 
+       
+        var pro_obj  =  localStorage.getItem("my_wish_items");
 
+        if(pro_obj != null ){
+        var pro_data =  JSON.parse(pro_obj);
+            trHTML += '<tbody class="replace_Tbody">';
+            for(i = 0; i< pro_data.length; i++ )
+             {  
+                trHTML += '<tr role="row" class="odd">';
+                 trHTML +='<td class="table_pro_data"><a href="'+pro_data[i].product_url+'" class="my_wish_pro"><img src="'+pro_data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+pro_data[i].product_url+'" class="my_wish_pro">'+pro_data[i].product_title+'</a></td>'
+
+                 trHTML +='<td class="table_pro_data"><a href="#" pro_id="'+pro_data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
+                 trHTML +='</tr>'
+              } 
+               trHTML += '</tbody>';
+                jQuery('.my_wish_Count').text(pro_data.length);
+                jQuery('.replace_Tbody').replaceWith(trHTML);
+           }
+       }  
     }
       
     jQuery('body').click(function() {
