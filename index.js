@@ -378,23 +378,31 @@ app.post('/remove_prod',(req, res) => {
   var cust_id = req.body.cust_id;
   var shop_name = req.body.shop_name;
 
-  let sql_user = "SELECT * FROM product_data WHERE shop_name='"+shop+"' AND product_id='"+pro_id+"'";
-            let query_user = conn.query(sql_user, (err, results) => {
-              // console.log(results);
-             if (results.rows.length >1) 
-                {
-                   
-               }
-             else if(results.rows.length == 1) 
-             {
+  let sql_user = "SELECT * FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+        let query_user = conn.query(sql_user, (err, results) => {
+          res.send(results);
+          // console.log(results);
+        //  if (results.rows.length >1) 
+        //     {
+               
+        //     }
+        //  else if(results.rows.length == 1) 
+        //  {
+        //     let del_pro = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+        //      conn.query(del_pro, (err, results) => {   
+        //     });
 
-             }
-             else {
-                  // res.render('home',{ shop_data : err });
-                 }
-           });
-  
-});
+        //     let del_wish = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+        //      conn.query(del_wish, (err, results) => {   
+        //     });
+           
+        //    let del_user = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+        //      conn.query(del_user, (err, results) => {   
+        //     });
+
+        // }
+      });
+  });
 
 app.post('/get_wish_list',(req, res) => {  
    var shop_name       =  req.body.shop_name;

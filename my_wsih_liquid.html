@@ -84,25 +84,29 @@ body {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript">
  var my_wish_items = [];
+ var my_wish_obj  = [];
+ var p_currency   = "{{ cart.currency.symbol }}";
 
  jQuery(document).ready(function(){
-  set_wish_item();
-  get_wish_item();
+  setTimeout(function(){set_wish_item(); }, 2000);
+  setTimeout(function(){ get_wish_item(); }, 3000);
+ 
+  
+  jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
   
     var prod_details_arr   = {};
     var pro_id             = jQuery(this).attr('prod_id');
     var prod_title         = jQuery(this).attr('prod_title');
-    var p_currency         = jQuery(this).attr('p_currency');
     var url                = prod_title.replace(/\s+/g, '-').toLowerCase();
     
     prod_details_arr['product_id']    = pro_id;
     prod_details_arr['product_title'] = prod_title;
     prod_details_arr['product_src']   = prod_title;
     prod_details_arr['product_url']   = url;
-    prod_details_arr['p_currency']    = p_currency;
-
+   
+    var pro_obj  =   localStorage.getItem("my_wish_items");
     if(pro_obj != null ){
      my_wish_items = JSON.parse(pro_obj);
      }
@@ -111,6 +115,10 @@ body {
       localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj)); 
      // jQuery('.my_wish_Count').text(my_wish_obj.length);
       set_wish_item();
+       if( cust_id && pro_obj != null) {
+          var curr_item = jQuery('.my_wish_Count').text();
+          jQuery('.my_wish_Count').text(parseInt(curr_item)+parseInt(my_wish_obj.length));
+       }
    });
      
     jQuery(document).on('click','.my_wish_View',function(){ 
@@ -123,7 +131,7 @@ body {
      var pro_obj  =   localStorage.getItem("my_wish_items");
 
      data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
-     if( cust_id ) {
+     if( cust_id && pro_obj != null) {
          jQuery.ajax({
              type:'POST',
              url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/add-to-wish',
@@ -131,13 +139,11 @@ body {
              dataType: "json",
              success: function (data) {
                   console.log(data);
-                  var curr_item = jQuery('.my_wish_Count').text();
-                  jQuery('.my_wish_Count').text(parseInt(curr_item)+parseInt(my_wish_obj.length));
                   localStorage.clear();
                   },
             });
        }
-      else{
+      else if(pro_obj != null){
          jQuery('.my_wish_LoginMsg').css({"display":"block"});
          jQuery('.my_wish_Count').text(my_wish_obj.length);     
       }
