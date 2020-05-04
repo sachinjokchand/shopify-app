@@ -272,34 +272,34 @@ app.get('/shopify/callback', (req, res) => {
 
 app.post('/add-to-wish',(req, res) => {  
    
-    var cust_resp = [];
-    var shop_resp = [];
-    var pro_obj = req.body.pro_arr;
-    var pro_arr = JSON.parse(pro_obj);
+  var cust_resp = [];
+  var shop_resp = [];
+  var pro_obj = req.body.pro_arr;
+  var pro_arr = JSON.parse(pro_obj);
+
+    const shopRequestUrl_cust = 'https://' + req.body.shop_name + '/admin/api/2020-01/customers/'+req.body.cust_id+'.json';
+    const shopRequestHeaders_cust = {
+       'X-Shopify-Access-Token': accessToken,
+     };
+
+    global_req.get(shopRequestUrl_cust, { headers: shopRequestHeaders_cust })
+    .then((cust_response) => {
+         cust_resp = JSON.parse(cust_response);
+       })
+    .catch((error) => {
+      res.send(error);
+    });  
   
-      const shopRequestUrl_cust = 'https://' + req.body.shop_name + '/admin/api/2020-01/customers/'+req.body.cust_id+'.json';
-      const shopRequestHeaders_cust = {
-         'X-Shopify-Access-Token': accessToken,
-       };
+    for (var i = 0; i < pro_arr.length; i++) {
+      
+    const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i].product_id+'.json';
+    const shopRequestHeaders_prod = {
+      'X-Shopify-Access-Token': accessToken,
+    };
 
-      global_req.get(shopRequestUrl_cust, { headers: shopRequestHeaders_cust })
-      .then((cust_response) => {
-           cust_resp = JSON.parse(cust_response);
-         })
-      .catch((error) => {
-        res.send(error);
-      });  
-    
-      for (var i = 0; i < pro_arr.length; i++) {
-        
-      const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[i].product_id+'.json';
-      const shopRequestHeaders_prod = {
-        'X-Shopify-Access-Token': accessToken,
-      };
-
-      global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
-      .then((shopResponse) => {
-      shop_resp = JSON.parse(shopResponse);
+    global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
+    .then((shopResponse) => {
+    shop_resp = JSON.parse(shopResponse);
 
     var shop_name  = req.body.shop_name;
     var cust_id    = req.body.cust_id;
@@ -315,8 +315,8 @@ app.post('/add-to-wish',(req, res) => {
     var cust_data = {shop_name: shop_name, cust_id: cust_id, cust_name: cust_name, cust_email: cust_email };
     var prod_data = {shop_name: shop_name, cust_id: cust_id, pro_id: shop_resp.product.id, pro_title: shop_resp.product.title, pro_img: shop_resp.product.image.src, pro_price: pro_price, pro_url: pro_url, pro_time: pro_time };
 
-      let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
-      let query_pro = conn.query(sql_cust, (err, results) => {
+    let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
+    let query_pro = conn.query(sql_cust, (err, results) => {
     
        if ( results.rows.length > 0 ) 
             { console.log("user already exist.");  }
@@ -340,33 +340,33 @@ app.post('/add-to-wish',(req, res) => {
                      }  
                });
              }
-              let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND product_id='"+prod_data.pro_id+"' AND shop_name='"+shop_name+"'";
-              let query_pro = conn.query(sql_pro, (err, results) => {
+            }); 
+            let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND product_id='"+prod_data.pro_id+"' AND shop_name='"+shop_name+"'";
+            let query_pro = conn.query(sql_pro, (err, results) => {
 
-               if (  results.rows.length > 0  ) 
-               {  console.log("product already exist."); }
-               else{
-                  const query = {
-                        text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
-                        values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url, prod_data.pro_time ],
-                       }
-                       conn.query(query, (err, results) => {
-                        if (err) { res.send(err); } 
-                        else {
-                                let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
-                                  let query_pro = conn.query(sql_pro, (err, results) => {
-                                    console.log("results");
-                                   if (results) 
-                                      {  
-                                        res.send(results.rows);
-                                      } 
-                               });
-                             }
-                       });                
-                   }
-              });
-         });  
-      })
+             if (  results.rows.length > 0  ) 
+             {  console.log("product already exist."); }
+             else{
+                const query = {
+                      text: 'INSERT INTO product_data(shop_name, customer_id, product_id,  product_title, product_src, product_price, product_url, product_time ) VALUES($1, $2, $3, $4, $5, $6, $7,$8)',
+                      values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url, prod_data.pro_time ],
+                     }
+                     conn.query(query, (err, results) => {
+                      if (err) { res.send(err); } 
+                      else {
+                              let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
+                                let query_pro = conn.query(sql_pro, (err, results) => {
+                                  console.log("results");
+                                 if (results) 
+                                    {  
+                                      res.send(results.rows);
+                                    } 
+                             });
+                           }
+                     });                
+                 }
+            }); 
+       })
       .catch((error) => {
         res.send(error);
       });   

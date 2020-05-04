@@ -84,15 +84,13 @@ body {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript">
  var my_wish_items = [];
- var my_wish_obj  = [];
- var p_currency   = "{{ cart.currency.symbol }}";
- var cust_id            = __st.cid;
+ var my_wish_obj   = [];
+ var p_currency    = "{{ cart.currency.symbol }}";
+ var cust_id       = __st.cid;
 
  jQuery(document).ready(function(){
-  setTimeout(function(){set_wish_item(); }, 2000);
-  setTimeout(function(){ get_wish_item(); }, 3000);
- 
-  
+  setTimeout(function(){set_wish_item(); }, 1500);
+  setTimeout(function(){ get_wish_item(); }, 2000);
   jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
@@ -100,20 +98,21 @@ body {
     var pro_id             = jQuery(this).attr('prod_id');
     var prod_title         = jQuery(this).attr('prod_title');
     var url                = prod_title.replace(/\s+/g, '-').toLowerCase();
+    var pro_obj            =   localStorage.getItem("my_wish_items");
     
     prod_details_arr['product_id']    = pro_id;
     prod_details_arr['product_title'] = prod_title;
     prod_details_arr['product_src']   = prod_title;
     prod_details_arr['product_url']   = url;
    
-    var pro_obj  =   localStorage.getItem("my_wish_items");
-    if(pro_obj != null ){
-     my_wish_items = JSON.parse(pro_obj);
-     }
+      if(pro_obj != null ){
+         my_wish_items = JSON.parse(pro_obj);
+      }
       my_wish_items.push(prod_details_arr);
       my_wish_obj =  [...new Set(my_wish_items.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
       localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj)); 
-     // jQuery('.my_wish_Count').text(my_wish_obj.length);
+      jQuery('.my_wish_LoginMsg').css({"display":"block"});
+
       set_wish_item();
        if( cust_id && pro_obj != null) {
           var curr_item = jQuery('.my_wish_Count').text();
@@ -144,7 +143,6 @@ body {
             });
        }
       else if(pro_obj != null){
-         jQuery('.my_wish_LoginMsg').css({"display":"block"});
          jQuery('.my_wish_Count').text(my_wish_obj.length);     
       }
     }
@@ -217,6 +215,15 @@ body {
                       console.log(data);
                       },
                 });
+           }
+           else
+           { 
+              var pro_obj  =   JSON.parse( localStorage.getItem("my_wish_items"));
+              var item_data = pro_obj.filter(function( obj ) {
+                          return obj.product_id !== pro_id;
+                        });
+              jQuery('.my_wish_Count').text(item_data.length);
+              localStorage.setItem('my_wish_items', JSON.stringify(item_data)); 
            }
           });
   }); 
