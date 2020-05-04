@@ -353,7 +353,14 @@ app.post('/add-to-wish',(req, res) => {
                        conn.query(query, (err, results) => {
                         if (err) { res.send(err); } 
                         else {
-                             res.send(1);
+                                let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
+                                  let query_pro = conn.query(sql_pro, (err, results) => {
+                                    console.log("results");
+                                   if (results) 
+                                      {  
+                                        res.send(results.rows);
+                                      } 
+                               });
                              }
                        });                
                    }
@@ -403,36 +410,6 @@ app.post('/get_wish_list',(req, res) => {
                 } 
          });
     }
-   else
-   {
-      // const shopRequestUrl_prod = 'https://' + req.body.shop_name + '/admin/api/2020-04/products/'+pro_arr[0]+'.json';
-
-      // res.send(pro_details_arr);
-      // const shopRequestHeaders_prod = {
-      //   'X-Shopify-Access-Token': accessToken,
-      // };
-
-      // global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
-      // .then((shopRespopro_details_arrnse) => {
-      //  shop_resp = JSON.parse(shopResponse);
-      //  pro_details_arr[i]  = shop_resp;
-      //  pro_details_arr["ssss"]  = "4444444";
-      //  res.send();
-      //  //  var url        = shop_resp.product.title.replace(/\s+/g, '-').toLowerCase();
-      //  //  var pro_url    = 'https://' + req.body.shop_name+'/products/'+url;
-
-      //  // pro_details_arr[i]['product_id']    = shop_resp.product.id;
-      //  // pro_details_arr[i]['product_src']   = shop_resp.product.image.src;
-      //  // pro_details_arr[i]['product_url']   =  pro_url; 
-      //  // pro_details_arr[i]['product_title'] = shop_resp.product.title;
-      //  })
-      // .catch((error) => {
-      //   res.send(error);
-      // });   
-    // }  
-    // console.log(pro_details_arr);
-    // res.send(pro_details_arr);
-   } 
 });
 
 // app.use('/admin', express.static('./node_modules/admin-lte'));

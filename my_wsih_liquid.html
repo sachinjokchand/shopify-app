@@ -86,31 +86,42 @@ body {
  var my_wish_items = [];
 
  jQuery(document).ready(function(){
+  set_wish_item();
   get_wish_item();
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
+  
     var prod_details_arr   = {};
     var pro_id             = jQuery(this).attr('prod_id');
     var prod_title         = jQuery(this).attr('prod_title');
-    var cust_id            = __st.cid;
-    var p_currency = jQuery(this).attr('p_currency');
-    var url        = prod_title.replace(/\s+/g, '-').toLowerCase();
+    var p_currency         = jQuery(this).attr('p_currency');
+    var url                = prod_title.replace(/\s+/g, '-').toLowerCase();
     
     prod_details_arr['product_id']    = pro_id;
     prod_details_arr['product_title'] = prod_title;
     prod_details_arr['product_src']   = prod_title;
     prod_details_arr['product_url']   = url;
-    
-    var pro_obj  =  localStorage.getItem("my_wish_items");
+    prod_details_arr['p_currency']    = p_currency;
+
     if(pro_obj != null ){
      my_wish_items = JSON.parse(pro_obj);
      }
       my_wish_items.push(prod_details_arr);
       my_wish_obj =  [...new Set(my_wish_items.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
-   
+      localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj)); 
      // jQuery('.my_wish_Count').text(my_wish_obj.length);
-     localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj));
-         
+      set_wish_item();
+   });
+     
+    jQuery(document).on('click','.my_wish_View',function(){ 
+      get_wish_item();
+      jQuery('#mySidenav').css({"width":"350px"});
+     });
+    
+    function set_wish_item(){
+     var cust_id  = __st.cid;
+     var pro_obj  =   localStorage.getItem("my_wish_items");
+
      data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
      if( cust_id ) {
          jQuery.ajax({
@@ -120,21 +131,18 @@ body {
              dataType: "json",
              success: function (data) {
                   console.log(data);
+                  var curr_item = jQuery('.my_wish_Count').text();
+                  jQuery('.my_wish_Count').text(parseInt(curr_item)+parseInt(my_wish_obj.length));
                   localStorage.clear();
-                   // /jQuery('.my_wish_Count').text(my_wish_obj.length);
                   },
             });
        }
       else{
-         jQuery('.my_wish_LoginMsg').css({"display":"block"});     
+         jQuery('.my_wish_LoginMsg').css({"display":"block"});
+         jQuery('.my_wish_Count').text(my_wish_obj.length);     
       }
-   });
-     
-    jQuery(document).on('click','.my_wish_View',function(){ 
-      get_wish_item();
-      jQuery('#mySidenav').css({"width":"350px"});
-     });
-   
+    }
+
     function get_wish_item()
     {
      var my_wish_items = localStorage.getItem("my_wish_items");
@@ -149,11 +157,12 @@ body {
            data: data,
            dataType: "json",
            success: function (data) {
+              console.log(data)
               trHTML += '<tbody class="replace_Tbody">';
               for(i = 0; i< data.length; i++ )
                {
                 trHTML += '<tr role="row" class="odd">';
-                trHTML +='<td class="table_data"><a href="'+data[i].product_url+'" class="my_wish_pro"><img src="'+data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+data[i].product_url+'" class="my_wish_pro">Antique Drawers</a></td>'
+                trHTML +='<td class="table_data"><a href="'+data[i].product_url+'" class="my_wish_pro"><img src="'+data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+data[i].product_url+'" class="my_wish_pro">'+data[i].product_title+'</a></td>'
 
                trHTML +='<td class="table_data"><a href="#" pro_id="'+data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
                trHTML +='</tr>'
