@@ -388,7 +388,7 @@ app.post('/remove_prod',(req, res) => {
              console.log("results");  
               console.log(results.rows.length);
                console.log("results");
-          res.send(results.rows.length);
+          res.sendStatus(results.rows.length);
                
             }
          else if(results.rows.length == 1) 
@@ -396,7 +396,7 @@ app.post('/remove_prod',(req, res) => {
           console.log("results");  
               console.log(results.rows.length);
                console.log("results");
-          res.send(results.rows.length);
+          res.sendStatus(results.rows.length);
            //  let del_pro = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
            //   conn.query(del_pro, (err, results) => {   
            //  });
