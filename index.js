@@ -353,16 +353,9 @@ app.post('/add-to-wish',(req, res) => {
                       values: [prod_data.shop_name, prod_data.cust_id, prod_data.pro_id, prod_data.pro_title, prod_data.pro_img, prod_data.pro_price, prod_data.pro_url, prod_data.pro_time ],
                      }
                      conn.query(query, (err, results) => {
-                      if (err) { res.send(err); } 
+                      if (err) { console.log("333"); } 
                       else {
-                              let sql_pro_count = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
-                                let query_pro_count = conn.query(sql_pro, (err, results) => {
-                                  console.log("results");
-                                 if (results) 
-                                    {  
-                                      res.send(results.rows);
-                                    } 
-                             });
+
                            }
                      });                
                  }
@@ -371,7 +364,8 @@ app.post('/add-to-wish',(req, res) => {
       .catch((error) => {
         res.send(error);
       });   
-    }  
+    }
+    res.send("success");  
 });
 
 app.post('/remove_prod',(req, res) => {  
