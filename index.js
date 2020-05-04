@@ -316,7 +316,7 @@ app.post('/add-to-wish',(req, res) => {
     var prod_data = {shop_name: shop_name, cust_id: cust_id, pro_id: shop_resp.product.id, pro_title: shop_resp.product.title, pro_img: shop_resp.product.image.src, pro_price: pro_price, pro_url: pro_url, pro_time: pro_time };
 
     let sql_cust = "SELECT * FROM user_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
-    let query_pro = conn.query(sql_cust, (err, results) => {
+    let query_cust = conn.query(sql_cust, (err, results) => {
     
        if ( results.rows.length > 0 ) 
             { console.log("user already exist.");  }
