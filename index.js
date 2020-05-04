@@ -384,31 +384,27 @@ app.post('/remove_prod',(req, res) => {
           // console.log(results);
          if (results.rows.length >1) 
             {
-
-             console.log("results");  
-              console.log(results.rows.length);
-               console.log("results");
-          res.sendStatus(results.rows.length);
-               
+               let del_user = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+                 conn.query(del_user, (err, results) => {   
+                });
+               res.send("sss");           
             }
          else if(results.rows.length == 1) 
          { 
-          console.log("results");  
-              console.log(results.rows.length);
-               console.log("results");
-          res.sendStatus(results.rows.length);
-           //  let del_pro = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
-           //   conn.query(del_pro, (err, results) => {   
-           //  });
+            let del_pro = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+             conn.query(del_pro, (err, results) => {   
+            });
 
-           //  let del_wish = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
-           //   conn.query(del_wish, (err, results) => {   
-           //  });
+            let del_wish = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+             conn.query(del_wish, (err, results) => {   
+            });
            
-           // let del_user = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
-           //   conn.query(del_user, (err, results) => {   
-           //  });
-
+           let del_user = "DELETE FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+             conn.query(del_user, (err, results) => {   
+            });
+           if(results) {
+           res.send("hhhh");
+            }
         }
       });
   });
