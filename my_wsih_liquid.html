@@ -89,8 +89,8 @@ body {
  var cust_id       = __st.cid;
 
  jQuery(document).ready(function(){
-  setTimeout(function(){set_wish_list(); }, 1500);
-  setTimeout(function(){ get_wish_list(); }, 2000);
+  setTimeout(function(){set_wish_item(); }, 1000);
+  setTimeout(function(){ get_wish_item(); }, 2000);
   jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
@@ -113,7 +113,7 @@ body {
       localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj)); 
       jQuery('.my_wish_LoginMsg').css({"display":"block"});
 
-      set_wish_list();
+      set_wish_item();
        if( cust_id && pro_obj != null) {
           var curr_item = jQuery('.my_wish_Count').text();
           jQuery('.my_wish_Count').text(parseInt(curr_item)+parseInt(my_wish_obj.length));
@@ -121,11 +121,11 @@ body {
    });
      
     jQuery(document).on('click','.my_wish_View',function(){ 
-      get_wish_list();
+      get_wish_item();
       jQuery('#mySidenav').css({"width":"350px"});
      });
     
-    function set_wish_list(){
+    function set_wish_item(){
      var pro_obj  =   localStorage.getItem("my_wish_items");
 
      data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
@@ -147,7 +147,7 @@ body {
       }
     }
 
-    function get_wish_list()
+    function get_wish_item()
     {
      var my_wish_items = localStorage.getItem("my_wish_items");
      var trHTML       = '';
@@ -213,7 +213,6 @@ body {
                  dataType: "json",
                  success: function (data) {
                       console.log(data);
-                      get_wish_list();
                       },
                 });
            }
@@ -223,7 +222,6 @@ body {
               var item_data = pro_obj.filter(function( obj ) {
                           return obj.product_id !== pro_id;
                         });
-              jQuery('.my_wish_Count').text(item_data.length);
               localStorage.setItem('my_wish_items', JSON.stringify(item_data)); 
            }
           });
