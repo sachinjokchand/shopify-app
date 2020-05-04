@@ -89,8 +89,8 @@ body {
  var cust_id       = __st.cid;
 
  jQuery(document).ready(function(){
-  setTimeout(function(){set_wish_item(); }, 1000);
-  setTimeout(function(){ get_wish_item(); }, 2000);
+  setTimeout(function(){ set_wish_item(); }, 1500);
+  setTimeout(function(){ get_wish_item(); }, 2500);
   jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
@@ -137,7 +137,7 @@ body {
              dataType: "json",
              success: function (data) {
                   console.log(data);
-                  jQuery('.my_wish_View').click();
+                  // jQuery('.my_wish_View').click();
                   localStorage.clear();
                   },
             });
