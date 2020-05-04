@@ -378,9 +378,9 @@ app.post('/remove_prod',(req, res) => {
   var cust_id = req.body.cust_id;
   var shop_name = req.body.shop_name;
 
-  let sql_user = "SELECT * FROM product_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+  let sql_user = "SELECT * FROM product_data WHERE shop_name='"+shop_name+"' AND customer_id='"+cust_id+"'";
         let query_user = conn.query(sql_user, (err, results) => {
-          res.send(results);
+          res.send(results.rows.length);
           // console.log(results);
         //  if (results.rows.length >1) 
         //     {

@@ -201,9 +201,27 @@ body {
        }  
     }
       
-    jQuery('body').click(function() {
-        jQuery('#mySidenav').css({"width":"0px"});
-    });
+    // jQuery('body').click(function() {
+    //     jQuery('#mySidenav').css({"width":"0px"});
+    // });
+    jQuery(document).on('click','.recDelete_pro',function()
+      {
+         var pro_id = jQuery(this).attr('pro_id');
+         var cust_id  = __st.cid;
+
+        data = {"cust_id": cust_id, "pro_id": pro_id, "shop_name": Shopify.shop}; 
+         if( cust_id ) {
+             jQuery.ajax({
+                 type:'POST',
+                 url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/remove_prod',
+                 data: data,
+                 dataType: "json",
+                 success: function (data) {
+                      console.log(data);
+                      },
+                });
+           }
+          });
   }); 
 </script>
 {% endif %}
