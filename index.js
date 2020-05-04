@@ -354,8 +354,8 @@ app.post('/add-to-wish',(req, res) => {
                      conn.query(query, (err, results) => {
                       if (err) { res.send(err); } 
                       else {
-                              let sql_pro = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
-                                let query_pro = conn.query(sql_pro, (err, results) => {
+                              let sql_pro_count = "SELECT * FROM product_data WHERE customer_id='"+cust_id+"' AND shop_name='"+shop_name+"'";
+                                let query_pro_count = conn.query(sql_pro, (err, results) => {
                                   console.log("results");
                                  if (results) 
                                     {  
