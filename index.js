@@ -395,16 +395,16 @@ app.post('/remove_prod',(req, res) => {
              conn.query(del_pro, (err, results) => {   
             });
 
-            let del_wish = "DELETE FROM wish_list WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+            let del_wish = "DELETE FROM wish_list WHERE shop_name='"+shop_name+"' AND customer_id='"+cust_id+"'";
              conn.query(del_wish, (err, results) => {   
             });
            
-           let del_user = "DELETE FROM user_data WHERE shop_name='"+shop_name+"' AND product_id='"+pro_id+"' AND customer_id='"+cust_id+"'";
+           let del_user = "DELETE FROM user_data WHERE shop_name='"+shop_name+"' AND customer_id='"+cust_id+"'";
              conn.query(del_user, (err, results) => {   
             });
            if(results) {
-           res.send("hhhh");
-            }
+            res.send("hhhh");
+           }
         }
       });
   });
