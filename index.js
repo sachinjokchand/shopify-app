@@ -293,9 +293,9 @@ app.post('/add-to-wish',(req, res) => {
       res.send(error);
     });  
   
-    for (var i = 0; i < pro_arr.length; i++) {
+    pro_arr.forEach((item) => {
       
-    const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+pro_arr[0].product_id+'.json';
+    const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+item[0].product_id+'.json';
     const shopRequestHeaders_prod = {
       'X-Shopify-Access-Token': accessToken,
     };
@@ -367,7 +367,7 @@ app.post('/add-to-wish',(req, res) => {
       .catch((error) => {
         res.send(error);
       });   
-    }
+    });
     res.send(blank_arr);  
 });
 
