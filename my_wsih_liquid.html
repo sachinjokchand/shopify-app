@@ -89,8 +89,10 @@ body {
  var cust_id       = __st.cid;
 
  jQuery(document).ready(function(){
+
   setTimeout(function(){ set_wish_item(); }, 1500);
-  setTimeout(function(){ get_wish_item(); }, 2500);
+  setTimeout(function(){ get_wish_item(); }, 2000);
+  // setTimeout(function(){ get_wish_item(); }, 2000);
   jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
@@ -98,7 +100,7 @@ body {
     var pro_id             = jQuery(this).attr('prod_id');
     var prod_title         = jQuery(this).attr('prod_title');
     var url                = prod_title.replace(/\s+/g, '-').toLowerCase();
-    var pro_obj            =   localStorage.getItem("my_wish_items");
+    var pro_obj            = localStorage.getItem("my_wish_items");
     
     prod_details_arr['product_id']    = pro_id;
     prod_details_arr['product_title'] = prod_title;
@@ -116,95 +118,94 @@ body {
       set_wish_item();
        if( cust_id && pro_obj != null) {
           var curr_item = jQuery('.my_wish_Count').text();
-          jQuery('.my_wish_Count').text(parseInt(curr_item)+parseInt(my_wish_obj.length));
+          jQuery('.my_wish_Count').text( +curr_item + +my_wish_obj.length);
        }
    });
      
+    function set_wish_item(){
+     var pro_obj  =   localStorage.getItem("my_wish_items");
+     data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
+       if( cust_id && pro_obj != null) {
+           jQuery.ajax({
+               type:'POST',
+               url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/add-to-wish',
+               data: data,
+               dataType: "json",
+               success: function (data) {
+                    console.log("data");
+                    console.log(data);
+                    localStorage.clear();
+                    jQuery('.my_wish_View').click();
+                    },
+              });
+         }
+        else if(pro_obj != null){
+           jQuery('.my_wish_Count').text(my_wish_obj.length);     
+        }
+    }
+
     jQuery(document).on('click','.my_wish_View',function(){ 
-      get_wish_item();
+       get_wish_item();
       jQuery('#mySidenav').css({"width":"350px"});
      });
     
-    function set_wish_item(){
-     var pro_obj  =   localStorage.getItem("my_wish_items");
-
-     data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
-     if( cust_id && pro_obj != null) {
-         jQuery.ajax({
-             type:'POST',
-             url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/add-to-wish',
-             data: data,
-             dataType: "json",
-             success: function (data) {
-                  console.log(data);
-                  jQuery('.my_wish_View').click();
-                  localStorage.clear();
-                  },
-            });
-       }
-      else if(pro_obj != null){
-         jQuery('.my_wish_Count').text(my_wish_obj.length);     
-      }
-    }
-
     function get_wish_item()
     {
      var my_wish_items = localStorage.getItem("my_wish_items");
-     var trHTML       = '';
+     var trHTML        = '';
      data = {"cust_id": cust_id,"shop_name": Shopify.shop};
      if(cust_id) {
-       jQuery.ajax({
-           type:'POSt',
-           url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/get_wish_list',
-           data: data,
-           dataType: "json",
-           success: function (data) {
-              console.log(data)
+           jQuery.ajax({
+               type:'POSt',
+               url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/get_wish_list',
+               data: data,
+               dataType: "json",
+               success: function (data) {
+                  // console.log(data)
+                  trHTML += '<tbody class="replace_Tbody">';
+                  for(var i = 0; i< data.length; i++ )
+                     {
+                        trHTML += '<tr role="row" class="odd">';
+                        trHTML +='<td class="table_data"><a href="'+data[i].product_url+'" class="my_wish_pro"><img src="'+data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+data[i].product_url+'" class="my_wish_pro">'+data[i].product_title+'</a></td>'
+                        trHTML +='<td class="table_data"><a href="#" pro_id="'+data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
+                        trHTML +='</tr>'
+                     }
+                   trHTML += '</tbody>';
+                   jQuery('.my_wish_Count').text(data.length);
+                   jQuery('.replace_Tbody').replaceWith(trHTML);
+                  }
+              });
+            } 
+       else{ 
+         var pro_obj  =  localStorage.getItem("my_wish_items");
+          if(pro_obj != null ){
+          var pro_data =  JSON.parse(pro_obj);
               trHTML += '<tbody class="replace_Tbody">';
-              for(var i = 0; i< data.length; i++ )
-               {
-                trHTML += '<tr role="row" class="odd">';
-                trHTML +='<td class="table_data"><a href="'+data[i].product_url+'" class="my_wish_pro"><img src="'+data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+data[i].product_url+'" class="my_wish_pro">'+data[i].product_title+'</a></td>'
+              for(i = 0; i< pro_data.length; i++ )
+               {  
+                  trHTML += '<tr role="row" class="odd">';
+                   trHTML +='<td class="table_pro_data"><a href="'+pro_data[i].product_url+'" class="my_wish_pro"><img src="'+pro_data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+pro_data[i].product_url+'" class="my_wish_pro">'+pro_data[i].product_title+'</a></td>'
 
-               trHTML +='<td class="table_data"><a href="#" pro_id="'+data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
-               trHTML +='</tr>'
+                   trHTML +='<td class="table_pro_data"><a href="#" pro_id="'+pro_data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
+                   trHTML +='</tr>'
+                } 
+                 trHTML += '</tbody>';
+                  jQuery('.my_wish_Count').text(pro_data.length);
+                  jQuery('.replace_Tbody').replaceWith(trHTML);
                }
-                trHTML += '</tbody>';
-                jQuery('.my_wish_Count').text(data.length);
-                jQuery('.replace_Tbody').replaceWith(trHTML);
-               }
-           });
-      } 
-  else{ 
-       
-        var pro_obj  =  localStorage.getItem("my_wish_items");
-
-        if(pro_obj != null ){
-        var pro_data =  JSON.parse(pro_obj);
-            trHTML += '<tbody class="replace_Tbody">';
-            for(i = 0; i< pro_data.length; i++ )
-             {  
-                trHTML += '<tr role="row" class="odd">';
-                 trHTML +='<td class="table_pro_data"><a href="'+pro_data[i].product_url+'" class="my_wish_pro"><img src="'+pro_data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+pro_data[i].product_url+'" class="my_wish_pro">'+pro_data[i].product_title+'</a></td>'
-
-                 trHTML +='<td class="table_pro_data"><a href="#" pro_id="'+pro_data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
-                 trHTML +='</tr>'
-              } 
-               trHTML += '</tbody>';
-                jQuery('.my_wish_Count').text(pro_data.length);
-                jQuery('.replace_Tbody').replaceWith(trHTML);
-           }
-       }  
-    }
+           }  
+       }
       
     jQuery('.closebtn').click(function() {
         jQuery('#mySidenav').css({"width":"0px"});
     });
     jQuery(document).on('click','.recDelete_pro',function()
-      {
+      { 
+        jQuery('.my_wish_LoginMsg').css({"display":"none"});
         var pro_id = jQuery(this).attr('pro_id');
         var count  = jQuery('.my_wish_Count').text();
         jQuery(this).parent().parent().remove();
+        jQuery('.my_wish_Count').text(count-1);
         data = {"cust_id": cust_id, "pro_id": pro_id, "shop_name": Shopify.shop}; 
          if( cust_id ) {
              jQuery.ajax({
@@ -214,8 +215,7 @@ body {
                  dataType: "json",
                  success: function (data) {
                       console.log(data);
-                      jQuery('.my_wish_Count').text(count-1);
-                      },
+                    },
                 });
            }
            else
@@ -224,7 +224,6 @@ body {
               var item_data = pro_obj.filter(function( obj ) {
                           return obj.product_id !== pro_id;
                         });
-              jQuery('.my_wish_Count').text(count-1);
               localStorage.setItem('my_wish_items', JSON.stringify(item_data)); 
            }
           });

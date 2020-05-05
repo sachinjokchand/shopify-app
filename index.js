@@ -76,9 +76,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-var accessToken = '' ;
-var filedata    = '' ;
-var global_req  = '' ;
+let accessToken = '' ;
+let filedata    = '' ;
+let global_req  = '' ;
 
 const getScript = (url) => {
     return new Promise((resolve, reject) => {
