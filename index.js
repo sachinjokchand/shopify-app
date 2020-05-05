@@ -295,7 +295,7 @@ app.post('/add-to-wish',(req, res) => {
   
     pro_arr.forEach((item) => {
       
-    const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+item[0].product_id+'.json';
+    const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+item.product_id+'.json';
     const shopRequestHeaders_prod = {
       'X-Shopify-Access-Token': accessToken,
     };
