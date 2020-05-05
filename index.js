@@ -303,7 +303,7 @@ app.post('/add-to-wish',(req, res) => {
     // global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
     // .then((shopResponse) => {
     // shop_resp = JSON.parse(shopResponse);
-    res.send(item);
+    res.send(item.product_id);
     // blank_arr[] = item;
 
     // var cust_id    = req.body.cust_id;
