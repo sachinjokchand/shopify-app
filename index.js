@@ -357,6 +357,7 @@ app.post('/add-to-wish',(req, res) => {
                       if (err) { console.log("333"); } 
                       else {
 
+                         res.send("success");  
                            }
                      });                
                  }
@@ -367,7 +368,6 @@ app.post('/add-to-wish',(req, res) => {
       });   
     });
   
-    res.send("success");  
 });
 
 app.post('/remove_prod',(req, res) => {  
