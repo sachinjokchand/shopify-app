@@ -293,7 +293,7 @@ app.post('/add-to-wish',(req, res) => {
       res.send(error);
     });  
   
-    await pro_arr.forEach((item) => {
+    pro_arr.forEach((item) => {
       
     const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+item.product_id+'.json';
     const shopRequestHeaders_prod = {
