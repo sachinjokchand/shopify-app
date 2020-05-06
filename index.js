@@ -372,7 +372,7 @@ app.post('/add-to-wish',(req, res) => {
    getData().then( function(){
      res.send(blank_arr);   
    });  
- });
+});
 
 app.post('/remove_prod',(req, res) => {  
   var pro_id = req.body.pro_id;
