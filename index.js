@@ -292,7 +292,7 @@ app.post('/add-to-wish',(req, res) => {
       res.send(error);
     });  
    
-   async function main() {
+    async function getData() {
     for await (var i = 0; i < pro_arr.length; i++) {
       
     const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+pro_arr[i].product_id+'.json';
@@ -367,8 +367,11 @@ app.post('/add-to-wish',(req, res) => {
       });   
    }
   }
-  main().catch(error => console.error(error.stack));
-  res.send("success");  
+ getData().then( function(){
+ res.send("success");  
+  
+ } );  
+ 
   
 });
 
