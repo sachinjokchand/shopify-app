@@ -75,7 +75,7 @@ body {
   <a class="my_wish_View" href="#">Wishlist (<span class="my_wish_Count">0</span>)</a>
 {% elsif my_wish_list == 'my_wish_product' %}
 <div class="my_wish_AddWrap">
-  <a class="my_wish_Add add_to_wish_list" href="#" prod_id="{{ product.id }}" prod_title="{{ product.title }}" p_currency="{{ cart.currency.symbol }}">Add to Wishlist</a>
+  <a class="my_wish_Add add_to_wish_list" href="#" data-variant="{{ product.variants.first.id }}" prod_id="{{ product.id }}" prod_title="{{ product.title }}" p_currency="{{ cart.currency.symbol }}">Add to Wishlist</a>
   {% unless customer %}<p class="my_wish_LoginMsg" style="display: none;">Your wishlist has been temporarily saved. Please <a href="/account/login">Log in</a> to save it permanently.</p>{% endunless %}
 </div>
 {% elsif my_wish_list == 'my_wish_Collection' %}
@@ -90,8 +90,9 @@ body {
 
  jQuery(document).ready(function(){
 
-  set_wish_item();
- setTimeout(function(){ get_wish_item(); }, 1000);
+//   set_wish_item();
+ setTimeout(function(){ set_wish_item(); }, 1000);
+ setTimeout(function(){ get_wish_item(); }, 2000);
   // setTimeout(function(){ get_wish_item(); }, 2000);
   jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
@@ -117,8 +118,7 @@ body {
 
       set_wish_item();
        if( cust_id && pro_obj != null) {
-          var curr_item = jQuery('.my_wish_Count').text();
-          jQuery('.my_wish_Count').text( +curr_item + +my_wish_obj.length);
+          
        }
    });
      
@@ -133,12 +133,16 @@ body {
                dataType: "json",
                async: false,
                success: function (data) {
-                console.log(data);
-                   console.log("sssssssssss");
+                 console.log(data);
+                },
+               complete: function () {
+                    console.log("sssssssssss");
+                    var curr_item = jQuery('.my_wish_Count').text();
+                    jQuery('.my_wish_Count').text( +curr_item + +my_wish_obj.length);
                     localStorage.removeItem('my_wish_items');
-                      // localStorage.clear();
-                      // get_wish_item();
-                    },
+                    // localStorage.clear();
+                    get_wish_item();
+                  },      
               });
          }
         else if(pro_obj != null){
