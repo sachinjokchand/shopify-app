@@ -293,7 +293,7 @@ app.post('/add-to-wish',(req, res) => {
     });  
    
     async function getData() {
-    for await (var i = 0; i < pro_arr.length; i++) {
+    for (var i = 0; i < pro_arr.length; i++) {
       
     const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+pro_arr[i].product_id+'.json';
     const shopRequestHeaders_prod = {
@@ -369,7 +369,7 @@ app.post('/add-to-wish',(req, res) => {
   }
  getData().then( function(){
  res.send("success");  
-  
+
  } );  
  
   
