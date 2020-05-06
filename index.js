@@ -277,7 +277,6 @@ app.post('/add-to-wish',(req, res) => {
   var pro_obj   = req.body.pro_arr;
   var pro_arr   = JSON.parse(pro_obj);
   var shop_name = req.body.shop_name;
-  var blank_arr = [];
 
     const shopRequestUrl_cust = 'https://' + shop_name + '/admin/api/2020-04/customers/'+req.body.cust_id+'.json';
     const shopRequestHeaders_cust = {
@@ -304,7 +303,6 @@ app.post('/add-to-wish',(req, res) => {
     global_req.get(shopRequestUrl_prod, { headers: shopRequestHeaders_prod })
     .then((shopResponse) => {
     shop_resp = JSON.parse(shopResponse);
-    blank_arr[i] = shop_resp;
 
     var cust_id    = req.body.cust_id;
     var cust_name  = cust_resp.customer.first_name+' '+ cust_resp.customer.last_name;
@@ -370,8 +368,8 @@ app.post('/add-to-wish',(req, res) => {
      }
    }
    getData().then( function(){
-     res.send(blank_arr);   
-   });  
+    res.send("success");   
+   });   
 });
 
 app.post('/remove_prod',(req, res) => {  
