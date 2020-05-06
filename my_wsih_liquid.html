@@ -91,7 +91,7 @@ body {
  jQuery(document).ready(function(){
 
   set_wish_item();
-  setTimeout(function(){ get_wish_item(); }, 1500);
+ setTimeout(function(){ get_wish_item(); }, 1000);
   // setTimeout(function(){ get_wish_item(); }, 2000);
   jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
@@ -125,17 +125,18 @@ body {
     function set_wish_item(){
      var pro_obj  =   localStorage.getItem("my_wish_items");
      data = {"cust_id": cust_id, "pro_arr": pro_obj,"p_currency": p_currency, "shop_name": Shopify.shop}; 
-       if( cust_id && pro_obj != null) {
+       if( cust_id ) {
            jQuery.ajax({
                type:'POST',
                url: 'https://cors-anywhere.herokuapp.com/'+'https://obscure-forest-68133.herokuapp.com/add-to-wish',
                data: data,
                dataType: "json",
                success: function (data) {
-                      console.log(data);
-                      console.log("data");
-                      localStorage.removeItem("my_wish_items");
-                      get_wish_item();
+                console.log(data);
+                   console.log("sssssssssss");
+                    localStorage.removeItem('my_wish_items');
+                      // localStorage.clear();
+                      // get_wish_item();
                     },
               });
          }
@@ -161,7 +162,7 @@ body {
                data: data,
                dataType: "json",
                success: function (data) {
-                  // console.log(data)
+                  console.log("aaaaaaaaaaaaaaaaaaaa")
                   trHTML += '<tbody class="replace_Tbody">';
                   for(var i = 0; i< data.length; i++ )
                      {
