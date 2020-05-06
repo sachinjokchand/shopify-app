@@ -274,9 +274,9 @@ app.post('/add-to-wish',(req, res) => {
    
   var cust_resp = [];
   var shop_resp = [];
-  var pro_obj = req.body.pro_arr;
-  var pro_arr = JSON.parse(pro_obj);
-  var shop_name  = req.body.shop_name;
+  var pro_obj   = req.body.pro_arr;
+  var pro_arr   = JSON.parse(pro_obj);
+  var shop_name = req.body.shop_name;
 
     const shopRequestUrl_cust = 'https://' + shop_name + '/admin/api/2020-04/customers/'+req.body.cust_id+'.json';
     const shopRequestHeaders_cust = {
@@ -292,10 +292,10 @@ app.post('/add-to-wish',(req, res) => {
       res.send(error);
     });  
    
-    pro_arr.forEach(async item => {
-    // for await (var i = 0; i < pro_arr.length; i++) {
+   async function main() {
+    for await (var i = 0; i < pro_arr.length; i++) {
       
-    const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+item.product_id+'.json';
+    const shopRequestUrl_prod = 'https://' + shop_name + '/admin/api/2020-04/products/'+pro_arr[i].product_id+'.json';
     const shopRequestHeaders_prod = {
       'X-Shopify-Access-Token': accessToken,
     };
@@ -365,8 +365,10 @@ app.post('/add-to-wish',(req, res) => {
       .catch((error) => {
         res.send(error);
       });   
-    });
-                         res.send("success");  
+   }
+  }
+  main().catch(error => console.error(error.stack));
+  res.send("success");  
   
 });
 
