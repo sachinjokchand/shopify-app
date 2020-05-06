@@ -90,8 +90,8 @@ body {
 
  jQuery(document).ready(function(){
 
-  setTimeout(function(){ set_wish_item(); }, 1500);
-  setTimeout(function(){ get_wish_item(); }, 2500);
+  set_wish_item();
+  setTimeout(function(){ get_wish_item(); }, 1500);
   // setTimeout(function(){ get_wish_item(); }, 2000);
   jQuery('.my_wish_LoginMsg').css({"display":"none"});
 
@@ -132,9 +132,9 @@ body {
                data: data,
                dataType: "json",
                success: function (data) {
-                      console.log("data");
                       console.log(data);
-                      localStorage.clear();
+                      console.log("data");
+                      localStorage.removeItem("my_wish_items");
                       get_wish_item();
                     },
               });
