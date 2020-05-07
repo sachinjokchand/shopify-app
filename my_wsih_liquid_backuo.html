@@ -66,7 +66,7 @@ body {
           </tr>
         </thead>    
       <tbody class="replace_Tbody">
-         <tr role="row" class="t_row t_row odd">
+         <tr role="row" class="odd">
          </tr>
       </tbody>
  </table>
@@ -75,7 +75,8 @@ body {
   <a class="my_wish_View" href="#">Wishlist (<span class="my_wish_Count">0</span>)</a>
 {% elsif my_wish_list == 'my_wish_product' %}
 <div class="my_wish_AddWrap">
-  <a class="my_wish_Add add_to_wish_list" href="#" data-variant="{{ product.variants.first.id }}" prod_id="{{ product.id }}" prod_title="{{ product.title }}" prod_img="{{ product.featured_image | product_img_url: 'grande' }}" p_currency="{{ cart.currency.symbol }}">Add to Wishlist</a>
+  <a class="my_wish_Add add_to_wish_list" href="#" data-variant="{{ product.variants.first.id }}" prod_id="{{ product.id }}" prod_title="{{ product.title }}" p_currency="{{ cart.currency.symbol }}">Add to Wishlist</a>
+  <p class="my_wish_added" style="display: none;">Your wishlist has been saved.</p>
   {% unless customer %}<p class="my_wish_LoginMsg" style="display: none;">Your wishlist has been temporarily saved. Please <a href="/account/login">Log in</a> to save it permanently.</p>{% endunless %}
 </div>
 {% elsif my_wish_list == 'my_wish_Collection' %}
@@ -90,56 +91,32 @@ body {
 
  jQuery(document).ready(function(){
 
-  // set_wish_item();
-  // get_wish_item();
+//   set_wish_item();
  setTimeout(function(){ set_wish_item(); }, 1000);
  setTimeout(function(){ get_wish_item(); }, 2000);
   // setTimeout(function(){ get_wish_item(); }, 2000);
 
   jQuery(document).on('click','.add_to_wish_list',function(){  
-    var trHTML             = '';
     var prod_details_arr   = {};
     var pro_id             = jQuery(this).attr('prod_id');
     var prod_title         = jQuery(this).attr('prod_title');
-    var prod_img           = jQuery(this).attr('prod_img');
     var url                = prod_title.replace(/\s+/g, '-').toLowerCase();
     var pro_obj            = localStorage.getItem("my_wish_items");
     
     prod_details_arr['product_id']    = pro_id;
     prod_details_arr['product_title'] = prod_title;
-    prod_details_arr['product_src']   = prod_img;
+    prod_details_arr['product_src']   = prod_title;
     prod_details_arr['product_url']   = url;
    
-    if(pro_obj != null ){
-       my_wish_items = JSON.parse(pro_obj);
-    }
-    my_wish_items.push(prod_details_arr);
-    my_wish_obj =  [...new Set(my_wish_items.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
-    localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj)); 
-    jQuery('.my_wish_LoginMsg').css({"display":"block"});
-    console.log("aaaaaaa");
-    console.log(my_wish_obj.length);
-    console.log(jQuery('.t_row').length);
-    console.log("aaaaaaa");
-    pro_obj  =  localStorage.getItem("my_wish_items");
-      if(pro_obj != null && my_wish_obj.length >jQuery('.t_row').length ){
-       var pro_data =  JSON.parse(pro_obj);
-       var obj_len  =  pro_data.length;
-         
-            trHTML += '<tr role="row" class="t_row odd">';
-               trHTML +='<td class="table_pro_data"><a href="'+pro_data[obj_len-1].product_url+'" class="my_wish_pro"><img src="'+pro_data[obj_len-1].product_src+'" height="50" width="50" alt=""></a><a href="'+pro_data[obj_len-1].product_url+'" class="my_wish_pro">'+pro_data[obj_len-1].product_title+'</a></td>'
+      if(pro_obj != null ){
+         my_wish_items = JSON.parse(pro_obj);
+      }
+      my_wish_items.push(prod_details_arr);
+      my_wish_obj =  [...new Set(my_wish_items.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
+      localStorage.setItem('my_wish_items', JSON.stringify(my_wish_obj)); 
+      jQuery('.my_wish_LoginMsg').css({"display":"block"});
 
-               trHTML +='<td class="table_pro_data"><a href="#" pro_id="'+pro_data[obj_len-1].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
-             trHTML +='</tr>'
-      
-              jQuery('.my_wish_Count').text(pro_data.length);
-              jQuery('.replace_Tbody').append(trHTML);
-              var curr_item = jQuery('.my_wish_Count').text();
-              if(cust_id && my_wish_obj.length >jQuery('.t_row').length )
-              {  
-                 jQuery('.my_wish_Count').text( +curr_item + +my_wish_obj.length);
-              }
-           }
+      set_wish_item();
        jQuery('.my_wish_added').css({"display":"block"});
    });
      
@@ -158,8 +135,8 @@ body {
                 },
                complete: function () {
                     console.log("sssssssssss");
-                    // var curr_item = jQuery('.my_wish_Count').text();
-                    // jQuery('.my_wish_Count').text( +curr_item + +my_wish_obj.length);
+                    var curr_item = jQuery('.my_wish_Count').text();
+                    jQuery('.my_wish_Count').text( +curr_item + +my_wish_obj.length);
                     localStorage.removeItem('my_wish_items');
                     // localStorage.clear();
                     get_wish_item();
@@ -172,7 +149,7 @@ body {
     }
 
     jQuery(document).on('click','.my_wish_View',function(){ 
-       // get_wish_item();
+       get_wish_item();
       jQuery('#mySidenav').css({"width":"350px"});
      });
     
@@ -192,7 +169,7 @@ body {
                   trHTML += '<tbody class="replace_Tbody">';
                   for(var i = 0; i< data.length; i++ )
                      {
-                        trHTML += '<tr role="row" class="t_row odd">';
+                        trHTML += '<tr role="row" class="odd">';
                         trHTML +='<td class="table_data"><a href="'+data[i].product_url+'" class="my_wish_pro"><img src="'+data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+data[i].product_url+'" class="my_wish_pro">'+data[i].product_title+'</a></td>'
                         trHTML +='<td class="table_data"><a href="#" pro_id="'+data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
                         trHTML +='</tr>'
@@ -210,7 +187,7 @@ body {
               trHTML += '<tbody class="replace_Tbody">';
               for(i = 0; i< pro_data.length; i++ )
                {  
-                  trHTML += '<tr role="row" class="t_row odd">';
+                  trHTML += '<tr role="row" class="odd">';
                    trHTML +='<td class="table_pro_data"><a href="'+pro_data[i].product_url+'" class="my_wish_pro"><img src="'+pro_data[i].product_src+'" height="50" width="50" alt=""></a><a href="'+pro_data[i].product_url+'" class="my_wish_pro">'+pro_data[i].product_title+'</a></td>'
 
                    trHTML +='<td class="table_pro_data"><a href="#" pro_id="'+pro_data[i].product_id+'" class="my_wish_pro recDelete_pro"><i class="fa fa-trash-o" aria-hidden="true"></i> REMOVE</a></td>'
@@ -233,9 +210,7 @@ body {
         var pro_id = jQuery(this).attr('pro_id');
         var count  = jQuery('.my_wish_Count').text();
         jQuery(this).parent().parent().remove();
-        if( count > 0 ){
-         jQuery('.my_wish_Count').text(count-1);
-        } 
+        jQuery('.my_wish_Count').text(count-1);
         data = {"cust_id": cust_id, "pro_id": pro_id, "shop_name": Shopify.shop}; 
          if( cust_id ) {
              jQuery.ajax({
